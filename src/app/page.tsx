@@ -353,13 +353,12 @@ function Demo() {
   return (
     <section id="demo" className="bg-[#fafafa] py-16 sm:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHead tag="Live Demo" title="Experience It Yourself" />
+        <SectionHead tag="Our Product" title="Try It Right Now" />
         <div className="mt-10 grid gap-8 sm:mt-16 md:grid-cols-2 md:items-start">
           <div>
-            <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Demo Scenario</h3>
+            <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Try It Right Now</h3>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-base">
-              You&apos;re visiting a dental clinic&apos;s website and want to book a consultation.
-              Watch how the AI handles the full booking flow.
+              Step into your patient&apos;s shoes and witness the future of your front desk. Use the demo chat to experience how Apivo grants you the freedom to focus on care while your calendar fills itself—accurately, instantly, and without the phone tag.
             </p>
             <ul className="mt-4 space-y-2 sm:mt-6">
               {[
