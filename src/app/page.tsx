@@ -67,7 +67,7 @@ function SocialProof() {
         <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-zinc-400 sm:mb-6 sm:text-sm">
           Trusted by dental practices across Virginia
         </p>
-        <div className="relative overflow-hidden">
+        <div className="relative mx-auto max-w-2xl overflow-hidden">
           <div className="industry-track flex w-max gap-4 sm:gap-6">
             {[...cities, ...cities].map((city, i) => (
               <span
