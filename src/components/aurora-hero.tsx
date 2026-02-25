@@ -22,38 +22,39 @@ export default function AuroraHero() {
 
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
-          AI-Powered<br />
-          <span className="whitespace-nowrap">Appointment Booking</span>
+          Stop Losing Dental<br />
+          <span className="whitespace-nowrap">Patients to Voicemail</span>
         </h1>
 
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
-          Customers chat on your website. Your calendar fills itself. No phone
-          tag. No double bookings. No missed revenue.
+          Your patients book cleanings, consultations, and emergency appointments
+          24/7 — even when your front desk is busy. Built exclusively for dental
+          practices.
         </p>
 
         {/* CTA Buttons */}
         <div className="flex flex-row flex-wrap items-center gap-3 pt-2">
           <a
-            href="#contact"
+            href="#demo"
             className="rounded-2xl border border-indigo-500/20 bg-indigo-500 px-5 py-3 text-center text-sm font-light tracking-tight text-white shadow-lg shadow-indigo-500/25 transition-colors duration-300 hover:bg-indigo-400"
           >
-            Get Started
+            Try It Now — It&apos;s Live ↓
           </a>
           <a
-            href="#pricing"
+            href="#how-it-works"
             className="rounded-2xl border border-zinc-200 px-5 py-3 text-center text-sm font-light tracking-tight text-zinc-700 transition-colors duration-300 hover:bg-white/80"
           >
-            View Pricing
+            See How It Works
           </a>
         </div>
 
         {/* Micro Details */}
         <ul className="mt-4 flex flex-wrap gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["Automated Calendar", "HIPAA Compliant", "29+ Languages"].map(
+          {["No contracts", "Live in 48 hours", "60-Day guarantee"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-zinc-400/50" />
+                <span className="text-emerald-500">✓</span>
                 {detail}
               </li>
             )
