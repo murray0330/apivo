@@ -353,7 +353,7 @@ function Demo() {
   return (
     <section id="demo" className="bg-[#fafafa] py-16 sm:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHead tag="Our Product" title="Try It Right Now" />
+        <SectionHead tag="Our Product" title="Experience It Yourself" />
         <div className="mt-10 grid gap-8 sm:mt-16 md:grid-cols-2 md:items-start">
           <div>
             <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Try It Right Now</h3>
