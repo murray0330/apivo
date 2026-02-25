@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: #818cf8;
+  --color-primary-bright: #a5b4fc;
+  --color-accent: #06b6d4;
+  --color-green: #34d399;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --animate-aurora: aurora 60s linear infinite;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #09090b;
+  --bg-card: #ffffff;
+  --bg-glass: rgba(0,0,0,.03);
+  --bg-glass-hover: rgba(0,0,0,.06);
+  --border: rgba(0,0,0,.08);
+  --border-strong: rgba(0,0,0,.15);
+  --text-2: #52525b;
+  --text-3: #a1a1aa;
+  /* Aurora background color variables */
+  --white: #fff;
+  --black: #000;
+  --transparent: transparent;
+  --blue-500: #3b82f6;
+  --blue-400: #60a5fa;
+  --blue-300: #93c5fd;
+  --indigo-300: #a5b4fc;
+  --violet-200: #ddd6fe;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Industry scroll animation */
+@keyframes scroll-industries {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.industry-track {
+  animation: scroll-industries 30s linear infinite;
+}
+
+.industry-track:hover {
+  animation-play-state: paused;
+}
+
+/* FAQ details animation */
+details summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Aurora background animation */
+@keyframes aurora {
+  from { background-position: 50% 50%, 50% 50%; }
+  to { background-position: 350% 50%, 350% 50%; }
+}
+
+/* Revenue calculator range slider */
+.calc-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    #6366f1 0%,
+    #6366f1 var(--slider-pct, 50%),
+    rgba(0, 0, 0, 0.08) var(--slider-pct, 50%),
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #6366f1;
+  border: 2.5px solid #fff;
+  box-shadow: 0 1px 4px rgba(99, 102, 241, 0.35);
+  cursor: pointer;
+}
+
+.calc-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #6366f1;
+  border: 2.5px solid #fff;
+  box-shadow: 0 1px 4px rgba(99, 102, 241, 0.35);
+  cursor: pointer;
+}
+
+/* Chat widget message entrance */
+@keyframes lcMsgIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

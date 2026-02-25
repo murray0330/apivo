@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointly AI &mdash; AI Chatbots That Actually Book Appointments</title>
+  <meta name="description" content="Appointly AI creates intelligent website chatbots that book appointments directly on your calendar, answer customer questions, and never double-book.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ====== Tubelight Navbar ====== -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-pill" id="nav-pill">
+      <!-- Nav indicator (tubelight glow) — positioned via JS -->
+      <span class="nav-indicator" id="nav-indicator" aria-hidden="true">
+        <span class="nav-indicator-bar"></span>
+        <span class="nav-indicator-glow"></span>
+        <span class="nav-indicator-glow-sm"></span>
+      </span>
+
+      <a href="#hero" class="nav-item active" data-nav>
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="#features" class="nav-item" data-nav>
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span class="nav-label">Features</span>
+      </a>
+      <a href="#demo" class="nav-item" data-nav>
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="nav-label">Demo</span>
+      </a>
+      <a href="#pricing" class="nav-item" data-nav>
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span class="nav-label">Pricing</span>
+      </a>
+      <a href="#contact" class="nav-item" data-nav>
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span class="nav-label">Contact</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ====== Hero ====== -->
+  <section class="hero" id="hero">
+    <!-- SVG filters for glass & glow effects (adapted from shader component) -->
+    <svg class="hero-filters" aria-hidden="true">
+      <defs>
+        <filter id="glass-effect" x="-50%" y="-50%" width="200%" height="200%">
+          <feTurbulence baseFrequency="0.005" numOctaves="1" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.3"/>
+          <feColorMatrix type="matrix" values="1 0 0 0 0.02 0 1 0 0 0.02 0 0 1 0 0.05 0 0 0 0.9 0" result="tint"/>
+        </filter>
+        <filter id="text-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-gradient"></div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+      <div class="hero-orb hero-orb-4"></div>
+      <div class="hero-orb hero-orb-5"></div>
+    </div>
+
+    <div class="container hero-container">
+      <div class="hero-badge reveal">
+        <span class="hero-badge-glow" aria-hidden="true"></span>
+        <span>&#10024; AI-Powered Scheduling</span>
+      </div>
+      <h1 class="hero-headline reveal reveal-delay-1">
+        <span class="hero-line hero-line-gradient">AI-Powered</span>
+        <span class="hero-line hero-line-bold">Appointment</span>
+        <span class="hero-line hero-line-light">Booking</span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2">Customers chat on your website. Your calendar fills itself. No phone tag. No double bookings. No missed revenue.</p>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="#pricing" class="hero-cta-outline">View Pricing</a>
+        <a href="#contact" class="hero-cta-gradient">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Social Proof ====== -->
+  <section class="social-proof">
+    <div class="container">
+      <p class="social-label">Built for appointment-based businesses</p>
+      <div class="industry-scroll" aria-label="Industries we serve">
+        <div class="industry-track">
+          <span class="ind-tag">Dental Clinics</span>
+          <span class="ind-tag">Med Spas</span>
+          <span class="ind-tag">Law Firms</span>
+          <span class="ind-tag">Salons & Barbers</span>
+          <span class="ind-tag">Fitness Studios</span>
+          <span class="ind-tag">Consulting</span>
+          <span class="ind-tag">Real Estate</span>
+          <span class="ind-tag">Auto Services</span>
+          <span class="ind-tag">Dental Clinics</span>
+          <span class="ind-tag">Med Spas</span>
+          <span class="ind-tag">Law Firms</span>
+          <span class="ind-tag">Salons & Barbers</span>
+          <span class="ind-tag">Fitness Studios</span>
+          <span class="ind-tag">Consulting</span>
+          <span class="ind-tag">Real Estate</span>
+          <span class="ind-tag">Auto Services</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Problem / Solution ====== -->
+  <section class="versus">
+    <div class="container">
+      <div class="versus-grid">
+        <div class="versus-card old reveal">
+          <span class="versus-label bad">Other Chatbots</span>
+          <ul>
+            <li>Collect info, email it to you</li>
+            <li>Customer waits for callback</li>
+            <li>Scheduling conflicts &amp; double-bookings</li>
+            <li>No calendar sync</li>
+            <li>Manual follow-up required</li>
+          </ul>
+        </div>
+        <div class="versus-divider reveal" aria-hidden="true">
+          <span>VS</span>
+        </div>
+        <div class="versus-card new reveal">
+          <span class="versus-label good">Appointly AI</span>
+          <ul>
+            <li>Books directly on your calendar</li>
+            <li>Instant confirmation for customer</li>
+            <li>Real-time availability &mdash; zero conflicts</li>
+            <li>Google Calendar + CRM sync</li>
+            <li>Automated email confirmations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== How It Works ====== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-tag">How It Works</p>
+        <h2>Three Steps. Fully Automated.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num" aria-hidden="true">01</div>
+          <div class="step-line" aria-hidden="true"></div>
+          <h3>Tell Us About Your Business</h3>
+          <p>Share your services, hours, booking rules, and FAQs. We configure your AI to sound like a member of your team.</p>
+        </div>
+        <div class="step reveal reveal-delay-1">
+          <div class="step-num" aria-hidden="true">02</div>
+          <div class="step-line" aria-hidden="true"></div>
+          <h3>We Connect Your Calendar &amp; CRM</h3>
+          <p>Google Calendar, HubSpot, Airtable, and more. Your chatbot sees real availability and books without conflicts.</p>
+        </div>
+        <div class="step reveal reveal-delay-2">
+          <div class="step-num" aria-hidden="true">03</div>
+          <h3>Embed &amp; Go Live</h3>
+          <p>One snippet on your website. Your AI is live, booking appointments 24/7, sending confirmations automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Features ====== -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-tag">Features</p>
+        <h2>Everything Your Front Desk Does &mdash; On Autopilot</h2>
+      </div>
+      <div class="features-grid">
+        <article class="feat-card feat-hero reveal" aria-label="Zero Double Bookings feature">
+          <div class="feat-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="feat-badge">Core Differentiator</span>
+          <h3>Zero Double Bookings</h3>
+          <p>Real-time calendar check before offering any slot. Configurable buffer times. Booked slots are never shown.</p>
+        </article>
+        <article class="feat-card reveal reveal-delay-1" aria-label="Smart Q&A feature">
+          <div class="feat-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Smart Business Q&amp;A</h3>
+          <p>AI-powered knowledge retrieval answers any customer question from your uploaded docs.</p>
+        </article>
+        <article class="feat-card reveal reveal-delay-2" aria-label="Email Confirmations feature">
+          <div class="feat-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3>Automatic Emails</h3>
+          <p>Booking, rescheduling, or cancellation &mdash; confirmation emails fire instantly.</p>
+        </article>
+        <article class="feat-card reveal" aria-label="CRM Integration feature">
+          <div class="feat-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>CRM Integration</h3>
+          <p>Contacts auto-created in HubSpot, Airtable, or Google Sheets. Deals sync instantly.</p>
+        </article>
+        <article class="feat-card reveal reveal-delay-1" aria-label="Full Lifecycle feature">
+          <div class="feat-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Full Lifecycle</h3>
+          <p>Book, reschedule, cancel &mdash; all through the chatbot. Calendar updates in real time.</p>
+        </article>
+        <article class="feat-card reveal reveal-delay-2" aria-label="Multilingual feature">
+          <div class="feat-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>29+ Languages</h3>
+          <p>Auto-detects the customer's language and responds natively. Global-ready.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Demo ====== -->
+  <section class="demo-section" id="demo">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-tag">Live Demo</p>
+        <h2>Experience It Yourself</h2>
+      </div>
+      <div class="demo-layout">
+        <div class="demo-info reveal">
+          <h3>Demo Scenario</h3>
+          <p>You're visiting a dental clinic's website and want to book a consultation. Watch how the AI handles the full booking flow.</p>
+          <ul class="demo-checklist">
+            <li>Real-time calendar availability check</li>
+            <li>Appointment placed directly on calendar</li>
+            <li>Confirmation email sent automatically</li>
+            <li>Contact saved to CRM</li>
+          </ul>
+          <button class="btn btn-glass" id="restart-demo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Restart Demo
+          </button>
+        </div>
+        <div class="demo-widget reveal reveal-delay-1">
+          <div class="widget-bar">
+            <div class="widget-bar-left">
+              <span class="widget-dot" aria-hidden="true"></span>
+              <span class="widget-title">Appointly AI</span>
+            </div>
+            <span class="widget-badge">Online</span>
+          </div>
+          <div class="widget-body" id="chat-body"></div>
+          <div class="widget-foot" id="chat-footer">
+            <div class="widget-options" id="chat-options"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Integrations ====== -->
+  <section class="integrations">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-tag">Integrations</p>
+        <h2>Works With Your Stack</h2>
+      </div>
+      <div class="int-grid">
+        <div class="int-card reveal">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="1.5"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Google Calendar</span>
+        </div>
+        <div class="int-card reveal reveal-delay-1">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>HubSpot</span>
+        </div>
+        <div class="int-card reveal reveal-delay-2">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.5"/><line x1="3" y1="15" x2="21" y2="15" stroke="currentColor" stroke-width="1.5"/><line x1="9" y1="3" x2="9" y2="21" stroke="currentColor" stroke-width="1.5"/><line x1="15" y1="3" x2="15" y2="21" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Google Sheets</span>
+        </div>
+        <div class="int-card reveal">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="9" r="1.5" fill="currentColor"/><circle cx="12" cy="9" r="1.5" fill="currentColor"/><circle cx="16" cy="9" r="1.5" fill="currentColor"/><line x1="6" y1="14" x2="18" y2="14" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Airtable</span>
+        </div>
+        <div class="int-card reveal reveal-delay-1">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.5"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Gmail</span>
+        </div>
+        <div class="int-card reveal reveal-delay-2">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>n8n Workflows</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Pricing ====== -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-tag">Pricing</p>
+        <h2>Simple, Transparent Pricing</h2>
+        <p class="section-sub">No hidden fees. No per-conversation charges.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <h3>Starter</h3>
+          <p class="price-desc">Solo practitioners &amp; small businesses</p>
+          <div class="price-amount"><span class="cur">$</span>297<span class="per">/mo</span></div>
+          <ul class="price-list">
+            <li>1 AI chatbot</li>
+            <li>Google Calendar sync</li>
+            <li>Email confirmations</li>
+            <li>Business Q&amp;A (50 FAQs)</li>
+            <li>Unlimited conversations</li>
+          </ul>
+          <a href="#contact" class="btn btn-glass btn-block">Get Started</a>
+        </div>
+        <div class="price-card popular reveal reveal-delay-1">
+          <span class="pop-badge">Most Popular</span>
+          <h3>Professional</h3>
+          <p class="price-desc">Growing businesses with CRM needs</p>
+          <div class="price-amount"><span class="cur">$</span>497<span class="per">/mo</span></div>
+          <ul class="price-list">
+            <li>Everything in Starter</li>
+            <li>CRM integration (HubSpot, Airtable)</li>
+            <li>Reschedule &amp; cancel via chatbot</li>
+            <li>Multi-language (29+)</li>
+            <li>Post-call analytics &amp; reports</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary btn-block">Get Started</a>
+        </div>
+        <div class="price-card reveal reveal-delay-2">
+          <h3>Enterprise</h3>
+          <p class="price-desc">Multi-location &amp; agencies</p>
+          <div class="price-amount">Custom</div>
+          <ul class="price-list">
+            <li>Everything in Professional</li>
+            <li>Multiple chatbots &amp; locations</li>
+            <li>Custom CRM &amp; API integrations</li>
+            <li>White-label option</li>
+            <li>Dedicated account manager</li>
+            <li>Custom workflow development</li>
+          </ul>
+          <a href="#contact" class="btn btn-glass btn-block">Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FAQ ====== -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-tag">FAQ</p>
+        <h2>Questions &amp; Answers</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary>How is this different from other chatbot services?</summary>
+          <p>Most chatbots just collect information and email it to you. Appointly AI connects to your live calendar, checks real-time availability, and places the actual appointment on your schedule &mdash; no human intervention needed. We also prevent double bookings by building in buffer times between appointments.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Which calendars and CRMs do you integrate with?</summary>
+          <p>Google Calendar for scheduling, plus HubSpot, Airtable, and Google Sheets for CRM. Custom integrations are available on the Enterprise plan.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Can the chatbot handle rescheduling and cancellations?</summary>
+          <p>Yes. Customers can book, reschedule, or cancel entirely through the chatbot. Calendar updates in real-time and confirmation emails are sent automatically.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>How does it prevent double bookings?</summary>
+          <p>The chatbot queries your Google Calendar for all existing events before presenting available times. It calculates open slots based on your business hours, meeting duration, and configurable buffer times. Only genuinely open slots are offered.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Can the chatbot answer questions about my business?</summary>
+          <p>We load your business information, FAQs, services, and policies into a knowledge base. The chatbot uses AI-powered retrieval (RAG) to deliver accurate answers to any question.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>How long does setup take?</summary>
+          <p>Most chatbots are live within a few business days. We handle configuration, calendar integration, CRM setup, and knowledge base loading. You provide the details, we do the rest.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Contact / CTA ====== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-layout">
+        <div class="contact-text reveal">
+          <p class="section-tag">Get Started</p>
+          <h2>Ready to Automate<br>Your Bookings?</h2>
+          <p>Stop losing appointments to phone tag and clunky forms. Let AI handle scheduling while you focus on what you do best.</p>
+          <ul class="contact-checks">
+            <li>Free consultation &amp; demo</li>
+            <li>No contracts &mdash; cancel anytime</li>
+            <li>Live in days, not weeks</li>
+          </ul>
+        </div>
+        <form class="contact-form reveal reveal-delay-1" id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="John Smith" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="john@business.com" required autocomplete="email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="business">Business Name</label>
+              <input type="text" id="business" name="business" placeholder="Your Business" autocomplete="organization">
+            </div>
+            <div class="form-group">
+              <label for="industry">Industry</label>
+              <select id="industry" name="industry">
+                <option value="">Select industry</option>
+                <option value="dental">Dental / Medical</option>
+                <option value="beauty">Beauty / Spa / Salon</option>
+                <option value="legal">Legal / Law Firm</option>
+                <option value="fitness">Fitness / Wellness</option>
+                <option value="consulting">Consulting / Coaching</option>
+                <option value="real-estate">Real Estate</option>
+                <option value="auto">Auto Services</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Book Your Free Demo</button>
+          <p class="form-note">We'll reach out within 24 hours.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Footer ====== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo" aria-label="Appointly AI Home">
+            <div class="logo-mark">
+              <svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect width="30" height="30" rx="7" fill="url(#lg2)"/><path d="M9 15.5L13 19.5L21 11.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="lg2" x1="0" y1="0" x2="30" y2="30"><stop stop-color="#818cf8"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>
+            </div>
+            <span class="logo-text">Appointly<span class="logo-ai">AI</span></span>
+          </a>
+          <p>AI chatbots that actually book appointments on your calendar &mdash; without double booking.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <div>
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#demo">Demo</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#how-it-works">How It Works</a>
+          </div>
+          <div>
+            <h4>Company</h4>
+            <a href="#contact">Contact</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div>
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Appointly AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== Live Chat Widget (Headless — no third-party scripts) ====== -->
+
+  <!-- Launcher button -->
+  <button class="lc-launcher" id="lc-launcher"
+          aria-label="Chat with ABC Dental Clinic AI" aria-expanded="false">
+    <span class="lc-pulse" aria-hidden="true"></span>
+    <img src="https://articulateusercontent.com/rise/courses/6LAd7BVqwL_9RIumlCyLBjIlvjZyarmo/G1gYt-CzgqvTSh_v.png"
+         class="lc-launcher-logo" alt="" aria-hidden="true">
+    <svg class="lc-launcher-x" width="22" height="22" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+
+  <!-- Chat panel -->
+  <div class="lc-window" id="lc-window" aria-hidden="true" role="dialog"
+       aria-label="ABC Dental Clinic AI Chat">
+
+    <div class="lc-header">
+      <img src="https://articulateusercontent.com/rise/courses/6LAd7BVqwL_9RIumlCyLBjIlvjZyarmo/G1gYt-CzgqvTSh_v.png"
+           class="lc-header-logo" alt="ABC Dental Clinic">
+      <div class="lc-header-info">
+        <span class="lc-header-name">ABC Dental Clinic</span>
+        <span class="lc-header-status"><span class="lc-header-dot" aria-hidden="true"></span> Online</span>
+      </div>
+      <button class="lc-close" id="lc-close" aria-label="Close chat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="lc-body" id="lc-body" aria-live="polite" aria-atomic="false"></div>
+
+    <div class="lc-footer">
+      <input type="text" class="lc-input" id="lc-input"
+             placeholder="Type a message…" autocomplete="off" maxlength="500"
+             aria-label="Chat message">
+      <button class="lc-send" id="lc-send" aria-label="Send message">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
