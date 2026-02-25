@@ -373,6 +373,21 @@ function Demo() {
                 </li>
               ))}
             </ul>
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              {[
+                { stat: "< 90s", label: "Average booking time" },
+                { stat: "24/7", label: "Always available" },
+                { stat: "0", label: "Missed after-hours appointments" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-2xl border border-black/[.08] bg-white p-3 text-center shadow-[0_2px_12px_rgba(0,0,0,.05)]"
+                >
+                  <p className="text-xl font-extrabold tracking-tight text-zinc-900 sm:text-2xl">{item.stat}</p>
+                  <p className="mt-1 text-[10px] leading-tight text-zinc-400 sm:text-[11px]">{item.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <DemoChatbot />
         </div>
