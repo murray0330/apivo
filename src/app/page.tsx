@@ -53,38 +53,28 @@ function Navbar() {
    Social Proof
    ================================================================ */
 function SocialProof() {
-  const industries = [
-    "Roofing",
-    "Restaurants",
-    "Real Estate",
-    "Property Management",
-    "Plumbing",
-    "Med Spa",
-    "Lock Smith",
-    "Law Firm",
-    "Landscaping",
-    "Junk Removal",
-    "HVAC",
-    "HR & Training",
-    "Ecommerce",
-    "Dental Clinics",
-    "Customer Service",
-    "Auto Repair",
+  const cities = [
+    "Chesapeake",
+    "Hampton",
+    "Newport News",
+    "Norfolk",
+    "Virginia Beach",
+    "Williamsburg",
   ];
   return (
     <section className="border-y border-black/[.05] bg-[#fafafa] py-8 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-zinc-400 sm:mb-6 sm:text-sm">
-          Built for appointment-based businesses
+          Trusted by dental practices across Virginia
         </p>
         <div className="relative overflow-hidden">
           <div className="industry-track flex w-max gap-4 sm:gap-6">
-            {[...industries, ...industries].map((ind, i) => (
+            {[...cities, ...cities].map((city, i) => (
               <span
                 key={i}
                 className="shrink-0 rounded-full border border-black/[.08] bg-white px-3 py-1.5 text-[11px] font-light text-zinc-500 sm:px-4 sm:py-2 sm:text-xs"
               >
-                {ind}
+                {city}
               </span>
             ))}
           </div>
