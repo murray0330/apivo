@@ -721,11 +721,11 @@ export default function HomePage() {
         <AuroraHero />
       </div>
       <SocialProof />
+      <Demo />
       <ValueProp />
       <HowItWorks />
       <Features />
       <Versus />
-      <Demo />
       <Integrations />
       <Pricing />
       <FAQ />
