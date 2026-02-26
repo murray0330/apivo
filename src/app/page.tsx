@@ -590,10 +590,11 @@ function FAQ() {
 function Contact() {
   return (
     <AuroraBackground
+      id="contact"
       className="h-auto min-h-0 py-16 sm:py-24 bg-zinc-50"
       showRadialGradient={true}
     >
-      <section id="contact" className="relative z-10 w-full">
+      <section className="relative z-10 w-full">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16">
             {/* Left — CTA */}
