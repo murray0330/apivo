@@ -152,7 +152,6 @@ function ValueProp() {
           ))}
         </div>
 
-        <RevenueCalculator />
       </div>
     </section>
   );
@@ -737,9 +736,9 @@ export default function HomePage() {
       <SocialProof />
       <Demo />
       <HowItWorks />
-      <ValueProp />
       <Features />
       <Versus />
+      <ValueProp />
       <Integrations />
       <Pricing />
       <FAQ />
