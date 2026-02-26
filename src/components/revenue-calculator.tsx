@@ -139,6 +139,19 @@ export default function RevenueCalculator() {
           </p>
         </div>
       </div>
+
+      {/* Annual savings row */}
+      <div className="mt-4">
+        <div className="rounded-xl border border-indigo-500/20 bg-indigo-50/50 px-5 py-4 text-center">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+            Annual savings with Apivo
+          </p>
+          <p className={`mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl ${roi * 12 >= 0 ? "text-indigo-600" : "text-red-500"}`}>
+            {roi * 12 >= 0 ? "+" : "−"}${Math.abs(roi * 12).toLocaleString()}
+            <span className="text-sm font-normal text-zinc-400">/yr</span>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
