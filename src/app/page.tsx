@@ -396,6 +396,19 @@ function Demo() {
 }
 
 /* ================================================================
+   Calculator
+   ================================================================ */
+function Calculator() {
+  return (
+    <section className="bg-white py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <RevenueCalculator />
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
    Integrations
    ================================================================ */
 function Integrations() {
@@ -734,12 +747,13 @@ export default function HomePage() {
         <AuroraHero />
       </div>
       <SocialProof />
+      <ValueProp />
       <Demo />
       <HowItWorks />
       <Features />
-      <Versus />
-      <ValueProp />
       <Integrations />
+      <Versus />
+      <Calculator />
       <Pricing />
       <FAQ />
       <Contact />
