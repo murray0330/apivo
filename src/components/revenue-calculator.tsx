@@ -116,7 +116,7 @@ export default function RevenueCalculator() {
       </div>
 
       {/* ROI row */}
-      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
         {/* Apivo cost */}
         <div className="rounded-xl border border-black/[.08] bg-white px-5 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,.04)]">
           <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
