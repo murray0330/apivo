@@ -615,8 +615,8 @@ export default function HomePage() {
       <Versus />
       <Calculator />
       <PricingSection />
-      <FAQ />
       <Contact />
+      <FAQ />
       <Footer />
     </div>
   );
