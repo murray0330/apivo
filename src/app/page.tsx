@@ -626,7 +626,7 @@ function Footer() {
               Apivo
             </span>
             <p className="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-sm">
-              AI chatbots that actually book appointments on your calendar — without double booking.
+              Stop Losing Dental Patients to Voicemail
             </p>
           </div>
           {[
