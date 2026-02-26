@@ -471,7 +471,7 @@ function Contact() {
       showRadialGradient={true}
     >
       <section id="contact" className="relative z-10 w-full">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
           <div>
               <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
                 Get Started
@@ -485,7 +485,7 @@ function Contact() {
                 No forms. No phone tag. Just chat with our AI to get started — the same
                 experience your customers will have.
               </p>
-              <ul className="mt-4 space-y-2 sm:mt-6">
+              <ul className="mt-4 space-y-2 sm:mt-6 inline-block text-left">
                 {[
                   "Free consultation & demo",
                   "No contracts — cancel anytime",
