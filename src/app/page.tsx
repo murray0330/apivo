@@ -5,6 +5,7 @@ import UseCaseCarousel from "@/components/use-case-carousel";
 import RevenueCalculator from "@/components/revenue-calculator";
 import PricingSection from "@/components/pricing";
 import { AuroraBackground } from "@/components/ui/aurora-background";
+import { FaqAccordion } from "@/components/ui/accordion";
 import {
   Calendar,
   MessageSquare,
@@ -440,21 +441,8 @@ function FAQ() {
     <section id="faq" className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <SectionHead tag="FAQ" title="Questions & Answers" />
-        <div className="mt-10 space-y-3 sm:mt-16">
-          {items.map((faq, i) => (
-            <details
-              key={i}
-              className="group rounded-xl border border-black/[.08] bg-white shadow-[0_2px_20px_rgba(0,0,0,.06)] transition-colors open:border-black/[.15]"
-            >
-              <summary className="flex items-center justify-between px-4 py-3.5 text-sm font-medium text-zinc-900 sm:px-5 sm:py-4 sm:text-base">
-                {faq.q}
-                <ChevronDown className="h-4 w-4 shrink-0 text-zinc-400 transition-transform group-open:rotate-180" />
-              </summary>
-              <p className="px-4 pb-4 text-xs leading-relaxed text-zinc-500 sm:px-5 sm:pb-5 sm:text-sm">
-                {faq.a}
-              </p>
-            </details>
-          ))}
+        <div className="mt-10 rounded-2xl border border-zinc-100 bg-white px-4 shadow-[0_4px_32px_rgba(0,0,0,.07)] sm:mt-16 sm:px-8">
+          <FaqAccordion items={items} defaultOpen={items[0].q} />
         </div>
       </div>
     </section>
