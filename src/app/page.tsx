@@ -15,7 +15,7 @@ import {
   Globe,
   Star,
   DollarSign,
-  Home,
+  Info,
   CheckCircle,
   ChevronDown,
   Clock,
@@ -26,7 +26,7 @@ import {
    ================================================================ */
 function Navbar() {
   const links = [
-    { href: "#hero", label: "About", icon: Home },
+    { href: "#about", label: "About", icon: Info },
     { href: "#demo", label: "Demo", icon: MessageSquare },
     { href: "#features", label: "Features", icon: Star },
     { href: "#pricing", label: "Pricing", icon: DollarSign },
@@ -122,7 +122,7 @@ function ValueProp() {
   ];
 
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section id="about" className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Intro */}
         <div className="mx-auto max-w-2xl text-center">
