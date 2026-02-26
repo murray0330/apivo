@@ -58,10 +58,15 @@ export default function RevenueCalculator() {
   const total = leads * avgValue * days;
 
   return (
-    <div className="mx-auto mt-12 max-w-5xl sm:mt-16">
-      <p className="mb-6 text-center text-xs font-medium uppercase tracking-widest text-zinc-400 sm:text-sm">
-        Revenue Impact Calculator
-      </p>
+    <div className="mx-auto max-w-5xl">
+      <div className="mb-10 text-center sm:mb-14">
+        <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
+          Revenue Impact
+        </p>
+        <h2 className="mt-2 text-2xl font-bold text-zinc-900 sm:text-3xl md:text-4xl">
+          See What You&apos;re Losing Every Month
+        </h2>
+      </div>
 
       <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-4 sm:gap-5">
         {/* 3 slider columns */}
