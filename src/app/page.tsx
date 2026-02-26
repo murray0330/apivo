@@ -161,45 +161,30 @@ function ValueProp() {
    ================================================================ */
 function Versus() {
   const rows = [
-    { feature: "Booking", old: "Collects info & emails it to you", us: "Books directly on your calendar" },
-    { feature: "Speed", old: "Customer waits for a callback", us: "Instant confirmation for the customer" },
-    { feature: "Conflicts", old: "Scheduling conflicts & double-bookings", us: "Real-time availability — zero conflicts" },
-    { feature: "Integrations", old: "No calendar or CRM sync", us: "Google Calendar + CRM sync built in" },
-    { feature: "Follow-up", old: "Manual follow-up required", us: "Automated confirmations & reminders" },
+    { feature: "Booking", old: "Collects info & emails you", us: "Books directly on your calendar" },
+    { feature: "Speed", old: "Patient waits for callback", us: "Instant confirmation" },
+    { feature: "Conflicts", old: "Double bookings happen", us: "Real-time availability check" },
+    { feature: "Integrations", old: "No calendar sync", us: "Google Calendar + CRM built in" },
+    { feature: "After Hours", old: "Missed calls go to voicemail", us: "AI captures and books 24/7" },
+    { feature: "Languages", old: "English only", us: "29+ languages" },
   ];
 
   return (
     <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
         {/* Heading */}
-        <div className="mb-10 text-center sm:mb-14">
-          <span className="mb-3 inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-600 sm:text-xs">
-            Why switch
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl lg:text-4xl">
-            Not all chatbots are created equal
-          </h2>
-        </div>
+        <h2 className="mb-10 text-center text-2xl font-bold text-zinc-900 sm:mb-14 sm:text-3xl lg:text-4xl">
+          Not All Chatbots Are Created Equal
+        </h2>
 
         {/* Comparison table */}
-        <div className="overflow-hidden rounded-2xl border border-black/[.08] shadow-[0_2px_24px_rgba(0,0,0,.06)]">
+        <div className="w-full">
           {/* Column headers */}
-          <div className="grid grid-cols-[1fr_1fr] border-b border-black/[.06] bg-[#fafafa] sm:grid-cols-[1fr_1fr]">
-            <div className="flex items-center gap-2 border-r border-black/[.06] px-4 py-3.5 sm:px-6 sm:py-4">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500/10 text-xs text-red-500 sm:h-6 sm:w-6">
-                ✕
-              </span>
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 sm:text-sm">
-                Other Chatbots
-              </span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-3.5 sm:px-6 sm:py-4">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500/10 text-xs text-green-600 sm:h-6 sm:w-6">
-                ✓
-              </span>
-              <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600 sm:text-sm">
-                Appointly AI
-              </span>
+          <div className="grid grid-cols-[1fr_1fr_1fr]">
+            <div />
+            <div className="py-3 text-center text-sm font-medium text-zinc-400">Other Chatbots</div>
+            <div className="rounded-t-xl bg-amber-50 py-3 text-center text-sm font-semibold text-zinc-800">
+              Apivo
             </div>
           </div>
 
@@ -207,23 +192,23 @@ function Versus() {
           {rows.map((r, i) => (
             <div
               key={i}
-              className={`grid grid-cols-[1fr_1fr] sm:grid-cols-[1fr_1fr] ${i < rows.length - 1 ? "border-b border-black/[.06]" : ""}`}
+              className="grid grid-cols-[1fr_1fr_1fr] border-t border-black/[.06]"
             >
-              {/* Old way */}
-              <div className="border-r border-black/[.06] px-4 py-4 sm:px-6 sm:py-5">
-                <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400 sm:text-[11px]">
-                  {r.feature}
-                </span>
-                <span className="text-sm leading-snug text-zinc-500 sm:text-[15px]">
+              {/* Feature label */}
+              <div className="flex items-center py-4 pr-4">
+                <span className="text-sm font-semibold text-zinc-800 sm:text-[15px]">{r.feature}</span>
+              </div>
+              {/* Other chatbots */}
+              <div className="flex items-start justify-center px-3 py-4 text-center">
+                <span className="text-sm text-zinc-400 sm:text-[15px]">
+                  <span className="mr-1 text-red-400">✕</span>
                   {r.old}
                 </span>
               </div>
-              {/* Appointly */}
-              <div className="bg-indigo-500/[.02] px-4 py-4 sm:px-6 sm:py-5">
-                <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400 sm:text-[11px]">
-                  {r.feature}
-                </span>
-                <span className="text-sm font-medium leading-snug text-zinc-800 sm:text-[15px]">
+              {/* Apivo */}
+              <div className={`flex items-start justify-center bg-amber-50 px-3 py-4 text-center${i === rows.length - 1 ? " rounded-b-xl" : ""}`}>
+                <span className="text-sm font-medium text-emerald-600 sm:text-[15px]">
+                  <span className="mr-1">✓</span>
                   {r.us}
                 </span>
               </div>
