@@ -1,7 +1,29 @@
 "use client"
-import { Accordion } from "@ark-ui/react/accordion"
+import { Accordion, useAccordionItemContext } from "@ark-ui/react/accordion"
 import { ChevronDownIcon } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+
+// Sub-component reads the item's open state via hook so AnimatePresence
+// can drive conditional rendering — bypassing ItemContent's immediate unmount.
+function AnimatedContent({ children }: { children: React.ReactNode }) {
+  const { expanded } = useAccordionItemContext()
+  return (
+    <AnimatePresence initial={false}>
+      {expanded && (
+        <motion.div
+          key="content"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.22, ease: "easeInOut" }}
+          className="overflow-hidden"
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
 
 export interface AccordionItem {
   q: string
@@ -31,22 +53,11 @@ export function FaqAccordion({ items, defaultOpen }: FaqAccordionProps) {
               <ChevronDownIcon className="h-4 w-4 shrink-0 text-zinc-400 transition-transform duration-200 group-data-[state=open]:rotate-180 group-data-[state=open]:text-indigo-500 sm:h-5 sm:w-5" />
             </Accordion.ItemIndicator>
           </Accordion.ItemTrigger>
-          <Accordion.ItemContent asChild>
-            <AnimatePresence initial={false}>
-              <motion.div
-                key={item.q}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.22, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
-                <p className="px-1 pb-4 text-xs leading-relaxed text-zinc-500 sm:text-sm">
-                  {item.a}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-          </Accordion.ItemContent>
+          <AnimatedContent>
+            <p className="px-1 pb-4 text-xs leading-relaxed text-zinc-500 sm:text-sm">
+              {item.a}
+            </p>
+          </AnimatedContent>
         </Accordion.Item>
       ))}
     </Accordion.Root>
