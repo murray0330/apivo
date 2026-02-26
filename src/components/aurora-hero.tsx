@@ -37,13 +37,13 @@ export default function AuroraHero() {
         <div className="flex flex-row flex-wrap items-center gap-3 pt-2">
           <a
             href="#demo"
-            className="rounded-2xl border border-indigo-500/20 bg-indigo-500 px-5 py-3 text-center text-sm font-light tracking-tight text-white shadow-lg shadow-indigo-500/25 transition-colors duration-300 hover:bg-indigo-400"
+            className="min-w-[160px] rounded-2xl border border-indigo-500/20 bg-indigo-500 px-5 py-3 text-center text-sm font-light tracking-tight text-white shadow-lg shadow-indigo-500/25 transition-colors duration-300 hover:bg-indigo-400"
           >
             Try It Now
           </a>
           <a
             href="#how-it-works"
-            className="rounded-2xl border border-zinc-200 px-5 py-3 text-center text-sm font-light tracking-tight text-zinc-700 transition-colors duration-300 hover:bg-white/80"
+            className="min-w-[160px] rounded-2xl border border-zinc-200 px-5 py-3 text-center text-sm font-light tracking-tight text-zinc-700 transition-colors duration-300 hover:bg-white/80"
           >
             See How It Works
           </a>
