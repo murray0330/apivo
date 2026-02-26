@@ -28,8 +28,8 @@ function Navbar() {
   const links = [
     { href: "#hero", label: "Home", icon: Home },
     { href: "#features", label: "Features", icon: Star },
-    { href: "#demo", label: "Demo", icon: MessageSquare },
     { href: "#pricing", label: "Pricing", icon: DollarSign },
+    { href: "#demo", label: "Demo", icon: MessageSquare },
     { href: "#contact", label: "Contact", icon: Mail },
   ];
   return (
