@@ -437,7 +437,7 @@ function FAQ() {
     },
   ];
   return (
-    <section id="faq" className="bg-[#fafafa] py-16 sm:py-24">
+    <section id="faq" className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <SectionHead tag="FAQ" title="Questions & Answers" />
         <div className="mt-10 space-y-3 sm:mt-16">
@@ -516,7 +516,7 @@ function Contact() {
    ================================================================ */
 function Footer() {
   return (
-    <footer className="border-t border-black/[.08] bg-white py-10 sm:py-14">
+    <footer className="border-t border-black/[.08] bg-[#fafafa] py-10 sm:py-14">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="sm:col-span-2 md:col-span-1">
