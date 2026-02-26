@@ -120,13 +120,13 @@ function ValueProp() {
         {/* Intro */}
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-600 sm:text-xs">
-            What Appointly AI Does
+            What Apivo Does
           </span>
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl md:text-4xl">
             Your Business, Running 24/7 —<br className="hidden sm:block" /> Without Adding Headcount
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Appointly AI is an intelligent chatbot that lives on your website. It answers customer
+            Apivo is an intelligent chatbot that lives on your website. It answers customer
             questions, checks your real-time calendar, books appointments directly, and sends
             confirmation emails — all without a human ever touching it.
           </p>
@@ -161,65 +161,71 @@ function ValueProp() {
    ================================================================ */
 function Versus() {
   const rows = [
-    { category: "Booking", other: "Collects info & emails it to you", apivo: "Books directly on your calendar" },
-    { category: "Speed", other: "Patient waits for a callback", apivo: "Instant confirmation for the patient" },
-    { category: "Conflicts", other: "Double bookings happen", apivo: "Real-time availability — zero conflicts" },
-    { category: "Integrations", other: "No calendar or CRM sync", apivo: "Google Calendar + CRM built in" },
-    { category: "After Hours", other: "Missed calls go to voicemail", apivo: "AI captures & books 24/7" },
-    { category: "Languages", other: "English only", apivo: "29+ languages, auto-detected" },
+    { feature: "Booking", old: "Collects info & emails it to you", us: "Books directly on your calendar" },
+    { feature: "Speed", old: "Customer waits for a callback", us: "Instant confirmation for the customer" },
+    { feature: "Conflicts", old: "Scheduling conflicts & double-bookings", us: "Real-time availability — zero conflicts" },
+    { feature: "Integrations", old: "No calendar or CRM sync", us: "Google Calendar + CRM sync built in" },
+    { feature: "Follow-up", old: "Manual follow-up required", us: "Automated confirmations & reminders" },
   ];
 
   return (
-    <section style={{ background: "#F8FAFC", padding: "40px 20px", display: "flex", justifyContent: "center" }}>
-      <div style={{ width: "100%", maxWidth: 860 }}>
-        <p style={{ textTransform: "uppercase", letterSpacing: 3, fontSize: 11, fontWeight: 300, color: "#00509D", marginBottom: 12 }}>
-          Why Apivo
-        </p>
-        <h2 style={{ fontSize: 36, fontWeight: 600, color: "#00296B", marginBottom: 40 }}>
-          Not All Chatbots Are Created Equal
-        </h2>
-        <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, borderRadius: 16, overflow: "hidden", boxShadow: "0 4px 40px rgba(0,41,107,.10)" }}>
-          <thead>
-            <tr>
-              <th style={{ padding: "20px 28px", fontSize: 15, fontWeight: 600, textAlign: "left", background: "#F1F5F9", color: "#64748B", width: "30%" }}></th>
-              <th style={{ padding: "20px 28px", fontSize: 15, fontWeight: 600, textAlign: "center", background: "#F1F5F9", color: "#94A3B8", width: "35%" }}>✕ Other Chatbots</th>
-              <th style={{ padding: "20px 28px", fontSize: 15, fontWeight: 600, textAlign: "center", background: "#00296B", color: "#FDC500", width: "35%" }}>✓ Apivo</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, i) => (
-              <tr key={row.category}>
-                <td style={{ padding: "18px 28px", fontSize: 13, fontWeight: 600, color: "#00296B", textTransform: "uppercase", letterSpacing: 1, background: "#F8FAFC", borderBottom: i < rows.length - 1 ? "1px solid #E2E8F0" : "none" }}>
-                  {row.category}
-                </td>
-                <td style={{ padding: "18px 28px", textAlign: "center", verticalAlign: "middle", background: i % 2 === 1 ? "#FAFAFA" : "#FFFFFF", borderBottom: i < rows.length - 1 ? "1px solid #E2E8F0" : "none" }}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                    <span style={{ fontSize: 18, color: "#FDA4AF", fontWeight: 700 }}>✕</span>
-                    <span style={{ fontSize: 13, color: "#94A3B8" }}>{row.other}</span>
-                  </div>
-                </td>
-                <td style={{ padding: "18px 28px", textAlign: "center", verticalAlign: "middle", background: i % 2 === 1 ? "#DBEAFE" : "#EFF6FF", borderBottom: i < rows.length - 1 ? "1px solid #E2E8F0" : "none" }}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                    <span style={{ fontSize: 18, color: "#FDC500", fontWeight: 700 }}>✓</span>
-                    <span style={{ fontSize: 13, color: "#003F88", fontWeight: 500 }}>{row.apivo}</span>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan={2} style={{ padding: "24px 28px", background: "#00296B", color: "#93C5FD", fontSize: 13, fontWeight: 300 }}>
-                Ready to make the switch?
-              </td>
-              <td style={{ padding: "24px 28px", background: "#00296B", textAlign: "center", borderRadius: "0 0 16px 0" }}>
-                <a href="#" style={{ display: "inline-block", background: "#FDC500", color: "#00296B", fontWeight: 600, fontSize: 15, padding: "12px 32px", borderRadius: 8, textDecoration: "none" }}>
-                  Book a Free Demo
-                </a>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+    <section className="bg-white py-16 sm:py-24">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="mb-10 text-center sm:mb-14">
+          <span className="mb-3 inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-600 sm:text-xs">
+            Why switch
+          </span>
+          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl lg:text-4xl">
+            Not all chatbots are created equal
+          </h2>
+        </div>
+
+        <div className="overflow-hidden rounded-2xl border border-black/[.08] shadow-[0_2px_24px_rgba(0,0,0,.06)]">
+          {/* Column headers */}
+          <div className="grid grid-cols-[1fr_1fr] border-b border-black/[.06] bg-[#fafafa] sm:grid-cols-[1fr_1fr]">
+            <div className="flex items-center gap-2 border-r border-black/[.06] px-4 py-3.5 sm:px-6 sm:py-4">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500/10 text-xs text-red-500 sm:h-6 sm:w-6">
+                ✕
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 sm:text-sm">
+                Other Chatbots
+              </span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-3.5 sm:px-6 sm:py-4">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500/10 text-xs text-green-600 sm:h-6 sm:w-6">
+                ✓
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600 sm:text-sm">
+                Apivo
+              </span>
+            </div>
+          </div>
+
+          {/* Rows */}
+          {rows.map((r, i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-[1fr_1fr] sm:grid-cols-[1fr_1fr] ${i < rows.length - 1 ? "border-b border-black/[.06]" : ""}`}
+            >
+              <div className="border-r border-black/[.06] px-4 py-4 sm:px-6 sm:py-5">
+                <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+                  {r.feature}
+                </span>
+                <span className="text-sm leading-snug text-zinc-500 sm:text-[15px]">
+                  {r.old}
+                </span>
+              </div>
+              <div className="bg-indigo-500/[.02] px-4 py-4 sm:px-6 sm:py-5">
+                <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+                  {r.feature}
+                </span>
+                <span className="text-sm font-medium leading-snug text-zinc-800 sm:text-[15px]">
+                  {r.us}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -247,7 +253,7 @@ function HowItWorks() {
     },
   ];
   return (
-    <section id="how-it-works" className="bg-[#fafafa] py-16 sm:py-24">
+    <section id="how-it-works" className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHead tag="How It Works" title="Three Steps. Fully Automated." />
         <div className="mt-10 grid gap-8 sm:mt-16 md:grid-cols-3 md:gap-6">
@@ -302,7 +308,7 @@ function Features() {
     },
   ];
   return (
-    <section id="features" className="bg-white py-16 sm:py-24">
+    <section id="features" className="bg-[#fafafa] py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHead
           tag="Features"
@@ -389,7 +395,7 @@ function Demo() {
    ================================================================ */
 function Calculator() {
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-[#fafafa] py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <RevenueCalculator />
       </div>
@@ -448,7 +454,7 @@ function Pricing() {
     },
   ];
   return (
-    <section id="pricing" className="bg-[#fafafa] py-16 sm:py-24">
+    <section id="pricing" className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHead
           tag="Pricing"
@@ -509,7 +515,7 @@ function FAQ() {
   const items = [
     {
       q: "How is this different from other chatbot services?",
-      a: "Most chatbots just collect information and email it to you. Appointly AI connects to your live calendar, checks real-time availability, and places the actual appointment on your schedule — no human intervention needed.",
+      a: "Most chatbots just collect information and email it to you. Apivo connects to your live calendar, checks real-time availability, and places the actual appointment on your schedule — no human intervention needed.",
     },
     {
       q: "Which calendars and CRMs do you integrate with?",
@@ -533,7 +539,7 @@ function FAQ() {
     },
   ];
   return (
-    <section id="faq" className="bg-white py-16 sm:py-24">
+    <section id="faq" className="bg-[#fafafa] py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <SectionHead tag="FAQ" title="Questions & Answers" />
         <div className="mt-10 space-y-3 sm:mt-16">
@@ -617,7 +623,7 @@ function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="sm:col-span-2 md:col-span-1">
             <span className="text-base font-bold text-zinc-900 sm:text-lg">
-              Appointly<span className="text-indigo-500">AI</span>
+              Apivo
             </span>
             <p className="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-sm">
               AI chatbots that actually book appointments on your calendar — without double booking.
@@ -665,7 +671,7 @@ function Footer() {
           ))}
         </div>
         <div className="mt-8 border-t border-black/[.08] pt-6 text-center text-[11px] text-zinc-400 sm:text-xs">
-          &copy; 2026 Appointly AI. All rights reserved.
+          &copy; 2026 Apivo. All rights reserved.
         </div>
       </div>
     </footer>
