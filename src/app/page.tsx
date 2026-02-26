@@ -206,21 +206,21 @@ function Versus() {
           {rows.map((r, i) => (
             <div
               key={i}
-              className={`grid grid-cols-[1fr_1fr] sm:grid-cols-[1fr_1fr] ${i < rows.length - 1 ? "border-b border-black/[.06]" : ""}`}
+              className={`grid grid-cols-[1fr_1fr] items-center ${i < rows.length - 1 ? "border-b border-black/[.06]" : ""}`}
             >
-              <div className="border-r border-black/[.06] px-4 py-4 sm:px-6 sm:py-5">
-                <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+              <div className="border-r border-black/[.06] px-4 py-3 sm:px-6">
+                <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
                   {r.feature}
                 </span>
-                <span className="text-sm leading-snug text-zinc-500 sm:text-[15px]">
+                <span className="text-xs leading-snug text-zinc-500 sm:text-sm">
                   {r.old}
                 </span>
               </div>
-              <div className="bg-indigo-500/[.02] px-4 py-4 sm:px-6 sm:py-5">
-                <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+              <div className="bg-indigo-500/[.02] px-4 py-3 sm:px-6">
+                <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
                   {r.feature}
                 </span>
-                <span className="text-sm font-medium leading-snug text-zinc-800 sm:text-[15px]">
+                <span className="text-xs font-medium leading-snug text-zinc-800 sm:text-sm">
                   {r.us}
                 </span>
               </div>
