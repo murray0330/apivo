@@ -71,39 +71,39 @@ export default function Pricing() {
         {/* Card — horizontal split */}
         <div className="overflow-hidden rounded-2xl border border-black/[.08] shadow-[0_4px_32px_rgba(0,0,0,.08)] sm:flex">
 
-          {/* Left — dark panel */}
-          <div className="flex flex-col justify-between bg-zinc-900 p-8 sm:w-72 sm:shrink-0 sm:p-10">
+          {/* Left — indigo panel */}
+          <div className="flex flex-col justify-between bg-indigo-600 p-8 sm:w-72 sm:shrink-0 sm:p-10">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400">
+              <p className="text-xs font-semibold uppercase tracking-widest text-indigo-200">
                 Apivo
               </p>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 text-sm text-indigo-100/80">
                 Everything you need to automate bookings
               </p>
 
               <div className="mt-8">
                 {yearly && (
-                  <p className="text-sm font-medium text-zinc-500 line-through">
+                  <p className="text-sm font-medium text-white/50 line-through">
                     ${MONTHLY_PRICE}/mo
                   </p>
                 )}
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-bold text-white">${price}</span>
-                  <span className="text-sm text-zinc-400">/mo</span>
+                  <span className="text-sm text-indigo-200">/mo</span>
                 </div>
                 {yearly ? (
-                  <p className="mt-1.5 text-xs text-indigo-400">
+                  <p className="mt-1.5 text-xs text-indigo-200">
                     Billed ${YEARLY_TOTAL.toLocaleString()}/yr &mdash; save ${((MONTHLY_PRICE - YEARLY_MONTHLY_PRICE) * 12).toLocaleString()}
                   </p>
                 ) : (
-                  <p className="mt-1.5 text-xs text-zinc-500">Billed monthly, cancel anytime</p>
+                  <p className="mt-1.5 text-xs text-indigo-200">Billed monthly, cancel anytime</p>
                 )}
               </div>
             </div>
 
             <a
               href="#contact"
-              className="mt-10 block rounded-full bg-indigo-500 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-indigo-400"
+              className="mt-10 block rounded-full bg-white py-3 text-center text-sm font-semibold text-indigo-600 transition-colors hover:bg-indigo-50"
             >
               Get Started
             </a>
