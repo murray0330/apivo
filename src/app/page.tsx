@@ -515,28 +515,28 @@ function Pricing() {
 function FAQ() {
   const items = [
     {
-      q: "How is this different from other chatbot services?",
-      a: "Most chatbots just collect information and email it to you. Apivo connects to your live calendar, checks real-time availability, and places the actual appointment on your schedule — no human intervention needed.",
+      q: "How is this different from Calendly or other booking tools?",
+      a: "Calendly shows a grid of times. Apivo actually converses — it answers insurance questions, handles special requests, and manages the full booking lifecycle in natural language. It sounds like a member of your team, not a form.",
     },
     {
-      q: "Which calendars and CRMs do you integrate with?",
-      a: "Google Calendar for scheduling, plus HubSpot, Airtable, and Google Sheets for CRM. Custom integrations are available on the Enterprise plan.",
-    },
-    {
-      q: "Can the chatbot handle rescheduling and cancellations?",
-      a: "Yes. Customers can book, reschedule, or cancel entirely through the chatbot. Calendar updates in real-time and confirmation emails are sent automatically.",
-    },
-    {
-      q: "How does it prevent double bookings?",
-      a: "The chatbot queries your Google Calendar for all existing events before presenting available times. It calculates open slots based on your business hours, meeting duration, and configurable buffer times.",
-    },
-    {
-      q: "Can the chatbot answer questions about my business?",
-      a: "We load your business information, FAQs, services, and policies into a knowledge base. The chatbot uses AI-powered retrieval (RAG) to deliver accurate answers.",
+      q: "What calendar system do you use?",
+      a: "We integrate with Google Calendar. If you use a different system, we set up a sync during onboarding at no extra cost.",
     },
     {
       q: "How long does setup take?",
-      a: "Most chatbots are live within a few business days. We handle configuration, calendar integration, CRM setup, and knowledge base loading.",
+      a: "Most practices are live within 48 hours. We handle everything — calendar integration, knowledge base setup, and widget installation.",
+    },
+    {
+      q: "Can it handle rescheduling and cancellations?",
+      a: "Yes. Patients can book, reschedule, or cancel entirely through the chat. Your calendar updates in real time.",
+    },
+    {
+      q: "What if a patient asks something the AI doesn't know?",
+      a: "It lets the patient know a team member will follow up shortly. You stay in control of edge cases.",
+    },
+    {
+      q: "Is there a contract?",
+      a: "None. Month-to-month only. Cancel anytime with no penalty.",
     },
   ];
   return (
