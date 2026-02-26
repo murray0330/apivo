@@ -125,7 +125,7 @@ function ValueProp() {
             What Apivo Does
           </span>
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl md:text-4xl">
-            Your Business, Running 24/7 —<br className="hidden sm:block" /> Without Adding Headcount
+            Your AI Receptionist. Always On.
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
             Apivo is an intelligent chatbot that lives on your website. It answers customer
