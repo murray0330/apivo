@@ -442,7 +442,7 @@ function FAQ() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <SectionHead tag="FAQ" title="Questions & Answers" />
         <div className="mt-10 rounded-2xl border border-zinc-100 bg-white px-4 shadow-[0_4px_32px_rgba(0,0,0,.07)] sm:mt-16 sm:px-8">
-          <FaqAccordion items={items} defaultOpen={items[0].q} />
+          <FaqAccordion items={items} />
         </div>
       </div>
     </section>
