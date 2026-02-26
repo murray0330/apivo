@@ -259,7 +259,7 @@ function HowItWorks() {
         <div className="mt-10 grid gap-8 sm:mt-16 md:grid-cols-3 md:gap-6">
           {steps.map((s) => (
             <div key={s.num} className="relative">
-              <span className="text-5xl font-extrabold text-black/[.05] sm:text-6xl">{s.num}</span>
+              <span className="text-5xl font-extrabold text-indigo-400/40 sm:text-6xl">{s.num}</span>
               <h3 className="mt-2 text-base font-semibold text-zinc-900 sm:text-lg">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-500">{s.desc}</p>
             </div>
