@@ -26,7 +26,7 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="mb-10 text-center sm:mb-14">
           <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
             Pricing
@@ -40,7 +40,7 @@ export default function Pricing() {
         </div>
 
         {/* Toggle */}
-        <div className="flex justify-center">
+        <div className="mb-8 flex justify-center">
           <div className="inline-flex items-center rounded-full border border-black/[.08] bg-[#f4f4f5] p-1">
             <button
               onClick={() => setYearly(false)}
@@ -68,45 +68,60 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* Card */}
-        <div className="mx-auto mt-10 max-w-md sm:mt-12">
-          <div className="relative rounded-2xl border border-indigo-500/30 bg-indigo-50/50 p-6 shadow-[0_2px_20px_rgba(0,0,0,.06)] sm:p-8">
-            <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Apivo</h3>
-            <p className="mt-1 text-sm text-zinc-500">Everything you need to automate bookings</p>
+        {/* Card — horizontal split */}
+        <div className="overflow-hidden rounded-2xl border border-black/[.08] shadow-[0_4px_32px_rgba(0,0,0,.08)] sm:flex">
 
-            <div className="mt-5 flex items-baseline gap-1">
-              <span className="text-4xl font-bold text-zinc-900 sm:text-5xl">
-                ${price}
-              </span>
-              <span className="text-sm text-zinc-400">/mo</span>
-              {yearly && (
-                <span className="ml-2 text-xs text-zinc-400">
-                  billed ${YEARLY_TOTAL.toLocaleString()}/yr
-                </span>
-              )}
+          {/* Left — dark panel */}
+          <div className="flex flex-col justify-between bg-zinc-900 p-8 sm:w-72 sm:shrink-0 sm:p-10">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400">
+                Apivo
+              </p>
+              <p className="mt-2 text-sm text-zinc-400">
+                Everything you need to automate bookings
+              </p>
+
+              <div className="mt-8">
+                {yearly && (
+                  <p className="text-sm font-medium text-zinc-500 line-through">
+                    ${MONTHLY_PRICE}/mo
+                  </p>
+                )}
+                <div className="flex items-baseline gap-1">
+                  <span className="text-5xl font-bold text-white">${price}</span>
+                  <span className="text-sm text-zinc-400">/mo</span>
+                </div>
+                {yearly ? (
+                  <p className="mt-1.5 text-xs text-indigo-400">
+                    Billed ${YEARLY_TOTAL.toLocaleString()}/yr &mdash; save ${((MONTHLY_PRICE - YEARLY_MONTHLY_PRICE) * 12).toLocaleString()}
+                  </p>
+                ) : (
+                  <p className="mt-1.5 text-xs text-zinc-500">Billed monthly, cancel anytime</p>
+                )}
+              </div>
             </div>
 
-            {yearly && (
-              <p className="mt-1 text-xs font-medium text-indigo-500">
-                You save ${((MONTHLY_PRICE - YEARLY_MONTHLY_PRICE) * 12).toLocaleString()} per year
-              </p>
-            )}
+            <a
+              href="#contact"
+              className="mt-10 block rounded-full bg-indigo-500 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-indigo-400"
+            >
+              Get Started
+            </a>
+          </div>
 
-            <ul className="mt-6 space-y-3">
+          {/* Right — features grid */}
+          <div className="flex-1 bg-zinc-50 p-8 sm:p-10">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-zinc-400">
+              Everything included
+            </p>
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {features.map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-zinc-600">
+                <li key={f} className="flex items-center gap-2.5 text-sm text-zinc-700">
                   <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />
                   {f}
                 </li>
               ))}
             </ul>
-
-            <a
-              href="#contact"
-              className="mt-7 block w-full rounded-full bg-indigo-500 py-3 text-center text-sm font-medium text-white transition-colors hover:bg-indigo-400"
-            >
-              Get Started
-            </a>
           </div>
         </div>
       </div>
