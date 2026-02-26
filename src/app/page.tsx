@@ -161,11 +161,12 @@ function ValueProp() {
    ================================================================ */
 function Versus() {
   const rows = [
-    { feature: "Booking", old: "Collects info & emails it to you", us: "Books directly on your calendar" },
-    { feature: "Speed", old: "Customer waits for a callback", us: "Instant confirmation for the customer" },
-    { feature: "Conflicts", old: "Scheduling conflicts & double-bookings", us: "Real-time availability — zero conflicts" },
-    { feature: "Integrations", old: "No calendar or CRM sync", us: "Google Calendar + CRM sync built in" },
-    { feature: "Follow-up", old: "Manual follow-up required", us: "Automated confirmations & reminders" },
+    { feature: "Booking", old: "Collects info & emails you", us: "Books directly on your calendar" },
+    { feature: "Speed", old: "Patient waits for callback", us: "Instant confirmation" },
+    { feature: "Conflicts", old: "Double bookings happen", us: "Real-time availability check" },
+    { feature: "Integrations", old: "No calendar sync", us: "Google Calendar + CRM built in" },
+    { feature: "After Hours", old: "Missed calls go to voicemail", us: "AI captures and books 24/7" },
+    { feature: "Languages", old: "English only", us: "29+ languages" },
   ];
 
   return (
