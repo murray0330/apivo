@@ -1,4 +1,3 @@
-import LiveChatWidget from "@/components/live-chat-widget";
 import DemoChatbot from "@/components/demo-chatbot";
 import AuroraHero from "@/components/aurora-hero";
 import ChatCtaButton from "@/components/chat-cta-button";
@@ -758,7 +757,6 @@ export default function HomePage() {
       <FAQ />
       <Contact />
       <Footer />
-      <LiveChatWidget />
     </div>
   );
 }
