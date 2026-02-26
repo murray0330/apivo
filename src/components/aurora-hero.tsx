@@ -17,13 +17,13 @@ export default function AuroraHero() {
       >
         {/* Badge */}
         <span className="inline-flex items-center rounded-full border border-indigo-500/20 bg-white/60 px-4 py-1.5 text-xs font-semibold tracking-tight text-indigo-500 backdrop-blur-sm sm:text-sm">
-          24/7 Booking Agent
+          AI Receptionist
         </span>
 
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
-          Stop Losing Dental<br />
-          <span className="whitespace-nowrap">Patients to Voicemail</span>
+          <span className="text-indigo-500">Stop Losing</span> Patients<br />
+          <span className="whitespace-nowrap">to Voicemail</span>
         </h1>
 
         {/* Subheading */}
@@ -39,7 +39,7 @@ export default function AuroraHero() {
             href="#demo"
             className="rounded-2xl border border-indigo-500/20 bg-indigo-500 px-5 py-3 text-center text-sm font-light tracking-tight text-white shadow-lg shadow-indigo-500/25 transition-colors duration-300 hover:bg-indigo-400"
           >
-            Try It Now — It&apos;s Live ↓
+            Try It Now
           </a>
           <a
             href="#how-it-works"
@@ -51,7 +51,7 @@ export default function AuroraHero() {
 
         {/* Micro Details */}
         <ul className="mt-4 flex flex-wrap gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["No contracts", "Live in 48 hours", "60-Day guarantee"].map(
+          {["Built for Dental", "29+ Languages", "Cancel Anytime"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
                 <span className="text-emerald-500">✓</span>
