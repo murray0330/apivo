@@ -13,26 +13,19 @@ interface SliderConfig {
 
 const sliders: SliderConfig[] = [
   {
-    label: "Missed leads / day",
+    label: "Missed appointments / week",
     min: 1,
-    max: 30,
+    max: 50,
     step: 1,
-    defaultValue: 8,
+    defaultValue: 5,
   },
   {
-    label: "Avg booking value",
+    label: "Avg appointment value",
     min: 25,
     max: 1000,
     step: 25,
-    defaultValue: 200,
+    defaultValue: 150,
     prefix: "$",
-  },
-  {
-    label: "Days covered / mo",
-    min: 1,
-    max: 31,
-    step: 1,
-    defaultValue: 22,
   },
 ];
 
@@ -54,8 +47,8 @@ export default function RevenueCalculator() {
     update(index, num);
   };
 
-  const [leads, avgValue, days] = values;
-  const total = leads * avgValue * days;
+  const [missed, avgValue] = values;
+  const total = missed * 4 * avgValue;
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -68,8 +61,8 @@ export default function RevenueCalculator() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-4 sm:gap-5">
-        {/* 3 slider columns */}
+      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-3 sm:gap-5">
+        {/* 2 slider columns */}
         {sliders.map((s, i) => {
           const pct = ((values[i] - s.min) / (s.max - s.min)) * 100;
 
@@ -111,7 +104,7 @@ export default function RevenueCalculator() {
         {/* Result column */}
         <div className="rounded-xl border border-indigo-500/20 bg-indigo-50/50 px-4 py-4 text-center">
           <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
-            Recovered revenue
+            Monthly missed revenue
           </p>
           <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-900 sm:text-3xl">
             ${total.toLocaleString()}
