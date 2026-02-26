@@ -24,7 +24,7 @@ const sliders: SliderConfig[] = [
     min: 25,
     max: 1000,
     step: 25,
-    defaultValue: 150,
+    defaultValue: 200,
     prefix: "$",
   },
 ];
