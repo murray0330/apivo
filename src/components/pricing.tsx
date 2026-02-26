@@ -102,9 +102,11 @@ export default function Pricing() {
               >
                 Lock In ${price}/Month
               </a>
-              <p className="mt-3 text-center text-xs text-indigo-200">
-                No contracts. Cancel anytime.
-              </p>
+              {!yearly && (
+                <p className="mt-3 text-center text-xs text-indigo-200">
+                  No contracts. Cancel anytime.
+                </p>
+              )}
             </div>
           </div>
 
