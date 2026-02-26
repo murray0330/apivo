@@ -3,6 +3,7 @@ import AuroraHero from "@/components/aurora-hero";
 import ChatCtaButton from "@/components/chat-cta-button";
 import UseCaseCarousel from "@/components/use-case-carousel";
 import RevenueCalculator from "@/components/revenue-calculator";
+import PricingSection from "@/components/pricing";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import {
   Calendar,
@@ -404,110 +405,6 @@ function Calculator() {
   );
 }
 
-/* ================================================================
-   Pricing
-   ================================================================ */
-function Pricing() {
-  const plans = [
-    {
-      name: "Starter",
-      desc: "Solo practitioners & small businesses",
-      price: "$297",
-      per: "/mo",
-      features: [
-        "1 AI chatbot",
-        "Google Calendar sync",
-        "Email confirmations",
-        "Business Q&A (50 FAQs)",
-        "Unlimited conversations",
-      ],
-      popular: false,
-    },
-    {
-      name: "Professional",
-      desc: "Growing businesses with CRM needs",
-      price: "$497",
-      per: "/mo",
-      features: [
-        "Everything in Starter",
-        "CRM integration (HubSpot, Airtable)",
-        "Reschedule & cancel via chatbot",
-        "Multi-language (29+)",
-        "Post-call analytics & reports",
-        "Priority support",
-      ],
-      popular: true,
-    },
-    {
-      name: "Enterprise",
-      desc: "Multi-location & agencies",
-      price: "Custom",
-      per: "",
-      features: [
-        "Everything in Professional",
-        "Multiple chatbots & locations",
-        "Custom CRM & API integrations",
-        "White-label option",
-        "Dedicated account manager",
-        "Custom workflow development",
-      ],
-      popular: false,
-    },
-  ];
-  return (
-    <section id="pricing" className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHead
-          tag="Pricing"
-          title="Simple, Transparent Pricing"
-          subtitle="No hidden fees. No per-conversation charges."
-        />
-        <div className="mt-10 grid gap-5 sm:mt-16 md:grid-cols-3">
-          {plans.map((p) => (
-            <div
-              key={p.name}
-              className={`relative rounded-2xl border p-5 shadow-[0_2px_20px_rgba(0,0,0,.06)] sm:p-7 ${
-                p.popular
-                  ? "border-indigo-500/30 bg-indigo-50/50"
-                  : "border-black/[.08] bg-white"
-              }`}
-            >
-              {p.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-indigo-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
-                  Most Popular
-                </span>
-              )}
-              <h3 className="text-base font-semibold text-zinc-900 sm:text-lg">{p.name}</h3>
-              <p className="mt-1 text-xs text-zinc-500 sm:text-sm">{p.desc}</p>
-              <div className="mt-4 flex items-baseline gap-0.5">
-                <span className="text-3xl font-bold text-zinc-900 sm:text-4xl">{p.price}</span>
-                {p.per && <span className="text-sm text-zinc-400">{p.per}</span>}
-              </div>
-              <ul className="mt-5 space-y-2">
-                {p.features.map((f, i) => (
-                  <li key={i} className="flex items-center gap-2 text-xs text-zinc-600 sm:text-sm">
-                    <CheckCircle className="h-3.5 w-3.5 shrink-0 text-indigo-500" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#contact"
-                className={`mt-6 block w-full rounded-full py-2.5 text-center text-sm font-medium transition-colors sm:py-3 ${
-                  p.popular
-                    ? "bg-indigo-500 text-white hover:bg-indigo-400"
-                    : "border border-black/[.08] bg-[#f4f4f5] text-zinc-900 hover:bg-[#e4e4e7]"
-                }`}
-              >
-                {p.name === "Enterprise" ? "Contact Sales" : "Get Started"}
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ================================================================
    FAQ
@@ -717,7 +614,7 @@ export default function HomePage() {
       <Features />
       <Versus />
       <Calculator />
-      <Pricing />
+      <PricingSection />
       <FAQ />
       <Contact />
       <Footer />
