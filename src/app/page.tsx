@@ -736,8 +736,8 @@ export default function HomePage() {
       </div>
       <SocialProof />
       <Demo />
-      <ValueProp />
       <HowItWorks />
+      <ValueProp />
       <Features />
       <Versus />
       <Integrations />
