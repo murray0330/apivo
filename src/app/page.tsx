@@ -161,60 +161,65 @@ function ValueProp() {
    ================================================================ */
 function Versus() {
   const rows = [
-    { feature: "Booking", old: "Collects info & emails you", us: "Books directly on your calendar" },
-    { feature: "Speed", old: "Patient waits for callback", us: "Instant confirmation" },
-    { feature: "Conflicts", old: "Double bookings happen", us: "Real-time availability check" },
-    { feature: "Integrations", old: "No calendar sync", us: "Google Calendar + CRM built in" },
-    { feature: "After Hours", old: "Missed calls go to voicemail", us: "AI captures and books 24/7" },
-    { feature: "Languages", old: "English only", us: "29+ languages" },
+    { category: "Booking", other: "Collects info & emails it to you", apivo: "Books directly on your calendar" },
+    { category: "Speed", other: "Patient waits for a callback", apivo: "Instant confirmation for the patient" },
+    { category: "Conflicts", other: "Double bookings happen", apivo: "Real-time availability — zero conflicts" },
+    { category: "Integrations", other: "No calendar or CRM sync", apivo: "Google Calendar + CRM built in" },
+    { category: "After Hours", other: "Missed calls go to voicemail", apivo: "AI captures & books 24/7" },
+    { category: "Languages", other: "English only", apivo: "29+ languages, auto-detected" },
   ];
 
   return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        {/* Heading */}
-        <h2 className="mb-10 text-center text-2xl font-bold text-zinc-900 sm:mb-14 sm:text-3xl lg:text-4xl">
+    <section style={{ background: "#F8FAFC", padding: "40px 20px", display: "flex", justifyContent: "center" }}>
+      <div style={{ width: "100%", maxWidth: 860 }}>
+        <p style={{ textTransform: "uppercase", letterSpacing: 3, fontSize: 11, fontWeight: 300, color: "#00509D", marginBottom: 12 }}>
+          Why Apivo
+        </p>
+        <h2 style={{ fontSize: 36, fontWeight: 600, color: "#00296B", marginBottom: 40 }}>
           Not All Chatbots Are Created Equal
         </h2>
-
-        {/* Comparison table */}
-        <div className="w-full">
-          {/* Column headers */}
-          <div className="grid grid-cols-[1fr_1fr_1fr]">
-            <div />
-            <div className="py-3 text-center text-sm font-medium text-zinc-400">Other Chatbots</div>
-            <div className="rounded-t-xl bg-amber-50 py-3 text-center text-sm font-semibold text-zinc-800">
-              Apivo
-            </div>
-          </div>
-
-          {/* Rows */}
-          {rows.map((r, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-[1fr_1fr_1fr] border-t border-black/[.06]"
-            >
-              {/* Feature label */}
-              <div className="flex items-center py-4 pr-4">
-                <span className="text-sm font-semibold text-zinc-800 sm:text-[15px]">{r.feature}</span>
-              </div>
-              {/* Other chatbots */}
-              <div className="flex items-start justify-center px-3 py-4 text-center">
-                <span className="text-sm text-zinc-400 sm:text-[15px]">
-                  <span className="mr-1 text-red-400">✕</span>
-                  {r.old}
-                </span>
-              </div>
-              {/* Apivo */}
-              <div className={`flex items-start justify-center bg-amber-50 px-3 py-4 text-center${i === rows.length - 1 ? " rounded-b-xl" : ""}`}>
-                <span className="text-sm font-medium text-emerald-600 sm:text-[15px]">
-                  <span className="mr-1">✓</span>
-                  {r.us}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, borderRadius: 16, overflow: "hidden", boxShadow: "0 4px 40px rgba(0,41,107,.10)" }}>
+          <thead>
+            <tr>
+              <th style={{ padding: "20px 28px", fontSize: 15, fontWeight: 600, textAlign: "left", background: "#F1F5F9", color: "#64748B", width: "30%" }}></th>
+              <th style={{ padding: "20px 28px", fontSize: 15, fontWeight: 600, textAlign: "center", background: "#F1F5F9", color: "#94A3B8", width: "35%" }}>✕ Other Chatbots</th>
+              <th style={{ padding: "20px 28px", fontSize: 15, fontWeight: 600, textAlign: "center", background: "#00296B", color: "#FDC500", width: "35%" }}>✓ Apivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={row.category}>
+                <td style={{ padding: "18px 28px", fontSize: 13, fontWeight: 600, color: "#00296B", textTransform: "uppercase", letterSpacing: 1, background: "#F8FAFC", borderBottom: i < rows.length - 1 ? "1px solid #E2E8F0" : "none" }}>
+                  {row.category}
+                </td>
+                <td style={{ padding: "18px 28px", textAlign: "center", verticalAlign: "middle", background: i % 2 === 1 ? "#FAFAFA" : "#FFFFFF", borderBottom: i < rows.length - 1 ? "1px solid #E2E8F0" : "none" }}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                    <span style={{ fontSize: 18, color: "#FDA4AF", fontWeight: 700 }}>✕</span>
+                    <span style={{ fontSize: 13, color: "#94A3B8" }}>{row.other}</span>
+                  </div>
+                </td>
+                <td style={{ padding: "18px 28px", textAlign: "center", verticalAlign: "middle", background: i % 2 === 1 ? "#DBEAFE" : "#EFF6FF", borderBottom: i < rows.length - 1 ? "1px solid #E2E8F0" : "none" }}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                    <span style={{ fontSize: 18, color: "#FDC500", fontWeight: 700 }}>✓</span>
+                    <span style={{ fontSize: 13, color: "#003F88", fontWeight: 500 }}>{row.apivo}</span>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={2} style={{ padding: "24px 28px", background: "#00296B", color: "#93C5FD", fontSize: 13, fontWeight: 300 }}>
+                Ready to make the switch?
+              </td>
+              <td style={{ padding: "24px 28px", background: "#00296B", textAlign: "center", borderRadius: "0 0 16px 0" }}>
+                <a href="#" style={{ display: "inline-block", background: "#FDC500", color: "#00296B", fontWeight: 600, fontSize: 15, padding: "12px 32px", borderRadius: 8, textDecoration: "none" }}>
+                  Book a Free Demo
+                </a>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </section>
   );
