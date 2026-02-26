@@ -472,9 +472,7 @@ function Contact() {
     >
       <section id="contact" className="relative z-10 w-full">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16">
-            {/* Left — CTA */}
-            <div>
+          <div>
               <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
                 Get Started
               </p>
@@ -501,10 +499,6 @@ function Contact() {
               </ul>
               <ChatCtaButton />
             </div>
-
-            {/* Right — Use Cases Carousel */}
-            <UseCaseCarousel />
-          </div>
         </div>
       </section>
     </AuroraBackground>
