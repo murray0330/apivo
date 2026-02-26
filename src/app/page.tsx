@@ -463,7 +463,7 @@ function Contact() {
       className="h-auto min-h-0 py-16 sm:py-24 bg-zinc-50"
       showRadialGradient={true}
     >
-      <section id="contact" className="relative z-10 w-full">
+      <section id="contact" className="relative z-10 w-full scroll-mt-20">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
           <div>
               <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
