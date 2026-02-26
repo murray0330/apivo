@@ -47,8 +47,10 @@ export default function RevenueCalculator() {
     update(index, num);
   };
 
+  const APIVO_COST = 297;
   const [missed, avgValue] = values;
   const total = missed * 4 * avgValue;
+  const roi = total - APIVO_COST;
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -108,6 +110,31 @@ export default function RevenueCalculator() {
           </p>
           <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-900 sm:text-3xl">
             ${total.toLocaleString()}
+            <span className="text-sm font-normal text-zinc-400">/mo</span>
+          </p>
+        </div>
+      </div>
+
+      {/* ROI row */}
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+        {/* Apivo cost */}
+        <div className="rounded-xl border border-black/[.08] bg-white px-5 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,.04)]">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+            Compared to Apivo
+          </p>
+          <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-900 sm:text-3xl">
+            $297
+            <span className="text-sm font-normal text-zinc-400">/mo</span>
+          </p>
+        </div>
+
+        {/* ROI */}
+        <div className="rounded-xl border border-green-500/20 bg-green-50/50 px-5 py-4 text-center">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+            Your monthly ROI
+          </p>
+          <p className={`mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl ${roi >= 0 ? "text-green-600" : "text-red-500"}`}>
+            {roi >= 0 ? "+" : "−"}${Math.abs(roi).toLocaleString()}
             <span className="text-sm font-normal text-zinc-400">/mo</span>
           </p>
         </div>
