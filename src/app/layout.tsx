@@ -3,9 +3,51 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Appointly AI — AI Chatbots That Actually Book Appointments",
+  title: "Apivo | AI Booking Assistant for Your Website",
   description:
-    "Appointly AI creates intelligent website chatbots that book appointments directly on your calendar, answer customer questions, and never double-book.",
+    "Apivo is an AI chatbot that lives on your website, books appointments directly to your calendar, answers patient questions in 29+ languages, and never double-books — no staff required.",
+  keywords: [
+    "AI booking assistant",
+    "AI chatbot appointment booking",
+    "website chatbot",
+    "automated scheduling",
+    "AI front desk",
+    "appointment chatbot",
+    "calendar booking AI",
+    "patient scheduling AI",
+    "no double booking",
+    "Apivo",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    title: "Apivo | AI Booking Assistant for Your Website",
+    description:
+      "An AI chatbot that books appointments, answers questions, and runs your front desk — 24/7, on autopilot.",
+    url: "https://apivo.ai",
+    siteName: "Apivo",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Apivo | AI Booking Assistant for Your Website",
+    description:
+      "An AI chatbot that books appointments, answers questions, and runs your front desk — 24/7, on autopilot.",
+    site: "@apivo_ai",
+  },
+  alternates: {
+    canonical: "https://apivo.ai",
+  },
 };
 
 export default function RootLayout({
