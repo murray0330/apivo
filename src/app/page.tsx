@@ -408,38 +408,6 @@ function Calculator() {
 }
 
 /* ================================================================
-   Integrations
-   ================================================================ */
-function Integrations() {
-  const items = [
-    { icon: Calendar, name: "Google Calendar" },
-    { icon: Users, name: "HubSpot" },
-    { icon: Globe, name: "Google Sheets" },
-    { icon: Star, name: "Airtable" },
-    { icon: Mail, name: "Gmail" },
-    { icon: RefreshCw, name: "n8n Workflows" },
-  ];
-  return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHead tag="Integrations" title="Works With Your Stack" />
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
-          {items.map((it) => (
-            <div
-              key={it.name}
-              className="flex flex-col items-center gap-2.5 rounded-xl border border-black/[.08] bg-white p-4 shadow-[0_2px_20px_rgba(0,0,0,.06)] transition-colors hover:border-black/[.15] sm:p-5"
-            >
-              <it.icon className="h-7 w-7 text-zinc-400 sm:h-8 sm:w-8" strokeWidth={1.5} />
-              <span className="text-[11px] font-medium text-zinc-600 sm:text-xs">{it.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ================================================================
    Pricing
    ================================================================ */
 function Pricing() {
@@ -750,7 +718,6 @@ export default function HomePage() {
       <Demo />
       <HowItWorks />
       <Features />
-      <Integrations />
       <Versus />
       <Calculator />
       <Pricing />
