@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { RefreshCw, Calendar, Mail, Users } from 'lucide-react';
+import { RefreshCw, Calendar, Mail, Users, XCircle } from 'lucide-react';
 
 /* ── types ────────────────────────────────────────────────── */
 interface DemoOption {
@@ -17,7 +17,7 @@ interface DemoStep {
   options: DemoOption[];
 }
 
-type MsgKind = 'bot' | 'user' | 'typing' | 'spinner' | 'booked' | 'rescheduled';
+type MsgKind = 'bot' | 'user' | 'typing' | 'spinner' | 'booked' | 'rescheduled' | 'cancelled';
 
 interface ChatMsg {
   id: number;
@@ -26,30 +26,42 @@ interface ChatMsg {
   spinnerLabel?: string;
 }
 
-/* ── demo flow data (ported 1-to-1 from original script.js) ─ */
+/* ── demo flow ───────────────────────────────────────────── */
 const demoFlow: DemoStep[] = [
+  // ── START ────────────────────────────────────────────────────
   {
     id: 'start',
-    bot: "Hi there! Welcome to ABC Dental Clinic. I'm your AI scheduling assistant. How can I help you today?",
+    bot: "Hi there! I'm Chloe, the AI assistant for ABC Dental Clinic. Are you a new patient, or have you visited us before?",
     options: [
-      { label: 'Book an appointment', next: 'treatment' },
-      { label: 'Ask a question', next: 'question' },
-      { label: 'Reschedule', next: 'reschedule' },
+      { label: 'New patient', next: 'new_patient' },
+      { label: "I've visited before", next: 'existing_patient' },
+      { label: 'I have a question', next: 'question' },
     ],
   },
+
+  // ── NEW PATIENT ──────────────────────────────────────────────
   {
-    id: 'treatment',
-    user: "I'd like to book an appointment",
-    bot: "I'd be happy to help! What type of treatment are you interested in?",
+    id: 'new_patient',
+    user: 'New patient',
+    bot: "Great! We'd love to see you. What treatment are you interested in today?",
     options: [
-      { label: 'Cleaning', next: 'cleaning_history' },
-      { label: 'Checkup', next: 'cleaning_history' },
+      { label: 'Consultation', next: 'consultation' },
+      { label: 'Cleaning or Checkup', next: 'cleaning_history' },
       { label: 'Other treatment', next: 'other_treatment' },
     ],
   },
   {
+    id: 'consultation',
+    user: 'Consultation',
+    bot: 'Excellent. A consultation is a great way to get started. What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
     id: 'cleaning_history',
-    user: 'I need a dental cleaning',
+    user: 'Cleaning or Checkup',
     bot: 'Great choice! When was your last dental cleaning?',
     options: [
       { label: 'About 6 months ago', next: 'pick_time' },
@@ -58,9 +70,8 @@ const demoFlow: DemoStep[] = [
     ],
   },
   {
-    id: 'consultation',
-    user: "I'd like a consultation",
-    bot: 'Excellent. A consultation is a great way to get started. What day and time works best for you?',
+    id: 'pick_time',
+    bot: "Got it. Let's find a time — what day and time works best for you?",
     options: [
       { label: 'Tomorrow at 2 PM', next: 'check_availability' },
       { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
@@ -68,118 +79,178 @@ const demoFlow: DemoStep[] = [
   },
   {
     id: 'other_treatment',
-    user: 'I need another treatment',
-    bot: "Got it — can you provide a few details for the doctor? Also, have you had this type of treatment before?",
+    user: 'Other treatment',
+    bot: "Can you provide some details for the doctor? Also, have you had this type of treatment before?",
     options: [
-      { label: "First time, I'll explain in person", next: 'other_treatment_consult' },
+      { label: "First time — I'll explain in person", next: 'other_treatment_consult' },
       { label: "Yes, I've had it before", next: 'other_treatment_consult' },
     ],
   },
   {
     id: 'other_treatment_consult',
-    user: "First time, I'll explain in person",
-    bot: "Okay! The next step is a complimentary consultation with Dr. Murray Vega. What day and time works best?",
+    user: "First time — I'll explain in person",
+    bot: "Okay. The next step is a complimentary consultation with Dr. Murray Vega. What day and time works best?",
     options: [
       { label: 'Tomorrow at 2 PM', next: 'check_availability' },
       { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
     ],
   },
-  {
-    id: 'pick_time',
-    bot: "Thank you for that. Let's find a time — what day and time works best for you?",
-    options: [
-      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
-      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
-      { label: 'Next Monday afternoon', next: 'check_availability' },
-    ],
-  },
+
+  // ── AVAILABILITY ─────────────────────────────────────────────
   {
     id: 'check_availability',
     user: 'Tomorrow at 2:00 PM',
     action: 'calendar_check',
-    bot: 'Great news! 2:00 PM tomorrow is available. Can I get your name and email to confirm?',
-    options: [{ label: 'John Smith / john@email.com', next: 'confirm_booking' }],
+    bot: 'Good news, that time is available. Shall I book that?',
+    options: [
+      { label: 'Yes, book it!', next: 'get_name' },
+      { label: 'Pick a different time', next: 'pick_time_retry' },
+    ],
   },
   {
     id: 'check_availability_alt',
     user: 'Thursday at 10:00 AM',
     action: 'calendar_check',
-    bot: '10:00 AM Thursday is already booked. I have 10:30 AM and 1:00 PM available. Which works?',
+    bot: 'That time is unavailable. However, I have 10:30 AM or 1:00 PM available. Would either work?',
     options: [
-      { label: '10:30 AM works', next: 'confirm_booking_alt' },
-      { label: '1:00 PM works', next: 'confirm_booking_alt' },
+      { label: '10:30 AM works', next: 'get_name' },
+      { label: '1:00 PM works', next: 'get_name' },
     ],
   },
   {
-    id: 'confirm_booking',
-    user: 'John Smith, john@email.com',
-    bot: 'To confirm: 30-minute appointment tomorrow at 2:00 PM with Dr. Murray Vega. Shall I book it?',
-    options: [{ label: 'Yes, book it!', next: 'booked' }],
+    id: 'pick_time_retry',
+    user: 'Pick a different time',
+    bot: 'No problem. What other time works for you?',
+    options: [
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+      { label: 'Friday at 3 PM', next: 'check_availability' },
+    ],
+  },
+
+  // ── CONTACT INFO (NEW PATIENT) ───────────────────────────────
+  {
+    id: 'get_name',
+    user: 'Yes, book it!',
+    bot: 'Perfect. What is your full name?',
+    options: [{ label: 'Jane Smith', next: 'get_insurance' }],
   },
   {
-    id: 'confirm_booking_alt',
-    user: 'That works for me',
-    bot: 'Can I get your name and email to finalize?',
-    options: [{ label: 'John Smith / john@email.com', next: 'confirm_booking_final' }],
+    id: 'get_insurance',
+    user: 'Jane Smith',
+    bot: "Got it, Jane! If any, what dental insurance would you like to use?",
+    options: [
+      { label: 'Delta Dental', next: 'get_phone' },
+      { label: 'No insurance', next: 'get_phone' },
+    ],
   },
   {
-    id: 'confirm_booking_final',
-    user: 'John Smith, john@email.com',
-    bot: "Let me book that for you...",
-    action: 'booking',
-    options: [],
+    id: 'get_phone',
+    user: 'Delta Dental',
+    bot: 'Great. What is the best phone number to reach you?',
+    options: [{ label: '(555) 123-4567', next: 'get_email' }],
+  },
+  {
+    id: 'get_email',
+    user: '(555) 123-4567',
+    bot: 'And your email address for the confirmation?',
+    options: [{ label: 'jane@email.com', next: 'booked' }],
   },
   {
     id: 'booked',
+    user: 'jane@email.com',
+    action: 'booking',
+    options: [],
+  },
+
+  // ── EXISTING PATIENT ─────────────────────────────────────────
+  {
+    id: 'existing_patient',
+    user: "I've visited before",
+    bot: "Welcome back! Please share the phone number or email associated with your file so I can look you up.",
+    options: [{ label: 'john@email.com', next: 'lookup_client' }],
+  },
+  {
+    id: 'lookup_client',
+    user: 'john@email.com',
+    action: 'calendar_lookup',
+    bot: "Thanks, John! I have your file open. Are you looking to book a new appointment, reschedule, or cancel?",
+    options: [
+      { label: 'Book a new appointment', next: 'existing_book' },
+      { label: 'Reschedule', next: 'reschedule' },
+      { label: 'Cancel', next: 'cancel' },
+    ],
+  },
+  {
+    id: 'existing_book',
+    user: 'Book a new appointment',
+    bot: "Ok great! Are you looking for a cleaning, checkup, or something else?",
+    options: [
+      { label: 'Cleaning', next: 'existing_cleaning' },
+      { label: 'Checkup', next: 'existing_cleaning' },
+      { label: 'Something else', next: 'existing_other' },
+    ],
+  },
+  {
+    id: 'existing_cleaning',
+    user: 'Cleaning',
+    bot: 'When was your last dental cleaning?',
+    options: [
+      { label: 'About 6 months ago', next: 'existing_pick_time' },
+      { label: 'Over a year ago', next: 'existing_pick_time' },
+    ],
+  },
+  {
+    id: 'existing_other',
+    user: 'Something else',
+    bot: "Can you provide some details for the doctor?",
+    options: [{ label: "I'll explain in person", next: 'existing_consult' }],
+  },
+  {
+    id: 'existing_consult',
+    user: "I'll explain in person",
+    bot: "Okay. The next step is a complimentary consultation with Dr. Murray Vega. What day and time works best?",
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'existing_pick_time',
+    bot: "Thank you for that information. Let's find a time — what day and time works best for you?",
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'existing_check_availability',
+    user: 'Tomorrow at 2:00 PM',
+    action: 'calendar_check',
+    bot: "Good news, that time is available. Shall I book it?",
+    options: [{ label: 'Yes, book it!', next: 'existing_booked' }],
+  },
+  {
+    id: 'existing_check_alt',
+    user: 'Thursday at 10:00 AM',
+    action: 'calendar_check',
+    bot: "That time is unavailable. However, I have 10:30 AM or 1:00 PM available. Would either work?",
+    options: [
+      { label: '10:30 AM works', next: 'existing_booked' },
+      { label: '1:00 PM works', next: 'existing_booked' },
+    ],
+  },
+  {
+    id: 'existing_booked',
     user: 'Yes, book it!',
     action: 'booking',
     options: [],
   },
-  {
-    id: 'question',
-    user: 'I have a question',
-    bot: 'Of course! What would you like to know?',
-    options: [
-      { label: 'What are your hours?', next: 'hours_answer' },
-      { label: 'Do you accept insurance?', next: 'insurance_answer' },
-      { label: 'Where are you located?', next: 'location_answer' },
-    ],
-  },
-  {
-    id: 'hours_answer',
-    user: 'What are your hours?',
-    action: 'rag_search',
-    bot: "We're open Monday through Friday, 8:00 AM to 6:00 PM. Closed weekends. Would you like to book?",
-    options: [
-      { label: 'Yes, book an appointment', next: 'treatment' },
-      { label: 'No thanks!', next: 'goodbye' },
-    ],
-  },
-  {
-    id: 'insurance_answer',
-    user: 'Do you accept insurance?',
-    action: 'rag_search',
-    bot: 'Yes! We accept Delta Dental, Cigna, Aetna, MetLife, and more. We also offer payment plans. Want to schedule?',
-    options: [
-      { label: 'Yes, book an appointment', next: 'treatment' },
-      { label: "That's all, thanks!", next: 'goodbye' },
-    ],
-  },
-  {
-    id: 'location_answer',
-    user: 'Where are you located?',
-    action: 'rag_search',
-    bot: "We're in the heart of Las Vegas with convenient parking. Want to schedule a visit?",
-    options: [
-      { label: 'Yes, book an appointment', next: 'treatment' },
-      { label: 'Thanks!', next: 'goodbye' },
-    ],
-  },
+
+  // ── RESCHEDULE ───────────────────────────────────────────────
   {
     id: 'reschedule',
-    user: 'I need to reschedule',
-    action: 'calendar_lookup',
-    bot: 'I found your upcoming appointment on Wednesday at 3:00 PM. What new time works?',
+    user: 'Reschedule',
+    bot: 'No problem. What new day and time would you prefer?',
     options: [
       { label: 'Friday at 11 AM', next: 'reschedule_confirm' },
       { label: 'Next Tuesday at 2 PM', next: 'reschedule_confirm' },
@@ -198,9 +269,76 @@ const demoFlow: DemoStep[] = [
     action: 'reschedule_action',
     options: [],
   },
+
+  // ── CANCEL ───────────────────────────────────────────────────
+  {
+    id: 'cancel',
+    user: 'Cancel',
+    bot: "I understand. Just to confirm, are you sure you want to cancel your appointment?",
+    options: [
+      { label: 'Yes, cancel it', next: 'cancelled' },
+      { label: 'No, keep it', next: 'keep_appointment' },
+    ],
+  },
+  {
+    id: 'cancelled',
+    user: 'Yes, cancel it',
+    action: 'cancel_action',
+    options: [],
+  },
+  {
+    id: 'keep_appointment',
+    user: 'No, keep it',
+    bot: "Okay, I've left your appointment as is. Can I help with anything else?",
+    options: [{ label: "No, that's all. Thanks!", next: 'goodbye' }],
+  },
+
+  // ── QUESTIONS ────────────────────────────────────────────────
+  {
+    id: 'question',
+    user: 'I have a question',
+    bot: 'Of course! What would you like to know?',
+    options: [
+      { label: 'What are your hours?', next: 'hours_answer' },
+      { label: 'Do you accept insurance?', next: 'insurance_answer' },
+      { label: 'Where are you located?', next: 'location_answer' },
+    ],
+  },
+  {
+    id: 'hours_answer',
+    user: 'What are your hours?',
+    action: 'rag_search',
+    bot: "We're open Monday through Friday, 8:00 AM to 6:00 PM, and closed on weekends. Does that help? Shall we get back to scheduling?",
+    options: [
+      { label: 'Yes, book an appointment', next: 'new_patient' },
+      { label: "No, that's all. Thanks!", next: 'goodbye' },
+    ],
+  },
+  {
+    id: 'insurance_answer',
+    user: 'Do you accept insurance?',
+    action: 'rag_search',
+    bot: "Yes! We accept Delta Dental, Cigna, Aetna, MetLife, and more. We also offer flexible payment plans. Does that help? Shall we get back to scheduling?",
+    options: [
+      { label: 'Yes, book an appointment', next: 'new_patient' },
+      { label: "No, that's all. Thanks!", next: 'goodbye' },
+    ],
+  },
+  {
+    id: 'location_answer',
+    user: 'Where are you located?',
+    action: 'rag_search',
+    bot: "We're located in Virginia Beach with convenient parking available. Does that help? Shall we get back to scheduling?",
+    options: [
+      { label: 'Yes, book an appointment', next: 'new_patient' },
+      { label: "No, that's all. Thanks!", next: 'goodbye' },
+    ],
+  },
+
+  // ── GOODBYE ──────────────────────────────────────────────────
   {
     id: 'goodbye',
-    user: "That's all, thanks!",
+    user: "No, that's all. Thanks!",
     bot: "You're welcome! Have a wonderful day.",
     options: [{ label: 'Start over', next: 'restart' }],
   },
@@ -216,7 +354,8 @@ const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const spinnerLabels: Record<string, string> = {
   calendar_check: 'Checking calendar availability...',
   rag_search: 'Searching knowledge base...',
-  calendar_lookup: 'Looking up your appointment...',
+  calendar_lookup: 'Looking up your file...',
+  cancel_action: 'Cancelling appointment...',
 };
 
 /* ── Booking Confirmation card ───────────────────────────── */
@@ -260,6 +399,32 @@ function RescheduleConfirmation() {
           {[
             { Icon: RefreshCw, text: 'Calendar updated' },
             { Icon: Mail, text: 'Rescheduling email sent' },
+          ].map(({ Icon, text }) => (
+            <li key={text} className="flex items-center gap-1.5 text-[11px] text-zinc-400 sm:text-xs">
+              <Icon className="h-3 w-3 shrink-0" />
+              {text}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+/* ── Cancel Confirmation card ────────────────────────────── */
+function CancelConfirmation() {
+  return (
+    <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/5 p-3.5 sm:p-4">
+      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500/20">
+        <XCircle className="h-4 w-4 text-red-400" strokeWidth={2} />
+      </div>
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-zinc-900">Appointment Cancelled</p>
+        <p className="mt-0.5 text-xs text-zinc-500">Your appointment has been cancelled. Have a good day.</p>
+        <ul className="mt-2 space-y-1.5">
+          {[
+            { Icon: Calendar, text: 'Calendar updated' },
+            { Icon: Mail, text: 'Cancellation email sent' },
           ].map(({ Icon, text }) => (
             <li key={text} className="flex items-center gap-1.5 text-[11px] text-zinc-400 sm:text-xs">
               <Icon className="h-3 w-3 shrink-0" />
@@ -356,7 +521,7 @@ export default function DemoChatbot() {
       setMessages((p) => p.filter((m) => m.id !== spId));
     }
 
-    // ── booking / reschedule finals ──────────────────────
+    // ── booking final ────────────────────────────────────
     if (step.action === 'booking') {
       const typId = nextId();
       setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
@@ -369,12 +534,26 @@ export default function DemoChatbot() {
       return;
     }
 
+    // ── reschedule final ─────────────────────────────────
     if (step.action === 'reschedule_action') {
       const typId = nextId();
       setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
       await delay(1100);
       setMessages((p) => p.filter((m) => m.id !== typId));
       setMessages((p) => [...p, { id: nextId(), kind: 'rescheduled' }]);
+      await delay(600);
+      setOptions([{ label: 'Try again', next: 'restart' }]);
+      runningRef.current = false;
+      return;
+    }
+
+    // ── cancel final ─────────────────────────────────────
+    if (step.action === 'cancel_action') {
+      const typId = nextId();
+      setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
+      await delay(1100);
+      setMessages((p) => p.filter((m) => m.id !== typId));
+      setMessages((p) => [...p, { id: nextId(), kind: 'cancelled' }]);
       await delay(600);
       setOptions([{ label: 'Try again', next: 'restart' }]);
       runningRef.current = false;
@@ -400,7 +579,7 @@ export default function DemoChatbot() {
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b border-black/[.08] px-4 py-3">
         <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
-        <span className="text-sm font-medium text-zinc-700">Appointly AI</span>
+        <span className="text-sm font-medium text-zinc-700">Chloe — ABC Dental Clinic</span>
         <span className="ml-auto rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-500">
           Online
         </span>
@@ -425,7 +604,7 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="msg-label-wrap">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Appointly AI</p>
+                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
                   <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-white px-4 py-2.5 text-[0.88rem] leading-relaxed text-zinc-800 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-black/[.06]">
                     {msg.text}
                   </div>
@@ -451,7 +630,7 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="w-full max-w-[85%]">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Appointly AI</p>
+                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
                   <BookingConfirmation />
                 </div>
               </div>
@@ -461,8 +640,18 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="w-full max-w-[85%]">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Appointly AI</p>
+                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
                   <RescheduleConfirmation />
+                </div>
+              </div>
+            );
+          }
+          if (msg.kind === 'cancelled') {
+            return (
+              <div key={msg.id} className="flex justify-start">
+                <div className="w-full max-w-[85%]">
+                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
+                  <CancelConfirmation />
                 </div>
               </div>
             );
