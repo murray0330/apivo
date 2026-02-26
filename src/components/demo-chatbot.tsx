@@ -31,7 +31,7 @@ const demoFlow: DemoStep[] = [
   // ── START ────────────────────────────────────────────────────
   {
     id: 'start',
-    bot: "Hi there! I'm Chloe, the AI assistant for ABC Dental Clinic. Are you a new patient, or have you visited us before?",
+    bot: "Hi! Welcome to ABC Dental Clinic. To get started, are you a new or existing patient?",
     options: [
       { label: 'New patient', next: 'new_patient' },
       { label: "I've visited before", next: 'existing_patient' },
@@ -529,7 +529,7 @@ export default function DemoChatbot() {
       setMessages((p) => p.filter((m) => m.id !== typId));
       setMessages((p) => [...p, { id: nextId(), kind: 'booked' }]);
       await delay(600);
-      setOptions([{ label: 'Try again', next: 'restart' }]);
+      setOptions([]);
       runningRef.current = false;
       return;
     }
@@ -542,7 +542,7 @@ export default function DemoChatbot() {
       setMessages((p) => p.filter((m) => m.id !== typId));
       setMessages((p) => [...p, { id: nextId(), kind: 'rescheduled' }]);
       await delay(600);
-      setOptions([{ label: 'Try again', next: 'restart' }]);
+      setOptions([]);
       runningRef.current = false;
       return;
     }
@@ -555,7 +555,7 @@ export default function DemoChatbot() {
       setMessages((p) => p.filter((m) => m.id !== typId));
       setMessages((p) => [...p, { id: nextId(), kind: 'cancelled' }]);
       await delay(600);
-      setOptions([{ label: 'Try again', next: 'restart' }]);
+      setOptions([]);
       runningRef.current = false;
       return;
     }
@@ -578,8 +578,12 @@ export default function DemoChatbot() {
     <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-black/[.08] bg-white shadow-[0_2px_20px_rgba(0,0,0,0.06)]" style={{ height: 'min(520px, calc(100vh - 200px))' }}>
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b border-black/[.08] px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
-        <span className="text-sm font-medium text-zinc-700">Chloe — ABC Dental Clinic</span>
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-50">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2C9 2 6 4 6 7c0 1.5.5 3 1 4.5C8 14 8 17 9 20c.4 1.2 1 2 2 2h2c1 0 1.6-.8 2-2 1-3 1-6 2-8.5.5-1.5 1-3 1-4.5 0-3-3-5-6-5z" />
+          </svg>
+        </div>
+        <span className="text-sm font-medium text-zinc-700">ABC Dental Clinic</span>
         <span className="ml-auto rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-500">
           Online
         </span>
@@ -603,11 +607,8 @@ export default function DemoChatbot() {
           if (msg.kind === 'bot') {
             return (
               <div key={msg.id} className="flex justify-start">
-                <div className="msg-label-wrap">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
-                  <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-white px-4 py-2.5 text-[0.88rem] leading-relaxed text-zinc-800 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-black/[.06]">
-                    {msg.text}
-                  </div>
+                <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-white px-4 py-2.5 text-[0.88rem] leading-relaxed text-zinc-800 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-black/[.06]">
+                  {msg.text}
                 </div>
               </div>
             );
@@ -630,7 +631,6 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="w-full max-w-[85%]">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
                   <BookingConfirmation />
                 </div>
               </div>
@@ -640,7 +640,6 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="w-full max-w-[85%]">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
                   <RescheduleConfirmation />
                 </div>
               </div>
@@ -650,7 +649,6 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="w-full max-w-[85%]">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Chloe</p>
                   <CancelConfirmation />
                 </div>
               </div>
