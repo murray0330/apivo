@@ -509,7 +509,7 @@ function Footer() {
           <div className="sm:col-span-2 md:col-span-1">
             <img src="/apivo-logo_black.png" alt="Apivo" className="h-8 w-auto sm:h-10" />
             <p className="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-sm">
-              Stop Losing Dental Patients to Voicemail
+              AI Booking Assistant for Your Website
             </p>
           </div>
           {[
@@ -532,8 +532,8 @@ function Footer() {
             {
               title: "Legal",
               links: [
-                { text: "Privacy Policy", href: "#" },
-                { text: "Terms of Service", href: "#" },
+                { text: "Privacy Policy", href: "/privacy" },
+                { text: "Terms of Service", href: "/terms" },
               ],
             },
           ].map((col) => (
