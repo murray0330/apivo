@@ -35,9 +35,9 @@ function Navbar() {
   return (
     <nav className="fixed top-4 left-1/2 z-50 -translate-x-1/2" aria-label="Main navigation">
       <div className="flex items-center gap-1 rounded-full border border-black/[.08] bg-white/75 px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,.06)] backdrop-blur-xl sm:gap-2 sm:px-3">
-        {/* Logo placeholder */}
-        <a href="#hero" className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 sm:h-8 sm:w-8">
-          <span className="text-[10px] font-bold text-white sm:text-xs">A</span>
+        {/* Logo */}
+        <a href="#hero" className="mr-1 flex h-7 w-7 items-center justify-center sm:h-8 sm:w-8">
+          <img src="/logo.png" alt="Apivo" className="h-full w-full object-contain" />
         </a>
         <div className="mr-1 h-4 w-px bg-black/[.08]" />
         {links.map((l) => (
