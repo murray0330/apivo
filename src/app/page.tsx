@@ -516,10 +516,10 @@ function Footer() {
             {
               title: "Product",
               links: [
+                { text: "How It Works", href: "#how-it-works" },
                 { text: "Features", href: "#features" },
                 { text: "Demo", href: "#demo" },
                 { text: "Pricing", href: "#pricing" },
-                { text: "How It Works", href: "#how-it-works" },
               ],
             },
             {
