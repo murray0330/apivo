@@ -7,7 +7,7 @@
   --color-primary-bright: #a5b4fc;
   --color-accent: #06b6d4;
   --color-green: #34d399;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --animate-aurora: aurora 60s linear infinite;
 }
 
