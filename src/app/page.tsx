@@ -36,8 +36,8 @@ function Navbar() {
     <nav className="fixed top-4 left-1/2 z-50 -translate-x-1/2" aria-label="Main navigation">
       <div className="flex items-center gap-1 rounded-full border border-black/[.08] bg-white/75 px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,.06)] backdrop-blur-xl sm:gap-2 sm:px-3">
         {/* Logo */}
-        <a href="#hero" className="mr-1 flex h-7 w-7 items-center justify-center sm:h-8 sm:w-8">
-          <img src="/logo.png" alt="Apivo" className="h-full w-full object-contain" />
+        <a href="#hero" className="mr-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#6366f1] sm:h-8 sm:w-8">
+          <img src="/apivo-favicon_white.png" alt="Apivo" className="h-4 w-4 object-contain sm:h-5 sm:w-5" />
         </a>
         <div className="mr-1 h-4 w-px bg-black/[.08]" />
         {links.map((l) => (
@@ -507,7 +507,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="sm:col-span-2 md:col-span-1">
-            <img src="/apivo-logo.png" alt="Apivo" className="h-7 w-auto sm:h-8" />
+            <img src="/apivo-logo_black.png" alt="Apivo" className="h-8 w-auto sm:h-10" />
             <p className="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-sm">
               Stop Losing Dental Patients to Voicemail
             </p>

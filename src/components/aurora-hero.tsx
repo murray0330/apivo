@@ -16,7 +16,7 @@ export default function AuroraHero() {
         className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-start gap-4 px-4 pb-28 pt-40 sm:gap-6 sm:px-6 sm:pb-24 sm:pt-36 md:gap-8 md:px-10 md:pt-44 lg:px-16"
       >
         {/* Logo */}
-        <img src="/apivo-logo.png" alt="Apivo" className="h-8 w-auto sm:h-10" />
+        <img src="/apivo-logo.png" alt="Apivo" className="h-10 w-auto sm:h-12" />
 
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
@@ -27,8 +27,8 @@ export default function AuroraHero() {
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
           Your patients book cleanings, consultations, and emergency appointments
-          24/7 — even when your front desk is busy. Built exclusively for dental
-          practices.
+          24/7 — right from your website. No phone calls. No voicemail. Built
+          exclusively for dental practices.
         </p>
 
         {/* CTA Buttons */}
