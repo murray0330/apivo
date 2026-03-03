@@ -507,9 +507,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="sm:col-span-2 md:col-span-1">
-            <span className="text-base font-bold text-zinc-900 sm:text-lg">
-              Apivo
-            </span>
+            <img src="/apivo-logo.png" alt="Apivo" className="h-7 w-auto sm:h-8" />
             <p className="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-sm">
               Stop Losing Dental Patients to Voicemail
             </p>
