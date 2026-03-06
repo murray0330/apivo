@@ -399,6 +399,76 @@ function Demo() {
 }
 
 /* ================================================================
+   Not Calendly
+   ================================================================ */
+function NotCalendly() {
+  return (
+    <section className="bg-white py-16 sm:py-24">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="text-center">
+          <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">The Difference</p>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl md:text-4xl">
+            Not a booking form.<br className="hidden sm:block" /> An AI team member.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-500 sm:text-base">
+            Other tools hand your clients a calendar grid. Apivo has a conversation.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-6">
+          {/* Other tools */}
+          <div className="rounded-2xl border border-black/[.08] bg-zinc-50 p-6 sm:p-8">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">Other booking tools</p>
+            <h3 className="mt-3 text-lg font-semibold text-zinc-500 sm:text-xl">Shows a grid of times.</h3>
+            <ul className="mt-5 space-y-3">
+              {[
+                "Client lands on a calendar picker",
+                "Selects a slot with no context",
+                "No questions answered",
+                "No special requests handled",
+                "Feels like filling out a form",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm text-zinc-400">
+                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-zinc-300 text-[10px] text-zinc-400">✕</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Apivo */}
+          <div className="rounded-2xl border border-indigo-500/20 bg-indigo-50/50 p-6 shadow-[0_2px_20px_rgba(99,102,241,.10)] sm:p-8">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-indigo-500">Apivo</p>
+            <h3 className="mt-3 text-lg font-semibold text-zinc-900 sm:text-xl">Actually converses.</h3>
+            <ul className="mt-5 space-y-3">
+              {[
+                "Answers service and pricing questions",
+                "Handles special requests naturally",
+                "Manages the full booking lifecycle",
+                "Reschedules and cancels in chat",
+                "Sounds like a member of your team",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm text-zinc-700">
+                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-[10px] text-indigo-600">✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Pull quote */}
+        <blockquote className="mx-auto mt-10 max-w-2xl rounded-2xl border border-black/[.06] bg-zinc-50 px-6 py-5 text-center sm:mt-12 sm:px-10 sm:py-7">
+          <p className="text-base font-medium leading-relaxed text-zinc-800 sm:text-lg">
+            &ldquo;It sounds like a member of your team, not a form.&rdquo;
+          </p>
+        </blockquote>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
    Calculator
    ================================================================ */
 function Calculator() {
@@ -598,6 +668,7 @@ export default function HomePage() {
       <HowItWorks />
       <Features />
       <Versus />
+      <NotCalendly />
       <Calculator />
       <PricingSection />
       <Contact />
