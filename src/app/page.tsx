@@ -332,7 +332,7 @@ function NotCalendly() {
         <div className="text-center">
           <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">The Difference</p>
           <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl md:text-4xl">
-            Not a booking form.<br className="hidden sm:block" /> An AI team member.
+            Apivo is a team member.<br className="hidden sm:block" /> Not a booking form.
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-500 sm:text-base">
             Other tools hand your clients a calendar grid. Apivo has a conversation.
@@ -385,12 +385,7 @@ function NotCalendly() {
           </div>
         </div>
 
-        {/* Pull quote */}
-        <blockquote className="mx-auto mt-10 max-w-2xl rounded-2xl border border-black/[.06] bg-zinc-50 px-6 py-5 text-center sm:mt-12 sm:px-10 sm:py-7">
-          <p className="text-base font-medium leading-relaxed text-zinc-800 sm:text-lg">
-            &ldquo;It sounds like a member of your team, not a form.&rdquo;
-          </p>
-        </blockquote>
+
       </div>
     </section>
   );
