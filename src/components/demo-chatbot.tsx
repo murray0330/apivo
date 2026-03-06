@@ -711,10 +711,16 @@ export default function DemoChatbot() {
 
     // ── booking final ────────────────────────────────────
     if (step.action === 'booking') {
+      const spId2 = nextId();
+      setMessages((p) => [...p, { id: spId2, kind: 'spinner', spinnerLabel: 'Booking your appointment...' }]);
+      await delay(1600);
+      setMessages((p) => p.filter((m) => m.id !== spId2));
       const typId = nextId();
       setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
-      await delay(1100);
+      await delay(1000);
       setMessages((p) => p.filter((m) => m.id !== typId));
+      setMessages((p) => [...p, { id: nextId(), kind: 'bot', text: "You're all set! Your appointment has been booked and a confirmation email is on its way. We look forward to seeing you!" }]);
+      await delay(700);
       setMessages((p) => [...p, { id: nextId(), kind: 'booked' }]);
       await delay(600);
       setOptions([]);
