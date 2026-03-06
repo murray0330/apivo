@@ -11,7 +11,7 @@ const YEARLY_TOTAL = YEARLY_MONTHLY_PRICE * 12;
 const features = [
   "AI Chat Widget for your website",
   "24/7 appointment booking, rescheduling & canceling",
-  "Google Calendar integration",
+  "Acuity integration",
   "Automated email confirmations",
   "Dental knowledge base (answers patient FAQs)",
   "29+ language support",

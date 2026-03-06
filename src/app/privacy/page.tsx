@@ -95,6 +95,7 @@ export default function PrivacyPolicy() {
                   {[
                     { name: "VAPI", purpose: "AI conversation engine, language processing", link: "vapi.ai/privacy" },
                     { name: "n8n", purpose: "Workflow automation and data routing", link: "n8n.io/privacy" },
+                    { name: "Acuity", purpose: "Appointment scheduling and calendar sync", link: "acuityscheduling.com/privacy" },
                     { name: "Google Calendar", purpose: "Appointment scheduling and calendar sync", link: "policies.google.com" },
                     { name: "Google Sheets", purpose: "Optional data logging", link: "policies.google.com" },
                     { name: "Gmail", purpose: "Sending confirmation emails", link: "policies.google.com" },
