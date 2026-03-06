@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { RefreshCw, Calendar, Mail, Users, XCircle } from 'lucide-react';
+import { RefreshCw, Calendar, Mail, Users, XCircle, Sparkles } from 'lucide-react';
 
 /* ── types ────────────────────────────────────────────────── */
 interface DemoOption {
@@ -767,9 +767,7 @@ export default function DemoChatbot() {
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b border-black/[.08] px-4 py-3">
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-50">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 2C9 2 6 4 6 7c0 1.5.5 3 1 4.5C8 14 8 17 9 20c.4 1.2 1 2 2 2h2c1 0 1.6-.8 2-2 1-3 1-6 2-8.5.5-1.5 1-3 1-4.5 0-3-3-5-6-5z" />
-          </svg>
+          <Sparkles className="h-3.5 w-3.5 text-indigo-500" strokeWidth={1.75} />
         </div>
         <span className="text-sm font-medium text-zinc-700">ABC Med Spa</span>
         <span className="ml-auto rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-500">
