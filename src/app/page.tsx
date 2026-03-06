@@ -302,7 +302,7 @@ function Features() {
     {
       icon: Users,
       title: "CRM Integration",
-      desc: "Contacts auto-created in HubSpot, Airtable, or Google Sheets. Deals sync instantly.",
+      desc: "Contacts auto-created in your CRM of choice. Deals and records sync instantly.",
     },
     {
       icon: RefreshCw,
