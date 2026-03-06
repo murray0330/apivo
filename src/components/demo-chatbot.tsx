@@ -734,6 +734,8 @@ export default function DemoChatbot() {
       setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
       await delay(1100);
       setMessages((p) => p.filter((m) => m.id !== typId));
+      setMessages((p) => [...p, { id: nextId(), kind: 'bot', text: "You're all set! Your appointment has been rescheduled and a confirmation email is on its way. We look forward to seeing you!" }]);
+      await delay(700);
       setMessages((p) => [...p, { id: nextId(), kind: 'rescheduled' }]);
       await delay(600);
       setOptions([]);
@@ -747,6 +749,8 @@ export default function DemoChatbot() {
       setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
       await delay(1100);
       setMessages((p) => p.filter((m) => m.id !== typId));
+      setMessages((p) => [...p, { id: nextId(), kind: 'bot', text: "Done! Your appointment has been cancelled. We hope to see you again soon — feel free to reach out anytime." }]);
+      await delay(700);
       setMessages((p) => [...p, { id: nextId(), kind: 'cancelled' }]);
       await delay(600);
       setOptions([]);
