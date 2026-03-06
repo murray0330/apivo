@@ -56,11 +56,11 @@ export default function PrivacyPolicy() {
               <li>Pages visited and time spent</li>
               <li>Referring URLs</li>
             </ul>
-            <p className="mb-3 font-medium text-zinc-700">Information from dental practice clients (B2B):</p>
+            <p className="mb-3 font-medium text-zinc-700">Information from business clients (B2B):</p>
             <ul className="list-disc space-y-1 pl-5">
               <li>Business name and address</li>
               <li>Contact person name and email</li>
-              <li>Google Calendar credentials (OAuth tokens)</li>
+              <li>Calendar and integration credentials (OAuth tokens)</li>
               <li>Business FAQs and service information uploaded to the knowledge base</li>
             </ul>
           </section>
@@ -69,12 +69,12 @@ export default function PrivacyPolicy() {
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">3. How We Use Your Information</h2>
             <p className="mb-3">We use collected information to:</p>
             <ul className="list-disc space-y-1 pl-5">
-              <li>Book, reschedule, and cancel appointments on behalf of dental practices</li>
-              <li>Send automated email confirmations to patients</li>
-              <li>Sync appointment data with connected Google Calendar</li>
+              <li>Book, reschedule, and cancel appointments on behalf of our business clients</li>
+              <li>Send automated email confirmations to end users</li>
+              <li>Sync appointment data with connected calendar and CRM integrations</li>
               <li>Respond to inquiries submitted through the chat widget</li>
               <li>Improve our AI workflows and booking experience</li>
-              <li>Communicate with dental practice clients about their accounts</li>
+              <li>Communicate with business clients about their accounts</li>
               <li>Comply with legal obligations</li>
             </ul>
           </section>
@@ -115,7 +115,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">5. Data Retention</h2>
             <ul className="list-disc space-y-2 pl-5">
-              <li>Patient booking data is retained for as long as the dental practice remains an active Apivo client, or until deletion is requested</li>
+              <li>End-user booking data is retained for as long as the business remains an active Apivo client, or until deletion is requested</li>
               <li>Chat conversation logs are retained for up to 12 months for quality and support purposes</li>
               <li>Client account data is retained for the duration of the service agreement plus 90 days after cancellation</li>
               <li>You may request deletion of your data at any time by contacting us at <a href="mailto:privacy@apivo.ai" className="text-indigo-500 hover:text-indigo-400">privacy@apivo.ai</a></li>
@@ -131,7 +131,7 @@ export default function PrivacyPolicy() {
               <li>Access controls limiting who can view patient data</li>
               <li>Regular review of third-party vendor security practices</li>
             </ul>
-            <p className="rounded-xl border border-black/[.08] bg-zinc-50 px-4 py-3 text-zinc-500">Note: While we implement these measures, no system is completely secure. Dental practice clients are encouraged to evaluate their own compliance obligations independently.</p>
+            <p className="rounded-xl border border-black/[.08] bg-zinc-50 px-4 py-3 text-zinc-500">Note: While we implement these measures, no system is completely secure. Business clients are encouraged to evaluate their own compliance obligations independently.</p>
           </section>
 
           <section>

@@ -35,7 +35,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">1. Agreement to Terms</h2>
             <p>By accessing or using Apivo&apos;s services — including our AI chat widget, website, and related tools — you (&quot;Client&quot; or &quot;you&quot;) agree to be bound by these Terms of Service. If you do not agree, do not use our services.</p>
-            <p className="mt-3">These Terms apply to dental practices and other appointment-based businesses that subscribe to Apivo&apos;s services.</p>
+            <p className="mt-3">These Terms apply to appointment-based businesses that subscribe to Apivo&apos;s services.</p>
           </section>
 
           <section>
@@ -45,9 +45,9 @@ export default function TermsOfService() {
               <li>Engages website visitors in natural language conversation</li>
               <li>Checks real-time calendar availability via Google Calendar</li>
               <li>Books, reschedules, and cancels appointments automatically</li>
-              <li>Sends email confirmations to patients</li>
-              <li>Syncs contact data to Google Sheets (optional)</li>
-              <li>Answers patient FAQs via a configured knowledge base</li>
+              <li>Sends email confirmations to clients</li>
+              <li>Syncs contact data to a connected CRM or spreadsheet (optional)</li>
+              <li>Answers client FAQs via a configured knowledge base</li>
             </ul>
             <p>The service is powered by VAPI (AI infrastructure) and n8n (workflow automation).</p>
           </section>
@@ -68,12 +68,12 @@ export default function TermsOfService() {
             <p className="mb-3">You agree to:</p>
             <ul className="mb-4 list-disc space-y-1 pl-5">
               <li>Provide accurate business information, calendar access, and FAQs during onboarding</li>
-              <li>Maintain valid Google Calendar credentials and notify us of any changes</li>
-              <li>Ensure your use of Apivo complies with all applicable laws, including any healthcare privacy regulations relevant to your practice</li>
+              <li>Maintain valid calendar and integration credentials and notify us of any changes</li>
+              <li>Ensure your use of Apivo complies with all applicable laws and regulations relevant to your business</li>
               <li>Not use Apivo for any unlawful purpose</li>
               <li>Not attempt to reverse engineer, copy, or resell the Apivo service</li>
             </ul>
-            <p className="rounded-xl border border-black/[.08] bg-zinc-50 px-4 py-3 text-zinc-500">Important: You are solely responsible for ensuring your practice&apos;s compliance with HIPAA and any other applicable healthcare regulations. Apivo provides tools with privacy-conscious settings enabled but does not guarantee HIPAA compliance on your behalf.</p>
+            <p className="rounded-xl border border-black/[.08] bg-zinc-50 px-4 py-3 text-zinc-500">Important: You are solely responsible for ensuring your business&apos;s compliance with all applicable laws and regulations. Apivo provides tools with privacy-conscious settings enabled but you remain responsible for your own compliance obligations.</p>
           </section>
 
           <section>
