@@ -71,7 +71,7 @@ function SocialProof() {
     <section className="border-y border-black/[.05] bg-[#fafafa] py-8 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-zinc-400 sm:mb-6 sm:text-sm">
-          Trusted by dental practices across Virginia
+          Trusted by med spas across Virginia
         </p>
         <div className="relative mx-auto max-w-2xl overflow-hidden">
           <div className="industry-track flex w-max gap-4 sm:gap-6">
@@ -169,7 +169,7 @@ function ValueProp() {
 function Versus() {
   const rows = [
     { feature: "Booking", old: "Collects info & emails you", us: "Books directly on your calendar" },
-    { feature: "Speed", old: "Patient waits for callback", us: "Instant confirmation" },
+    { feature: "Speed", old: "Client waits for callback", us: "Instant confirmation" },
     { feature: "Conflicts", old: "Double bookings happen", us: "Real-time availability check" },
     { feature: "Integrations", old: "No calendar sync", us: "Google Calendar + CRM built in" },
     { feature: "After Hours", old: "Missed calls go to voicemail", us: "AI captures and books 24/7" },
@@ -360,7 +360,7 @@ function Demo() {
           <div>
             <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Try It Right Now</h3>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-base">
-              Step into your patient&apos;s shoes and witness the future of your front desk. Use the demo chat to experience how Apivo grants you the freedom to focus on care while your calendar fills itself—accurately, instantly, and without the phone tag.
+              Step into your client&apos;s shoes and witness the future of your front desk. Use the demo chat to experience how Apivo grants you the freedom to focus on care while your calendar fills itself—accurately, instantly, and without the phone tag.
             </p>
             <ul className="mt-4 space-y-2 sm:mt-6">
               {[
@@ -419,7 +419,7 @@ function FAQ() {
   const items = [
     {
       q: "How is this different from Calendly or other booking tools?",
-      a: "Calendly shows a grid of times. Apivo actually converses — it answers insurance questions, handles special requests, and manages the full booking lifecycle in natural language. It sounds like a member of your team, not a form.",
+      a: "Calendly shows a grid of times. Apivo actually converses — it answers service and pricing questions, handles special requests, and manages the full booking lifecycle in natural language. It sounds like a member of your team, not a form.",
     },
     {
       q: "What calendar system do you use?",
@@ -427,15 +427,15 @@ function FAQ() {
     },
     {
       q: "How long does setup take?",
-      a: "Most practices are live within 48 hours. We handle everything — calendar integration, knowledge base setup, and widget installation.",
+      a: "Most med spas are live within 48 hours. We handle everything — calendar integration, knowledge base setup, and widget installation.",
     },
     {
       q: "Can it handle rescheduling and cancellations?",
-      a: "Yes. Patients can book, reschedule, or cancel entirely through the chat. Your calendar updates in real time.",
+      a: "Yes. Clients can book, reschedule, or cancel entirely through the chat. Your calendar updates in real time.",
     },
     {
-      q: "What if a patient asks something the AI doesn't know?",
-      a: "It lets the patient know a team member will follow up shortly. You stay in control of edge cases.",
+      q: "What if a client asks something the AI doesn't know?",
+      a: "It lets the client know a team member will follow up shortly. You stay in control of edge cases.",
     },
     {
       q: "Is there a contract?",

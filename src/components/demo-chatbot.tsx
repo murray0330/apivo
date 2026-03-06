@@ -31,9 +31,9 @@ const demoFlow: DemoStep[] = [
   // ── START ────────────────────────────────────────────────────
   {
     id: 'start',
-    bot: "Hi! Welcome to ABC Dental Clinic. To get started, are you a new or existing patient?",
+    bot: "Hi! Welcome to ABC Med Spa. To get started, are you a new or returning client?",
     options: [
-      { label: 'New patient', next: 'new_patient' },
+      { label: 'New client', next: 'new_patient' },
       { label: "I've visited before", next: 'existing_patient' },
       { label: 'I have a question', next: 'question' },
     ],
@@ -42,12 +42,12 @@ const demoFlow: DemoStep[] = [
   // ── NEW PATIENT ──────────────────────────────────────────────
   {
     id: 'new_patient',
-    user: 'New patient',
-    bot: "Great! We'd love to see you. What treatment are you interested in today?",
+    user: 'New client',
+    bot: "Great! We'd love to have you. What service are you interested in today?",
     options: [
       { label: 'Consultation', next: 'consultation' },
-      { label: 'Cleaning or Checkup', next: 'cleaning_history' },
-      { label: 'Other treatment', next: 'other_treatment' },
+      { label: 'Facial or Treatment', next: 'cleaning_history' },
+      { label: 'Other service', next: 'other_treatment' },
     ],
   },
   {
@@ -61,12 +61,12 @@ const demoFlow: DemoStep[] = [
   },
   {
     id: 'cleaning_history',
-    user: 'Cleaning or Checkup',
-    bot: 'Great choice! When was your last dental cleaning?',
+    user: 'Facial or Treatment',
+    bot: 'Great choice! When was your last visit with us?',
     options: [
       { label: 'About 6 months ago', next: 'pick_time' },
       { label: 'Over a year ago', next: 'pick_time' },
-      { label: "I'm not sure", next: 'pick_time' },
+      { label: "I'm not sure / first time", next: 'pick_time' },
     ],
   },
   {
@@ -79,8 +79,8 @@ const demoFlow: DemoStep[] = [
   },
   {
     id: 'other_treatment',
-    user: 'Other treatment',
-    bot: "Can you provide some details for the doctor? Also, have you had this type of treatment before?",
+    user: 'Other service',
+    bot: "Can you provide some details for our team? Also, have you had this type of service before?",
     options: [
       { label: "First time — I'll explain in person", next: 'other_treatment_consult' },
       { label: "Yes, I've had it before", next: 'other_treatment_consult' },
@@ -89,7 +89,7 @@ const demoFlow: DemoStep[] = [
   {
     id: 'other_treatment_consult',
     user: "First time — I'll explain in person",
-    bot: "Okay. The next step is a complimentary consultation with Dr. Murray Vega. What day and time works best?",
+    bot: "Okay. The next step is a complimentary consultation with our lead aesthetician. What day and time works best?",
     options: [
       { label: 'Tomorrow at 2 PM', next: 'check_availability' },
       { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
@@ -137,15 +137,15 @@ const demoFlow: DemoStep[] = [
   {
     id: 'get_insurance',
     user: 'Jane Smith',
-    bot: "Got it, Jane! If any, what dental insurance would you like to use?",
+    bot: "Got it, Jane! Do you have any skin concerns or allergies we should note before your appointment?",
     options: [
-      { label: 'Delta Dental', next: 'get_phone' },
-      { label: 'No insurance', next: 'get_phone' },
+      { label: "Yes, I'll share in person", next: 'get_phone' },
+      { label: 'No concerns', next: 'get_phone' },
     ],
   },
   {
     id: 'get_phone',
-    user: 'Delta Dental',
+    user: 'No concerns',
     bot: 'Great. What is the best phone number to reach you?',
     options: [{ label: '(555) 123-4567', next: 'get_email' }],
   },
@@ -166,14 +166,14 @@ const demoFlow: DemoStep[] = [
   {
     id: 'existing_patient',
     user: "I've visited before",
-    bot: "Welcome back! Please share the phone number or email associated with your file so I can look you up.",
+    bot: "Welcome back! Please share the phone number or email associated with your profile so I can look you up.",
     options: [{ label: 'john@email.com', next: 'lookup_client' }],
   },
   {
     id: 'lookup_client',
     user: 'john@email.com',
     action: 'calendar_lookup',
-    bot: "Thanks, John! I have your file open. Are you looking to book a new appointment, reschedule, or cancel?",
+    bot: "Thanks, John! I have your profile open. Are you looking to book a new appointment, reschedule, or cancel?",
     options: [
       { label: 'Book a new appointment', next: 'existing_book' },
       { label: 'Reschedule', next: 'reschedule' },
@@ -183,17 +183,17 @@ const demoFlow: DemoStep[] = [
   {
     id: 'existing_book',
     user: 'Book a new appointment',
-    bot: "Ok great! Are you looking for a cleaning, checkup, or something else?",
+    bot: "Ok great! Are you looking for a facial, treatment, or something else?",
     options: [
-      { label: 'Cleaning', next: 'existing_cleaning' },
-      { label: 'Checkup', next: 'existing_cleaning' },
+      { label: 'Facial', next: 'existing_cleaning' },
+      { label: 'Treatment', next: 'existing_cleaning' },
       { label: 'Something else', next: 'existing_other' },
     ],
   },
   {
     id: 'existing_cleaning',
-    user: 'Cleaning',
-    bot: 'When was your last dental cleaning?',
+    user: 'Facial',
+    bot: 'When was your last visit with us?',
     options: [
       { label: 'About 6 months ago', next: 'existing_pick_time' },
       { label: 'Over a year ago', next: 'existing_pick_time' },
@@ -202,13 +202,13 @@ const demoFlow: DemoStep[] = [
   {
     id: 'existing_other',
     user: 'Something else',
-    bot: "Can you provide some details for the doctor?",
+    bot: "Can you provide some details for our team?",
     options: [{ label: "I'll explain in person", next: 'existing_consult' }],
   },
   {
     id: 'existing_consult',
     user: "I'll explain in person",
-    bot: "Okay. The next step is a complimentary consultation with Dr. Murray Vega. What day and time works best?",
+    bot: "Okay. The next step is a complimentary consultation with our lead aesthetician. What day and time works best?",
     options: [
       { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
       { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
@@ -300,7 +300,7 @@ const demoFlow: DemoStep[] = [
     bot: 'Of course! What would you like to know?',
     options: [
       { label: 'What are your hours?', next: 'hours_answer' },
-      { label: 'Do you accept insurance?', next: 'insurance_answer' },
+      { label: 'What services do you offer?', next: 'insurance_answer' },
       { label: 'Where are you located?', next: 'location_answer' },
     ],
   },
@@ -308,7 +308,7 @@ const demoFlow: DemoStep[] = [
     id: 'hours_answer',
     user: 'What are your hours?',
     action: 'rag_search',
-    bot: "We're open Monday through Friday, 8:00 AM to 6:00 PM, and closed on weekends. Does that help? Shall we get back to scheduling?",
+    bot: "We're open Monday through Saturday, 9:00 AM to 7:00 PM. Does that help? Shall we get back to scheduling?",
     options: [
       { label: 'Yes, book an appointment', next: 'new_patient' },
       { label: "No, that's all. Thanks!", next: 'goodbye' },
@@ -316,9 +316,9 @@ const demoFlow: DemoStep[] = [
   },
   {
     id: 'insurance_answer',
-    user: 'Do you accept insurance?',
+    user: 'What services do you offer?',
     action: 'rag_search',
-    bot: "Yes! We accept Delta Dental, Cigna, Aetna, MetLife, and more. We also offer flexible payment plans. Does that help? Shall we get back to scheduling?",
+    bot: "We offer Botox, fillers, laser treatments, facials, skin rejuvenation, and more. We also offer packages and memberships. Does that help? Shall we get back to scheduling?",
     options: [
       { label: 'Yes, book an appointment', next: 'new_patient' },
       { label: "No, that's all. Thanks!", next: 'goodbye' },
@@ -583,7 +583,7 @@ export default function DemoChatbot() {
             <path d="M12 2C9 2 6 4 6 7c0 1.5.5 3 1 4.5C8 14 8 17 9 20c.4 1.2 1 2 2 2h2c1 0 1.6-.8 2-2 1-3 1-6 2-8.5.5-1.5 1-3 1-4.5 0-3-3-5-6-5z" />
           </svg>
         </div>
-        <span className="text-sm font-medium text-zinc-700">ABC Dental Clinic</span>
+        <span className="text-sm font-medium text-zinc-700">ABC Med Spa</span>
         <span className="ml-auto rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-500">
           Online
         </span>

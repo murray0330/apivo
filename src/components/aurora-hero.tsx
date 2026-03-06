@@ -20,15 +20,15 @@ export default function AuroraHero() {
 
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
-          <span className="text-indigo-500">Stop Losing</span> Patients<br />
+          <span className="text-indigo-500">Stop Losing</span> Clients<br />
           <span className="whitespace-nowrap">to Voicemail</span>
         </h1>
 
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
-          Your patients book cleanings, consultations, and emergency appointments
+          Your clients book treatments, consultations, and services
           24/7 — right from your website. No phone calls. No voicemail. Built
-          exclusively for dental practices.
+          for med spas.
         </p>
 
         {/* CTA Buttons */}
@@ -49,7 +49,7 @@ export default function AuroraHero() {
 
         {/* Micro Details */}
         <ul className="mt-4 flex flex-wrap gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["Built for Dental", "29+ Languages", "Cancel Anytime"].map(
+          {["Built for Med Spas", "29+ Languages", "Cancel Anytime"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
                 <span className="text-emerald-500">✓</span>
