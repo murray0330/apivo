@@ -473,8 +473,8 @@ function Contact() {
               </p>
               <ul className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
                 {[
-                  "Free consultation & demo",
-                  "No contracts — cancel anytime",
+                  "Free consultation",
+                  "No contracts",
                   "Live in days, not weeks",
                 ].map((c, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
