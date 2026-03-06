@@ -28,7 +28,7 @@ export default function AuroraHero() {
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
           Your clients book treatments, consultations, and services
           24/7 — right from your website. No phone calls. No voicemail. Built
-          for med spas.
+          specifically for Acuity-powered med spas.
         </p>
 
         {/* CTA Buttons */}
@@ -49,7 +49,7 @@ export default function AuroraHero() {
 
         {/* Micro Details */}
         <ul className="mt-4 flex flex-wrap gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["Built for Med Spas", "29+ Languages", "Cancel Anytime"].map(
+          {["Works with Acuity", "29+ Languages", "Cancel Anytime"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
                 <span className="text-emerald-500">✓</span>

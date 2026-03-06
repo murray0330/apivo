@@ -133,9 +133,9 @@ function ValueProp() {
             Your Front Desk Automated.
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Apivo is an intelligent chatbot that lives on your website. It answers customer
-            questions, checks your real-time calendar, books appointments directly, and sends
-            confirmation emails — all without a human ever touching it.
+            Apivo is an AI booking assistant built specifically for Acuity-powered med spas.
+            It lives on your website, syncs directly with your Acuity calendar, books
+            appointments in real time, and sends confirmation emails — all without a human ever touching it.
           </p>
         </div>
 
@@ -171,7 +171,7 @@ function Versus() {
     { feature: "Booking", old: "Collects info & emails you", us: "Books directly on your calendar" },
     { feature: "Speed", old: "Client waits for callback", us: "Instant confirmation" },
     { feature: "Conflicts", old: "Double bookings happen", us: "Real-time availability check" },
-    { feature: "Integrations", old: "No calendar sync", us: "Google Calendar + CRM built in" },
+    { feature: "Integrations", old: "No Acuity integration", us: "Native Acuity Scheduling sync" },
     { feature: "After Hours", old: "Missed calls go to voicemail", us: "AI captures and books 24/7" },
     { feature: "Languages", old: "English only", us: "29+ languages" },
   ];
@@ -251,8 +251,8 @@ function HowItWorks() {
     },
     {
       num: "02",
-      title: "We Connect Your Calendar & CRM",
-      desc: "Google Calendar, HubSpot, Airtable, and more. Your chatbot sees real availability and books without conflicts.",
+      title: "We Connect to Your Acuity Account",
+      desc: "We sync directly with your Acuity Scheduling calendar. Your chatbot sees live availability and books appointments without conflicts.",
     },
     {
       num: "03",
@@ -422,8 +422,8 @@ function FAQ() {
       a: "Calendly shows a grid of times. Apivo actually converses — it answers service and pricing questions, handles special requests, and manages the full booking lifecycle in natural language. It sounds like a member of your team, not a form.",
     },
     {
-      q: "What calendar system do you use?",
-      a: "We integrate with Google Calendar. If you use a different system, we set up a sync during onboarding at no extra cost.",
+      q: "Do you work with Acuity Scheduling?",
+      a: "Yes — Apivo is built specifically for Acuity. We connect directly to your Acuity account so your chatbot reads live availability and books appointments right into it. No double bookings, no manual entry.",
     },
     {
       q: "How long does setup take?",
