@@ -26,7 +26,7 @@ export default function AuroraHero() {
 
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
-          Apivo answers questions, handles special requests, and books appointments in natural language — 24/7. Not a calendar grid. A real conversation.
+          Not a calendar grid. A real conversation. Apivo answers questions, handles special requests, and books appointments in natural language — 24/7.
         </p>
 
         {/* CTA Buttons */}
