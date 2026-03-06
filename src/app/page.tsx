@@ -164,82 +164,6 @@ function ValueProp() {
 }
 
 /* ================================================================
-   Problem / Solution
-   ================================================================ */
-function Versus() {
-  const rows = [
-    { feature: "Booking", old: "Collects info & emails you", us: "Books directly on your calendar" },
-    { feature: "Speed", old: "Client waits for callback", us: "Instant confirmation" },
-    { feature: "Conflicts", old: "Double bookings happen", us: "Real-time availability check" },
-    { feature: "Integrations", old: "No Acuity integration", us: "Native Acuity Scheduling sync" },
-    { feature: "After Hours", old: "Missed calls go to voicemail", us: "AI captures and books 24/7" },
-    { feature: "Languages", old: "English only", us: "29+ languages" },
-  ];
-
-  return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <div className="mb-10 text-center sm:mb-14">
-          <span className="mb-3 inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-600 sm:text-xs">
-            Why switch
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl lg:text-4xl">
-            Not all chatbots are created equal
-          </h2>
-        </div>
-
-        <div className="overflow-hidden rounded-2xl border border-black/[.08] shadow-[0_2px_24px_rgba(0,0,0,.06)]">
-          {/* Column headers */}
-          <div className="grid grid-cols-[1fr_1fr] border-b border-black/[.06] bg-[#fafafa] sm:grid-cols-[1fr_1fr]">
-            <div className="flex items-center gap-2 border-r border-black/[.06] px-4 py-3.5 sm:px-6 sm:py-4">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500/10 text-xs text-red-500 sm:h-6 sm:w-6">
-                ✕
-              </span>
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 sm:text-sm">
-                Other Chatbots
-              </span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-3.5 sm:px-6 sm:py-4">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500/10 text-xs text-green-600 sm:h-6 sm:w-6">
-                ✓
-              </span>
-              <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600 sm:text-sm">
-                Apivo
-              </span>
-            </div>
-          </div>
-
-          {/* Rows */}
-          {rows.map((r, i) => (
-            <div
-              key={i}
-              className={`grid grid-cols-[1fr_1fr] items-center ${i < rows.length - 1 ? "border-b border-black/[.06]" : ""}`}
-            >
-              <div className="border-r border-black/[.06] px-4 py-3 sm:px-6">
-                <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
-                  {r.feature}
-                </span>
-                <span className="text-xs leading-snug text-zinc-500 sm:text-sm">
-                  {r.old}
-                </span>
-              </div>
-              <div className="bg-indigo-500/[.02] px-4 py-3 sm:px-6">
-                <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
-                  {r.feature}
-                </span>
-                <span className="text-xs font-medium leading-snug text-zinc-800 sm:text-sm">
-                  {r.us}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ================================================================
    How It Works
    ================================================================ */
 function HowItWorks() {
@@ -426,6 +350,8 @@ function NotCalendly() {
                 "Selects a slot with no context",
                 "No questions answered",
                 "No special requests handled",
+                "Misses calls after hours",
+                "English only",
                 "Feels like filling out a form",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-zinc-400">
@@ -446,6 +372,8 @@ function NotCalendly() {
                 "Handles special requests naturally",
                 "Manages the full booking lifecycle",
                 "Reschedules and cancels in chat",
+                "Captures and books after hours, 24/7",
+                "29+ languages",
                 "Sounds like a member of your team",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-zinc-700">
@@ -667,7 +595,6 @@ export default function HomePage() {
       <Demo />
       <HowItWorks />
       <Features />
-      <Versus />
       <NotCalendly />
       <Calculator />
       <PricingSection />
