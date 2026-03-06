@@ -478,14 +478,14 @@ function Contact() {
                 No forms. No phone tag. Just chat with our AI to get started — the same
                 experience your customers will have.
               </p>
-              <ul className="mt-4 space-y-2 sm:mt-6 inline-block text-left">
+              <ul className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
                 {[
                   "Free consultation & demo",
                   "No contracts — cancel anytime",
                   "Live in days, not weeks",
                 ].map((c, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
-                    <CheckCircle className="h-4 w-4 shrink-0 text-green-500" />
+                    <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />
                     {c}
                   </li>
                 ))}
