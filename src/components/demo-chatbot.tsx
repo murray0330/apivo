@@ -45,33 +45,122 @@ const demoFlow: DemoStep[] = [
     user: 'New client',
     bot: "Great! We'd love to have you. What service are you interested in today?",
     options: [
-      { label: 'Consultation', next: 'consultation' },
-      { label: 'Facial or Treatment', next: 'cleaning_history' },
+      { label: 'Injectables', next: 'svc_injectables' },
+      { label: 'Skin Rejuvenation', next: 'svc_skin' },
+      { label: 'Body & Hair', next: 'svc_body_hair' },
       { label: 'Other service', next: 'other_treatment' },
     ],
   },
+
+  // ── NEW PATIENT: SERVICE CATEGORIES ─────────────────────────
   {
-    id: 'consultation',
-    user: 'Consultation',
-    bot: 'Excellent. A consultation is a great way to get started. What day and time works best for you?',
+    id: 'svc_injectables',
+    user: 'Injectables',
+    bot: 'Which injectable service are you interested in?',
+    options: [
+      { label: 'Botox / Neurotoxins', next: 'svc_botox' },
+      { label: 'Dermal Fillers', next: 'svc_fillers' },
+    ],
+  },
+  {
+    id: 'svc_skin',
+    user: 'Skin Rejuvenation',
+    bot: 'Which skin treatment are you looking for?',
+    options: [
+      { label: 'Chemical Peels', next: 'svc_peels' },
+      { label: 'HydraFacial', next: 'svc_hydra' },
+      { label: 'Microneedling', next: 'svc_micro' },
+      { label: 'IPL Photofacials', next: 'svc_ipl' },
+      { label: 'Laser Skin Resurfacing', next: 'svc_laser' },
+    ],
+  },
+  {
+    id: 'svc_body_hair',
+    user: 'Body & Hair',
+    bot: 'Which service interests you?',
+    options: [
+      { label: 'Laser Hair Removal', next: 'svc_hair_removal' },
+      { label: 'Body Contouring (CoolSculpting/Emsculpt)', next: 'svc_body_contour' },
+    ],
+  },
+
+  // ── NEW PATIENT: SPECIFIC SERVICES ──────────────────────────
+  {
+    id: 'svc_botox',
+    user: 'Botox / Neurotoxins',
+    bot: 'Great choice! What day and time works best for you?',
     options: [
       { label: 'Tomorrow at 2 PM', next: 'check_availability' },
       { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
     ],
   },
   {
-    id: 'cleaning_history',
-    user: 'Facial or Treatment',
-    bot: 'Great choice! When was your last visit with us?',
+    id: 'svc_fillers',
+    user: 'Dermal Fillers',
+    bot: 'Wonderful! What day and time works best for you?',
     options: [
-      { label: 'About 6 months ago', next: 'pick_time' },
-      { label: 'Over a year ago', next: 'pick_time' },
-      { label: "I'm not sure / first time", next: 'pick_time' },
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
     ],
   },
   {
-    id: 'pick_time',
-    bot: "Got it. Let's find a time — what day and time works best for you?",
+    id: 'svc_peels',
+    user: 'Chemical Peels',
+    bot: 'Perfect. What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_hydra',
+    user: 'HydraFacial',
+    bot: 'Great choice! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_micro',
+    user: 'Microneedling',
+    bot: 'Perfect. What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_ipl',
+    user: 'IPL Photofacials',
+    bot: 'Great choice! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_laser',
+    user: 'Laser Skin Resurfacing',
+    bot: 'Perfect. What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_hair_removal',
+    user: 'Laser Hair Removal',
+    bot: 'Great choice! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_body_contour',
+    user: 'Body Contouring (CoolSculpting/Emsculpt)',
+    bot: 'Wonderful! What day and time works best for you?',
     options: [
       { label: 'Tomorrow at 2 PM', next: 'check_availability' },
       { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
@@ -183,20 +272,127 @@ const demoFlow: DemoStep[] = [
   {
     id: 'existing_book',
     user: 'Book a new appointment',
-    bot: "Ok great! Are you looking for a facial, treatment, or something else?",
+    bot: "Great! What service are you looking for?",
     options: [
-      { label: 'Facial', next: 'existing_cleaning' },
-      { label: 'Treatment', next: 'existing_cleaning' },
+      { label: 'Injectables', next: 'ex_svc_injectables' },
+      { label: 'Skin Rejuvenation', next: 'ex_svc_skin' },
+      { label: 'Body & Hair', next: 'ex_svc_body_hair' },
       { label: 'Something else', next: 'existing_other' },
     ],
   },
+
+  // ── EXISTING PATIENT: SERVICE CATEGORIES ────────────────────
   {
-    id: 'existing_cleaning',
-    user: 'Facial',
-    bot: 'When was your last visit with us?',
+    id: 'ex_svc_injectables',
+    user: 'Injectables',
+    bot: 'Which injectable service are you interested in?',
     options: [
-      { label: 'About 6 months ago', next: 'existing_pick_time' },
-      { label: 'Over a year ago', next: 'existing_pick_time' },
+      { label: 'Botox / Neurotoxins', next: 'ex_svc_botox' },
+      { label: 'Dermal Fillers', next: 'ex_svc_fillers' },
+    ],
+  },
+  {
+    id: 'ex_svc_skin',
+    user: 'Skin Rejuvenation',
+    bot: 'Which skin treatment are you looking for?',
+    options: [
+      { label: 'Chemical Peels', next: 'ex_svc_peels' },
+      { label: 'HydraFacial', next: 'ex_svc_hydra' },
+      { label: 'Microneedling', next: 'ex_svc_micro' },
+      { label: 'IPL Photofacials', next: 'ex_svc_ipl' },
+      { label: 'Laser Skin Resurfacing', next: 'ex_svc_laser' },
+    ],
+  },
+  {
+    id: 'ex_svc_body_hair',
+    user: 'Body & Hair',
+    bot: 'Which service interests you?',
+    options: [
+      { label: 'Laser Hair Removal', next: 'ex_svc_hair_removal' },
+      { label: 'Body Contouring (CoolSculpting/Emsculpt)', next: 'ex_svc_body_contour' },
+    ],
+  },
+
+  // ── EXISTING PATIENT: SPECIFIC SERVICES ─────────────────────
+  {
+    id: 'ex_svc_botox',
+    user: 'Botox / Neurotoxins',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_fillers',
+    user: 'Dermal Fillers',
+    bot: 'Wonderful! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_peels',
+    user: 'Chemical Peels',
+    bot: 'Perfect. What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_hydra',
+    user: 'HydraFacial',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_micro',
+    user: 'Microneedling',
+    bot: 'Perfect. What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_ipl',
+    user: 'IPL Photofacials',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_laser',
+    user: 'Laser Skin Resurfacing',
+    bot: 'Perfect. What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_hair_removal',
+    user: 'Laser Hair Removal',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_body_contour',
+    user: 'Body Contouring (CoolSculpting/Emsculpt)',
+    bot: 'Wonderful! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
     ],
   },
   {
@@ -209,14 +405,6 @@ const demoFlow: DemoStep[] = [
     id: 'existing_consult',
     user: "I'll explain in person",
     bot: "Okay. The next step is a complimentary consultation with our lead aesthetician. What day and time works best?",
-    options: [
-      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
-      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
-    ],
-  },
-  {
-    id: 'existing_pick_time',
-    bot: "Thank you for that information. Let's find a time — what day and time works best for you?",
     options: [
       { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
       { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
