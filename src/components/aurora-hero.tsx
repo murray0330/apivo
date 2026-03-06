@@ -20,15 +20,13 @@ export default function AuroraHero() {
 
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
-          <span className="text-indigo-500">Stop Losing</span> Clients<br />
-          <span className="whitespace-nowrap">to Voicemail</span>
+          <span className="text-indigo-500">A Conversation,</span><br />
+          <span className="whitespace-nowrap">Not a Booking Grid.</span>
         </h1>
 
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
-          Your clients book treatments, consultations, and services
-          24/7 — right from your website. No phone calls. No voicemail. Built
-          specifically for Acuity-powered med spas.
+          Apivo answers your clients&apos; questions, handles special requests, and books appointments in natural language — 24/7. It sounds like a member of your team, not a form.
         </p>
 
         {/* CTA Buttons */}
