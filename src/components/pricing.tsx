@@ -13,7 +13,7 @@ const features = [
   "24/7 appointment booking, rescheduling & canceling",
   "Acuity integration",
   "Automated email confirmations",
-  "Dental knowledge base (answers patient FAQs)",
+  "Knowledge base (answers client FAQs)",
   "29+ language support",
   "CRM integration",
   "White-glove setup & onboarding",
