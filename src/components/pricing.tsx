@@ -26,7 +26,7 @@ export default function Pricing() {
   const price = yearly ? YEARLY_MONTHLY_PRICE : MONTHLY_PRICE;
 
   return (
-    <section id="pricing" className="bg-white py-16 sm:py-24">
+    <section id="pricing" className="bg-[#fafafa] py-16 sm:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="mb-10 text-center sm:mb-14">
           <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
