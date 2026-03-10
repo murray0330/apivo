@@ -51,7 +51,7 @@ export default function Navbar() {
 
         {/* Login */}
         <a
-          href="/login"
+          href="https://dashboard.apivo.ai/login"
           className="flex h-7 w-7 items-center justify-center rounded-full bg-black/[.06] text-[11px] font-medium text-zinc-900 transition-colors hover:bg-black/[.10] sm:h-auto sm:w-auto sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-xs"
         >
           <LogIn className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
