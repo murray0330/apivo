@@ -47,10 +47,12 @@ export default function RevenueCalculator() {
     update(index, num);
   };
 
-  const APIVO_COST = 297;
+  const APIVO_MONTHLY = 297;
+  const APIVO_ANNUAL = 2316;
   const [missed, avgValue] = values;
   const total = missed * 4 * avgValue;
-  const roi = total - APIVO_COST;
+  const roi = total - APIVO_MONTHLY;
+  const annualSavings = total * 12 - APIVO_ANNUAL;
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -146,8 +148,8 @@ export default function RevenueCalculator() {
           <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
             Annual savings with Apivo
           </p>
-          <p className={`mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl ${roi * 12 >= 0 ? "text-indigo-600" : "text-red-500"}`}>
-            {roi * 12 >= 0 ? "+" : "−"}${Math.abs(roi * 12).toLocaleString()}
+          <p className={`mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl ${annualSavings >= 0 ? "text-indigo-600" : "text-red-500"}`}>
+            {annualSavings >= 0 ? "+" : "−"}${Math.abs(annualSavings).toLocaleString()}
             <span className="text-sm font-normal text-zinc-400">/yr</span>
           </p>
           <p className="mt-1.5 text-[10px] text-zinc-400 sm:text-[11px]">
