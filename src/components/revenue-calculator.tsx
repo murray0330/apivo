@@ -150,6 +150,9 @@ export default function RevenueCalculator() {
             {roi * 12 >= 0 ? "+" : "−"}${Math.abs(roi * 12).toLocaleString()}
             <span className="text-sm font-normal text-zinc-400">/yr</span>
           </p>
+          <p className="mt-1.5 text-[10px] text-zinc-400 sm:text-[11px]">
+            Apivo subscription ($3,564/yr) already deducted
+          </p>
         </div>
       </div>
     </div>
