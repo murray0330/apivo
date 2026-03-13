@@ -140,13 +140,13 @@ function HowItWorks() {
     },
     {
       num: "02",
-      title: "We Connect to Your Acuity Account",
+      title: "We Sync With Acuity",
       desc: "We sync directly with your Acuity Scheduling calendar. Your chatbot sees live availability and books appointments without conflicts.",
     },
     {
       num: "03",
       title: "Embed & Go Live",
-      desc: "One snippet on your website. Your AI is live, booking appointments 24/7, sending confirmations automatically.",
+      desc: "One snippet on your website. Your AI is live — answering questions, booking appointments, and handling reschedules and cancellations 24/7.",
     },
   ];
   return (
