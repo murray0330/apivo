@@ -146,7 +146,7 @@ function HowItWorks() {
     {
       num: "03",
       title: "Embed & Go Live",
-      desc: "One snippet on your website. Your AI is live — answering questions, booking appointments, and handling reschedules and cancellations 24/7.",
+      desc: "One snippet on your website. Your AI is live in 48 hours — answering questions, booking appointments, and handling reschedules and cancellations 24/7.",
     },
   ];
   return (
