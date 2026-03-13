@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { RefreshCw, Calendar, Mail, Users, XCircle, Sparkles } from 'lucide-react';
+import { RefreshCw, Calendar, Mail, Users, XCircle, Sparkles, Send } from 'lucide-react';
 
 /* ── types ────────────────────────────────────────────────── */
 interface DemoOption {
@@ -779,10 +779,13 @@ export default function DemoChatbot() {
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-50">
           <Sparkles className="h-3.5 w-3.5 text-indigo-500" strokeWidth={1.75} />
         </div>
-        <span className="text-sm font-medium text-zinc-700">ABC Med Spa</span>
-        <span className="ml-auto rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-500">
-          Online
-        </span>
+        <div className="flex flex-col">
+          <span className="text-sm font-medium text-zinc-700">ABC Med Spa</span>
+          <span className="flex items-center gap-1 text-[10px] font-medium text-green-500">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+            Online
+          </span>
+        </div>
       </div>
 
       {/* Messages */}
@@ -869,8 +872,23 @@ export default function DemoChatbot() {
         )}
       </div>
 
-      {/* Footer restart */}
+      {/* Input bar */}
       <div className="shrink-0 border-t border-black/[.08] bg-white px-4 py-3">
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            placeholder="Type a message..."
+            className="flex-1 rounded-full border border-black/[.08] bg-[#fafafa] px-4 py-2 text-sm text-zinc-700 placeholder-zinc-400 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100"
+            readOnly
+          />
+          <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-500 text-white shadow-sm transition-colors hover:bg-indigo-600">
+            <Send className="h-4 w-4" strokeWidth={1.75} />
+          </button>
+        </div>
+      </div>
+
+      {/* Footer restart */}
+      <div className="shrink-0 bg-white px-4 pb-3">
         <button
           onClick={startDemo}
           className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"

@@ -249,17 +249,17 @@ function Demo() {
           <div>
             <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Try It Right Now</h3>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-base">
-              Step into your client&apos;s shoes and witness the future of your front desk. Use the demo chat to experience how Apivo grants you the freedom to focus on care while your calendar fills itself—accurately, instantly, and without the phone tag.
+              Step into your client&apos;s shoes. This is the same AI your website visitors will experience — trained on your services, knowing your availability, booking appointments in real time without your staff involved.
             </p>
             <ul className="mt-4 space-y-2 sm:mt-6">
               {[
                 "Real-time calendar availability check",
+                "Service and pricing questions answered instantly",
                 "Appointment placed directly on calendar",
-                "Confirmation email sent automatically",
-                "Contact saved to CRM",
+                "Contact saved to Acuity",
               ].map((c, i) => (
                 <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
-                  <CheckCircle className="h-4 w-4 shrink-0 text-green-500" />
+                  <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />
                   {c}
                 </li>
               ))}
@@ -268,7 +268,7 @@ function Demo() {
               {[
                 { stat: "< 90s", label: "Average booking time" },
                 { stat: "24/7", label: "Always available" },
-                { stat: "0", label: "Missed after-hours appointments" },
+                { stat: "29+", label: "Languages Supported" },
               ].map((item) => (
                 <div
                   key={item.label}
