@@ -773,6 +773,7 @@ export default function DemoChatbot() {
   }, [startDemo]);
 
   return (
+    <>
     <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-black/[.08] bg-white shadow-[0_2px_20px_rgba(0,0,0,0.06)]" style={{ height: 'min(520px, calc(100vh - 200px))' }}>
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b border-black/[.08] px-4 py-3">
@@ -887,16 +888,16 @@ export default function DemoChatbot() {
         </div>
       </div>
 
-      {/* Footer restart */}
-      <div className="shrink-0 bg-white px-4 pb-3">
-        <button
-          onClick={startDemo}
-          className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
-        >
-          <RefreshCw className="h-3.5 w-3.5" />
-          Restart Demo
-        </button>
-      </div>
     </div>
+    <div className="mt-3 flex justify-center">
+      <button
+        onClick={startDemo}
+        className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
+      >
+        <RefreshCw className="h-3.5 w-3.5" />
+        Restart Demo
+      </button>
+    </div>
+    </>
   );
 }
