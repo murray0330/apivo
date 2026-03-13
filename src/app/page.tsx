@@ -280,7 +280,9 @@ function Demo() {
               ))}
             </div>
           </div>
-          <DemoChatbot />
+          <div className="mx-auto w-full max-w-sm">
+            <DemoChatbot />
+          </div>
         </div>
       </div>
     </section>
