@@ -21,12 +21,12 @@ export default function AuroraHero() {
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
           <span className="text-indigo-500">Stop Losing</span> Clients<br />
-          <span className="whitespace-nowrap">to Voicemail</span>
+          <span className="whitespace-nowrap">After Hours</span>
         </h1>
 
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
-          Not a calendar grid. A real conversation. Apivo answers questions, handles special requests, and books appointments in natural language — 24/7.
+          Not a booking link. An AI trained on your services, your pricing, and your FAQs — that answers real questions and books appointments 24/7, completely hands-free.
         </p>
 
         {/* CTA Buttons */}
@@ -47,10 +47,10 @@ export default function AuroraHero() {
 
         {/* Micro Details */}
         <ul className="mt-4 flex flex-wrap gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["Personalize Chatbot", "Analytics Dashboard", "Cancel Anytime"].map(
+          {["Personalized Chatbot", "Syncs with Acuity", "Cancel Anytime"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
-                <span className="text-emerald-500">✓</span>
+                <span className="text-indigo-500">✓</span>
                 {detail}
               </li>
             )

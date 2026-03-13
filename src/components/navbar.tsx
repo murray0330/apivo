@@ -5,7 +5,7 @@ import { Info, MessageSquare, Star, DollarSign, Mail, LogIn } from "lucide-react
 export default function Navbar() {
   const links = [
     { href: "#about", label: "About", icon: Info },
-    { href: "#demo", label: "Demo", icon: MessageSquare },
+    { href: "#demo", label: "Try It", icon: MessageSquare },
     { href: "#features", label: "Features", icon: Star },
     { href: "#pricing", label: "Pricing", icon: DollarSign },
   ];
