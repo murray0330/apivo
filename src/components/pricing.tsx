@@ -10,12 +10,11 @@ const YEARLY_TOTAL = YEARLY_MONTHLY_PRICE * 12;
 
 const features = [
   "AI Chat Widget for your website",
+  "Knowledge base trained on your practice",
   "24/7 appointment booking, rescheduling & canceling",
-  "Acuity integration",
-  "Automated email confirmations",
-  "Knowledge base (answers client FAQs)",
+  "Real-time analytics dashboard",
+  "Acuity integration — live in 48 hours",
   "29+ language support",
-  "CRM integration",
   "White-glove setup & onboarding",
   "Ongoing support",
 ];
