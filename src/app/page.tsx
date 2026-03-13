@@ -141,7 +141,7 @@ function HowItWorks() {
     {
       num: "02",
       title: "We Sync With Acuity",
-      desc: "We sync directly with your Acuity Scheduling calendar. Your chatbot sees live availability and books appointments without conflicts.",
+      desc: "Your Acuity Scheduling chatbot syncs directly with your calendar — sees live availability and books appointments without conflicts.",
     },
     {
       num: "03",
@@ -209,7 +209,7 @@ function Features() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHead
           tag="Features"
-          title="Everything Your Front Desk Does — On Autopilot"
+          title="Med Spa Booking Automation — On Autopilot"
         />
         <div className="mt-10 grid gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {feats.map((f) => (
@@ -302,7 +302,7 @@ function NotCalendly() {
             Apivo is a team member.<br className="hidden sm:block" /> Not a booking form.
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Other tools hand your clients a calendar grid. Apivo has a conversation.
+            Other tools hand your clients a calendar grid. Apivo is an AI receptionist for med spas — it actually converses.
           </p>
         </div>
 
@@ -476,7 +476,7 @@ function Footer() {
           <div className="sm:col-span-2 md:col-span-1">
             <img src="/apivo-logo_black.png" alt="Apivo" className="h-8 w-auto sm:h-10" />
             <p className="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-sm">
-              AI Booking Assistant for Your Website
+              AI Booking Assistant for Med Spas
             </p>
           </div>
           {[

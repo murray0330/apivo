@@ -3,10 +3,14 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Apivo | AI Booking Assistant for Your Website",
+  title: "AI Booking Assistant for Med Spas | Apivo",
   description:
-    "Apivo is an AI chatbot that lives on your website, books appointments directly to your calendar, answers patient questions in 29+ languages, and never double-books — no staff required.",
+    "Apivo is an AI chat widget built for Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
   keywords: [
+    "AI booking assistant for med spas",
+    "Acuity Scheduling chatbot",
+    "med spa booking automation",
+    "AI receptionist med spa",
     "AI booking assistant",
     "AI chatbot appointment booking",
     "website chatbot",
@@ -14,8 +18,6 @@ export const metadata: Metadata = {
     "AI front desk",
     "appointment chatbot",
     "calendar booking AI",
-    "patient scheduling AI",
-    "no double booking",
     "Apivo",
   ],
   robots: {
@@ -30,9 +32,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Apivo | AI Booking Assistant for Your Website",
+    title: "AI Booking Assistant for Med Spas | Apivo",
     description:
-      "An AI chatbot that books appointments, answers questions, and runs your front desk — 24/7, on autopilot.",
+      "Apivo is an AI chat widget built for Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
     url: "https://apivo.ai",
     siteName: "Apivo",
     locale: "en_US",
@@ -40,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Apivo | AI Booking Assistant for Your Website",
+    title: "AI Booking Assistant for Med Spas | Apivo",
     description:
-      "An AI chatbot that books appointments, answers questions, and runs your front desk — 24/7, on autopilot.",
+      "Apivo is an AI chat widget built for Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
     site: "@apivo_ai",
   },
   alternates: {

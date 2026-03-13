@@ -26,7 +26,7 @@ export default function AuroraHero() {
 
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
-          Not a booking link. An AI trained on your services, your pricing, and your FAQs — that answers real questions and books appointments 24/7, completely hands-free.
+          Not a booking link. An AI receptionist built for med spas — trained on your services, pricing, and FAQs — that answers real questions and books appointments 24/7, completely hands-free.
         </p>
 
         {/* CTA Buttons */}
