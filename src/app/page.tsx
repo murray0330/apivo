@@ -313,11 +313,11 @@ function NotCalendly() {
             <h3 className="mt-3 text-lg font-semibold text-zinc-500 sm:text-xl">Shows a grid of times.</h3>
             <ul className="mt-5 space-y-3">
               {[
-                "Client lands on a calendar picker",
+                "Shows a grid of times",
                 "Selects a slot with no context",
                 "Cannot answer service or pricing questions",
                 "No special requests handled",
-                "Misses calls after hours",
+                "Misses inquiries after hours",
                 "English only",
                 "Feels like filling out a form",
               ].map((item) => (
@@ -335,13 +335,13 @@ function NotCalendly() {
             <h3 className="mt-3 text-lg font-semibold text-zinc-900 sm:text-xl">Actually converses.</h3>
             <ul className="mt-5 space-y-3">
               {[
-                "Answers service and pricing questions",
-                "Knows your specific services and pricing",
+                "Has a real conversation",
+                "Trained on your services, pricing, and FAQs",
+                "Answers any client question accurately",
                 "Handles special requests naturally",
-                "Manages the full booking lifecycle",
-                "Captures and books after hours, 24/7",
-                "29+ languages",
-                "Sounds like a member of your team",
+                "Books after hours, 24/7",
+                "29+ languages, automatically",
+                "Represents your business like a pro",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-zinc-700">
                   <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-[10px] text-indigo-600">✓</span>
