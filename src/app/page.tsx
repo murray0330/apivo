@@ -379,27 +379,35 @@ function FAQ() {
   const items = [
     {
       q: "How is this different from Calendly or other booking tools?",
-      a: "Calendly shows a grid of times. Apivo actually converses — it answers service and pricing questions, handles special requests, and manages the full booking lifecycle in natural language. It sounds like a member of your team, not a form.",
+      a: "Calendly and booking tools do one thing — they show your availability and collect a name. They have no knowledge of your business. They can't tell a visitor which treatment is right for them, explain what a service involves, or answer a single question about your practice. Apivo does all of that — because it's trained on your specific knowledge base before it goes live. That's what turns a browser into a booking.",
+    },
+    {
+      q: "How does the AI know about my services and pricing?",
+      a: "Before going live, we build a custom knowledge base for your practice — covering your full service menu, pricing, treatment details, contraindications, policies, and the FAQs your front desk handles every day. The AI is trained on this and only answers based on it. It will never pull generic information from the internet or guess at an answer. If it doesn't know something, it says so and offers to have a staff member follow up. This is what makes Apivo an expert, not just a booking link.",
     },
     {
       q: "Do you work with Acuity Scheduling?",
-      a: "Yes — Apivo is built specifically for Acuity. We connect directly to your Acuity account so your chatbot reads live availability and books appointments right into it. No double bookings, no manual entry.",
+      a: "Yes — Acuity is our primary integration. We sync directly with your Acuity calendar, see live availability, and book appointments in real time. Acuity clients are typically live within 48 hours of onboarding. We also support Mindbody, Boulevard, and Jane App — approximately 7 days for each.",
     },
     {
-      q: "How long does setup take?",
-      a: "Most med spas are live within 48 hours. We handle everything — calendar integration, knowledge base setup, and widget installation.",
-    },
-    {
-      q: "Can it handle rescheduling and cancellations?",
-      a: "Yes. Clients can book, reschedule, or cancel entirely through the chat. Your calendar updates in real time.",
-    },
-    {
-      q: "What if a client asks something the AI doesn't know?",
-      a: "It lets the client know a team member will follow up shortly. You stay in control of edge cases.",
+      q: "Does Apivo replace my front desk?",
+      a: "No. Apivo handles inbound booking inquiries from your website so your team can focus on in-person clients and higher-value tasks. It works alongside your existing staff, not instead of them.",
     },
     {
       q: "Is there a contract?",
-      a: "None. Month-to-month only. Cancel anytime with no penalty.",
+      a: "The monthly plan is month-to-month — cancel anytime, no commitment. The annual plan is a one-year commitment billed upfront at a 35% discount, with your price locked forever after that first year.",
+    },
+    {
+      q: "How quickly will I see results?",
+      a: "Most clients see their first AI-booked appointment within the first day of going live. The impact grows over time as the agent handles more after-hours and overflow inquiries that would have previously gone unanswered.",
+    },
+    {
+      q: "What if the AI can't answer a question?",
+      a: "The agent is configured to acknowledge what it doesn't know and offer to have a staff member follow up. It will never guess or fabricate an answer. Accuracy is the priority.",
+    },
+    {
+      q: "Is my client data secure?",
+      a: "Yes. Apivo collects only what a standard booking form does — name, contact, service, and appointment time. No clinical data, no PHI. Every client's data is isolated and stored securely — no practice can see another's information. Your client records never leave Acuity.",
     },
   ];
   return (
