@@ -173,35 +173,35 @@ function HowItWorks() {
 function Features() {
   const feats = [
     {
-      icon: Calendar,
-      title: "Zero Double Bookings",
-      desc: "Real-time calendar check before offering any slot. Configurable buffer times. Booked slots are never shown.",
-      highlight: true,
-    },
-    {
       icon: MessageSquare,
-      title: "Smart Business Q&A",
-      desc: "AI-powered knowledge retrieval answers any customer question from your uploaded docs.",
-    },
-    {
-      icon: Mail,
-      title: "Automatic Emails",
-      desc: "Booking, rescheduling, or cancellation — confirmation emails fire instantly.",
-    },
-    {
-      icon: Users,
-      title: "CRM Integration",
-      desc: "Contacts auto-created in your CRM of choice. Deals and records sync instantly.",
-    },
-    {
-      icon: RefreshCw,
-      title: "Full Lifecycle",
-      desc: "Book, reschedule, cancel — all through the chatbot. Calendar updates in real time.",
+      title: "Knows Your Business",
+      desc: "Trained on your services, pricing, treatments, and FAQs — answers client questions like a team member before booking the appointment. It never guesses. It only knows your practice.",
+      highlight: true,
     },
     {
       icon: Globe,
       title: "29+ Languages",
-      desc: "Auto-detects the customer's language and responds natively. Global-ready.",
+      desc: "Detects your client's language automatically and responds fluently — Spanish, Korean, Arabic, and 26 more. No setup required. No other booking tool offers this.",
+    },
+    {
+      icon: RefreshCw,
+      title: "Full Lifecycle",
+      desc: "Book, reschedule, and cancel — all through the chat. Your Acuity calendar updates in real time, every time.",
+    },
+    {
+      icon: Calendar,
+      title: "Real-Time Availability",
+      desc: "Every slot offered is checked against your live Acuity calendar the moment a client asks. No back and forth, no booking errors, no awkward follow-up calls.",
+    },
+    {
+      icon: DollarSign,
+      title: "Your Dashboard",
+      desc: "Every booking, reschedule, and cancellation logged in real time. See appointments, time saved, and revenue attributed to your AI — all in one place.",
+    },
+    {
+      icon: CheckCircle,
+      title: "HIPAA-Friendly",
+      desc: "Apivo collects only what a standard booking form does — name, contact, service, and time. No clinical data, no PHI. Your client records never leave Acuity.",
     },
   ];
   return (
