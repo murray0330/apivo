@@ -399,7 +399,7 @@ function FAQ() {
     },
     {
       q: "How quickly will I see results?",
-      a: "Most clients see their first AI-booked appointment within the first day of going live. The impact grows over time as the agent handles more after-hours and overflow inquiries that would have previously gone unanswered.",
+      a: "Your AI is live and booking from day one. The impact grows over time as it captures after-hours and overflow inquiries that would have previously gone unanswered.",
     },
     {
       q: "What if the AI can't answer a question?",
