@@ -438,19 +438,18 @@ function Contact() {
                 Get Started
               </p>
               <h2 className="mt-2 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl md:text-4xl">
-                Ready to Automate
+                Ready to Fill Your Calendar
                 <br />
-                Your Bookings?
+                After Hours?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
-                No forms. No phone tag. Just chat with our AI to get started — the same
-                experience your customers will have.
+                See exactly what your clients will experience. Chat with our AI to book a free consultation — no forms, no phone tag, no emailing back and forth.
               </p>
               <ul className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
                 {[
                   "Free consultation",
                   "No contracts",
-                  "Live in days, not weeks",
+                  "Live in 48 hours",
                 ].map((c, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
                     <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />
