@@ -69,19 +69,19 @@ function ValueProp() {
     {
       stat: "30%",
       label: "More Appointments",
-      desc: "Never miss an after-hours lead. Your AI captures and books inquiries around the clock.",
+      desc: "Never miss an after-hours booking. Your AI captures and books inquiries around the clock.",
       icon: Calendar,
     },
     {
       stat: "3+ hrs",
       label: "Back Every Day",
-      desc: "No more answering booking calls or chasing confirmations — it's all handled automatically.",
+      desc: "Stop answering the same questions every day. Your AI handles every service, pricing, and FAQ inquiry automatically — giving your team hours back.",
       icon: Clock,
     },
     {
       stat: "24/7",
       label: "Always Available",
-      desc: "Your AI never sleeps, never takes a break, and never puts a customer on hold.",
+      desc: "Whether it's 2pm or 2am, your AI is on — answering questions, booking appointments, never putting a client on hold.",
       icon: Globe,
     },
   ];
@@ -99,8 +99,8 @@ function ValueProp() {
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
             Apivo is an AI booking assistant built specifically for Acuity-powered med spas.
-            It lives on your website, syncs directly with your Acuity calendar, books
-            appointments in real time, and sends confirmation emails — all without a human ever touching it.
+            It lives on your website, trained on your services, pricing, and FAQs — answers real questions,
+            books appointments in real time, and speaks your clients&apos; language, in 29+ languages automatically.
           </p>
         </div>
 
