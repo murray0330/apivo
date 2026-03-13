@@ -315,7 +315,7 @@ function NotCalendly() {
               {[
                 "Client lands on a calendar picker",
                 "Selects a slot with no context",
-                "No questions answered",
+                "Cannot answer service or pricing questions",
                 "No special requests handled",
                 "Misses calls after hours",
                 "English only",
@@ -336,9 +336,9 @@ function NotCalendly() {
             <ul className="mt-5 space-y-3">
               {[
                 "Answers service and pricing questions",
+                "Knows your specific services and pricing",
                 "Handles special requests naturally",
                 "Manages the full booking lifecycle",
-                "Reschedules and cancels in chat",
                 "Captures and books after hours, 24/7",
                 "29+ languages",
                 "Sounds like a member of your team",
