@@ -84,8 +84,8 @@ export default function Pricing() {
                 <span className="text-sm text-indigo-200">/month</span>
               </div>
               {yearly ? (
-                <p className="mt-1.5 text-xs text-indigo-200">
-                  Billed ${YEARLY_TOTAL.toLocaleString()}/yr &mdash; save ${((MONTHLY_PRICE - YEARLY_MONTHLY_PRICE) * 12).toLocaleString()}
+                <p className="mt-3 text-sm text-indigo-100/80">
+                  Billed annually. Save ${((MONTHLY_PRICE - YEARLY_MONTHLY_PRICE) * 12).toLocaleString()} — price locked forever after your first year.
                 </p>
               ) : (
                 <p className="mt-3 text-sm text-indigo-100/80">
