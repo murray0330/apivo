@@ -17,6 +17,7 @@ import {
   DollarSign,
   CheckCircle,
   Clock,
+  BarChart2,
 } from "lucide-react";
 
 
@@ -141,7 +142,7 @@ function HowItWorks() {
     {
       num: "02",
       title: "We Sync With Acuity",
-      desc: "Your Acuity Scheduling chatbot syncs directly with your calendar — sees live availability and books appointments without conflicts.",
+      desc: "We sync directly with your Acuity Scheduling calendar — your AI sees live availability and books appointments without conflicts.",
     },
     {
       num: "03",
@@ -194,7 +195,7 @@ function Features() {
       desc: "Every slot offered is checked against your live Acuity calendar the moment a client asks. No back and forth, no booking errors, no awkward follow-up calls.",
     },
     {
-      icon: DollarSign,
+      icon: BarChart2,
       title: "Your Dashboard",
       desc: "Every booking, reschedule, and cancellation logged in real time. See appointments, time saved, and revenue attributed to your AI — all in one place.",
     },
