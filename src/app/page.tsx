@@ -215,18 +215,18 @@ function Features() {
           {feats.map((f) => (
             <article
               key={f.title}
-              className={`group rounded-2xl border p-5 transition-colors sm:p-6 ${
+              className={`group relative rounded-2xl border p-5 transition-colors sm:p-6 ${
                 f.highlight
                   ? "border-indigo-500/20 bg-indigo-50/50 shadow-[0_2px_20px_rgba(0,0,0,.06)]"
                   : "border-black/[.08] bg-white shadow-[0_2px_20px_rgba(0,0,0,.06)] hover:border-black/[.15]"
               }`}
             >
-              <f.icon className="h-8 w-8 text-indigo-500 sm:h-10 sm:w-10" strokeWidth={1.5} />
               {f.highlight && (
-                <span className="mt-3 inline-block rounded-full bg-indigo-500/10 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-indigo-600">
+                <span className="absolute right-4 top-4 rounded-full bg-indigo-500/10 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-indigo-600">
                   Core Differentiator
                 </span>
               )}
+              <f.icon className="h-8 w-8 text-indigo-500 sm:h-10 sm:w-10" strokeWidth={1.5} />
               <h3 className="mt-3 text-sm font-semibold text-zinc-900 sm:text-base">{f.title}</h3>
               <p className="mt-1.5 text-xs leading-relaxed text-zinc-500 sm:text-sm">{f.desc}</p>
             </article>
