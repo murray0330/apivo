@@ -341,7 +341,7 @@ function NotCalendly() {
                 "Handles special requests naturally",
                 "Books after hours, 24/7",
                 "29+ languages, automatically",
-                "Represents your business like a pro",
+                "Feels like a team member",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-zinc-700">
                   <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-[10px] text-indigo-600">✓</span>
