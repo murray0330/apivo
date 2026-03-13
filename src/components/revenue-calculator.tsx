@@ -52,7 +52,7 @@ export default function RevenueCalculator() {
   const [missed, avgValue] = values;
   const total = missed * 4 * avgValue;
   const roi = total - APIVO_MONTHLY;
-  const annualSavings = total * 12 - APIVO_ANNUAL;
+  const annualSavings = total * 12 - APIVO_MONTHLY * 12;
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -153,7 +153,7 @@ export default function RevenueCalculator() {
             <span className="text-sm font-normal text-zinc-400">/yr</span>
           </p>
           <p className="mt-1.5 text-[10px] text-zinc-400 sm:text-[11px]">
-            Includes additional annual plan savings of $1,248/yr
+            Switch to annual and save an additional $1,248/yr
           </p>
         </div>
       </div>
