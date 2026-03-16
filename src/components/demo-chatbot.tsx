@@ -880,6 +880,7 @@ export default function DemoChatbot() {
             type="text"
             placeholder="Type a message..."
             className="flex-1 rounded-full border border-black/[.08] bg-[#fafafa] px-4 py-2 text-sm text-zinc-700 placeholder-zinc-400 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100"
+            style={{ fontSize: '16px' }}
             readOnly
           />
           <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-500 text-white shadow-sm transition-colors hover:bg-indigo-600">
