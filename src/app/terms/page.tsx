@@ -27,7 +27,7 @@ export default function TermsOfService() {
       <main className="mx-auto max-w-4xl px-6 py-16 sm:py-24">
         <div className="mb-12">
           <h1 className="text-3xl font-light tracking-tight text-zinc-900 sm:text-4xl">Terms of Service</h1>
-          <p className="mt-3 text-sm font-light text-zinc-400">Effective Date: March 1, 2026 &nbsp;·&nbsp; Last Updated: March 1, 2026</p>
+          <p className="mt-3 text-sm font-light text-zinc-400">Effective Date: March 1, 2026 &nbsp;·&nbsp; Last Updated: March 24, 2026</p>
         </div>
 
         <div className="space-y-12 text-sm font-light leading-relaxed text-zinc-600 sm:text-base">
@@ -35,7 +35,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">1. Agreement to Terms</h2>
             <p>By accessing or using Apivo&apos;s services — including our AI chat widget, website, and related tools — you (&quot;Client&quot; or &quot;you&quot;) agree to be bound by these Terms of Service. If you do not agree, do not use our services.</p>
-            <p className="mt-3">These Terms apply to appointment-based businesses that subscribe to Apivo&apos;s services.</p>
+            <p className="mt-3">These Terms apply to appointment-based businesses across the United States that subscribe to Apivo&apos;s services.</p>
           </section>
 
           <section>
@@ -43,19 +43,20 @@ export default function TermsOfService() {
             <p className="mb-3">Apivo provides an AI-powered appointment booking widget that:</p>
             <ul className="mb-4 list-disc space-y-1 pl-5">
               <li>Engages website visitors in natural language conversation</li>
-              <li>Checks real-time calendar availability via Acuity</li>
+              <li>Checks real-time calendar availability via Acuity Scheduling</li>
               <li>Books, reschedules, and cancels appointments automatically</li>
               <li>Sends email confirmations to clients</li>
               <li>Syncs contact data to a connected CRM or spreadsheet (optional)</li>
               <li>Answers client FAQs via a configured knowledge base</li>
             </ul>
-            <p>The service is powered by VAPI (AI infrastructure) and n8n (workflow automation).</p>
+            <p>The service is powered by VAPI (AI infrastructure), ElevenLabs (multi-language processing), Azure OpenAI (language model), and n8n (workflow automation).</p>
           </section>
 
           <section>
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">3. Subscription &amp; Payment</h2>
             <ul className="list-disc space-y-2 pl-5">
               <li>Apivo is offered on a month-to-month subscription at the current listed price on apivo.ai</li>
+              <li>Subscriptions renew automatically each month unless cancelled before the next billing date</li>
               <li>Billing occurs monthly on the date of signup</li>
               <li>No long-term contracts. You may cancel at any time</li>
               <li>Early adopter pricing, where applicable, is locked in for the lifetime of the subscription as long as it remains active and in good standing</li>
@@ -73,7 +74,7 @@ export default function TermsOfService() {
               <li>Not use Apivo for any unlawful purpose</li>
               <li>Not attempt to reverse engineer, copy, or resell the Apivo service</li>
             </ul>
-            <p className="rounded-xl border border-black/[.08] bg-zinc-50 px-4 py-3 text-zinc-500">Important: You are solely responsible for ensuring your business&apos;s compliance with all applicable laws and regulations. Apivo provides tools with privacy-conscious settings enabled but you remain responsible for your own compliance obligations.</p>
+            <p className="rounded-xl border border-black/[.08] bg-zinc-50 px-4 py-3 text-zinc-500">Important: You are solely responsible for ensuring your business&apos;s compliance with all applicable laws and regulations, including any industry-specific requirements. Apivo provides tools with privacy-conscious settings enabled but you remain responsible for your own compliance obligations.</p>
           </section>
 
           <section>
@@ -86,7 +87,7 @@ export default function TermsOfService() {
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">6. Uptime &amp; Service Availability</h2>
             <p className="mb-3">We strive for high availability but do not guarantee uninterrupted service. Downtime may occur due to:</p>
             <ul className="mb-4 list-disc space-y-1 pl-5">
-              <li>Third-party service outages (VAPI, n8n, Google, Acuity)</li>
+              <li>Third-party service outages (VAPI, ElevenLabs, Azure OpenAI, n8n, Acuity Scheduling)</li>
               <li>Scheduled maintenance</li>
               <li>Events beyond our control</li>
             </ul>
@@ -107,28 +108,33 @@ export default function TermsOfService() {
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">8. Termination</h2>
             <p className="mb-3">Either party may terminate the service at any time:</p>
             <ul className="mb-4 list-disc space-y-2 pl-5">
-              <li><span className="font-medium text-zinc-700">You:</span> Cancel anytime via email to <a href="mailto:support@apivo.ai" className="text-indigo-500 hover:text-indigo-400">support@apivo.ai</a> — no penalty, no questions asked</li>
+              <li><span className="font-medium text-zinc-700">You:</span> Cancel anytime via email to <a href="mailto:hello@apivo.ai" className="text-indigo-500 hover:text-indigo-400">hello@apivo.ai</a> — no penalty, no questions asked</li>
               <li><span className="font-medium text-zinc-700">Us:</span> We reserve the right to terminate accounts that violate these Terms, with 7 days written notice except in cases of severe violation</li>
             </ul>
-            <p>Upon termination, your data will be retained for 90 days then deleted unless you request earlier deletion.</p>
+            <p>Upon termination, your data will be retained for 90 days then deleted unless you request earlier deletion at <a href="mailto:hello@apivo.ai" className="text-indigo-500 hover:text-indigo-400">hello@apivo.ai</a>.</p>
           </section>
 
           <section>
-            <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">9. Governing Law</h2>
-            <p>These Terms are governed by the laws of the Commonwealth of Virginia, without regard to conflict of law principles. Any disputes shall be resolved in the courts of Hampton, Virginia.</p>
+            <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">9. Dispute Resolution</h2>
+            <p>Prior to initiating any legal action, both parties agree to attempt resolution through good faith negotiation for a period of 30 days. If the dispute cannot be resolved through negotiation, the parties agree to pursue binding arbitration before resorting to litigation, except where injunctive relief is necessary to prevent irreparable harm.</p>
           </section>
 
           <section>
-            <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">10. Changes to Terms</h2>
+            <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">10. Governing Law</h2>
+            <p>These Terms are governed by the laws of the Commonwealth of Virginia, without regard to conflict of law principles. Any disputes not resolved through arbitration shall be resolved in the courts of Hampton, Virginia.</p>
+          </section>
+
+          <section>
+            <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">11. Changes to Terms</h2>
             <p>We may update these Terms periodically. We will notify you via email at least 14 days before material changes take effect. Continued use after that date constitutes acceptance.</p>
           </section>
 
           <section>
-            <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">11. Contact</h2>
+            <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">12. Contact</h2>
             <address className="not-italic">
               <p className="font-medium text-zinc-800">Apivo</p>
               <p>Hampton, Virginia</p>
-              <p><a href="mailto:support@apivo.ai" className="text-indigo-500 hover:text-indigo-400">support@apivo.ai</a></p>
+              <p><a href="mailto:hello@apivo.ai" className="text-indigo-500 hover:text-indigo-400">hello@apivo.ai</a></p>
               <p><a href="https://apivo.ai" className="text-indigo-500 hover:text-indigo-400">apivo.ai</a></p>
             </address>
           </section>
