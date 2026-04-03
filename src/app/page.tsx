@@ -387,8 +387,8 @@ function FAQ() {
       a: "Before going live, we build a custom knowledge base for your practice — covering your full service menu, pricing, treatment details, contraindications, policies, and the FAQs your front desk handles every day. The AI is trained on this and only answers based on it. It will never pull generic information from the internet or guess at an answer. If it doesn't know something, it says so and offers to have a staff member follow up. This is what makes Apivo an expert, not just a booking link.",
     },
     {
-      q: "Do you work with Square or Acuity Scheduling?",
-      a: "Yes — Square and Acuity are our primary integrations. We sync directly with your Square or Acuity calendar, see live availability, and book appointments in real time. Square and Acuity clients are typically live within 48 hours of onboarding. We also support Mindbody, Boulevard, and Jane App — approximately 7 days for each.",
+      q: "What scheduling software do you integrate with?",
+      a: "Square and Acuity are our primary integrations. We sync directly with your calendar, see live availability, and book appointments in real time — typically live within 48 hours of onboarding. We also support Mindbody, Boulevard, and Jane App — approximately 7 days for each.",
     },
     {
       q: "Does Apivo replace my front desk?",
