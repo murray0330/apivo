@@ -47,7 +47,7 @@ export default function AuroraHero() {
 
         {/* Micro Details */}
         <ul className="mt-4 flex gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["Personalized Chatbot", "Syncs with Acuity", "Cancel Anytime"].map(
+          {["Personalized Chatbot", "Syncs with Square or Acuity", "Cancel Anytime"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
                 <span className="text-indigo-500">✓</span>

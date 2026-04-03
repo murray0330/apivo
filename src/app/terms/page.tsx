@@ -43,7 +43,7 @@ export default function TermsOfService() {
             <p className="mb-3">Apivo provides an AI-powered appointment booking widget that:</p>
             <ul className="mb-4 list-disc space-y-1 pl-5">
               <li>Engages website visitors in natural language conversation</li>
-              <li>Checks real-time calendar availability via Acuity Scheduling</li>
+              <li>Checks real-time calendar availability via Square or Acuity Scheduling</li>
               <li>Books, reschedules, and cancels appointments automatically</li>
               <li>Sends email confirmations to clients</li>
               <li>Syncs contact data to a connected CRM or spreadsheet (optional)</li>
@@ -87,7 +87,7 @@ export default function TermsOfService() {
             <h2 className="mb-4 text-base font-medium text-zinc-900 sm:text-lg">6. Uptime &amp; Service Availability</h2>
             <p className="mb-3">We strive for high availability but do not guarantee uninterrupted service. Downtime may occur due to:</p>
             <ul className="mb-4 list-disc space-y-1 pl-5">
-              <li>Third-party service outages (VAPI, ElevenLabs, Azure OpenAI, n8n, Acuity Scheduling)</li>
+              <li>Third-party service outages (VAPI, ElevenLabs, Azure OpenAI, n8n, Square or Acuity Scheduling)</li>
               <li>Scheduled maintenance</li>
               <li>Events beyond our control</li>
             </ul>

@@ -13,7 +13,7 @@ const features = [
   "Knowledge base trained on your practice",
   "24/7 appointment booking, rescheduling & canceling",
   "Real-time analytics dashboard",
-  "Acuity integration — live in 48 hours",
+  "Square or Acuity integration — live in 48 hours",
   "29+ language support",
   "White-glove setup & onboarding",
   "Ongoing support",

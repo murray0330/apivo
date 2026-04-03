@@ -99,7 +99,7 @@ function ValueProp() {
             Your Front Desk Automated.
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Apivo is an AI booking assistant built specifically for Acuity-powered med spas.
+            Apivo is an AI booking assistant built specifically for med spas on Square or Acuity.
             It lives on your website, trained on your services, pricing, and FAQs — answers real questions,
             books appointments in real time, and speaks your clients&apos; language, in 29+ languages automatically.
           </p>
@@ -141,8 +141,8 @@ function HowItWorks() {
     },
     {
       num: "02",
-      title: "We Sync With Acuity",
-      desc: "We sync directly with your Acuity Scheduling calendar — your AI sees live availability and books appointments without conflicts.",
+      title: "We Sync With Square or Acuity",
+      desc: "We sync directly with your Square or Acuity Scheduling calendar — your AI sees live availability and books appointments without conflicts.",
     },
     {
       num: "03",
@@ -187,12 +187,12 @@ function Features() {
     {
       icon: RefreshCw,
       title: "Full Lifecycle",
-      desc: "Book, reschedule, and cancel — all through the chat. Your Acuity calendar updates in real time, every time.",
+      desc: "Book, reschedule, and cancel — all through the chat. Your Square or Acuity calendar updates in real time, every time.",
     },
     {
       icon: Calendar,
       title: "Real-Time Availability",
-      desc: "Every slot offered is checked against your live Acuity calendar the moment a client asks. No back and forth, no booking errors, no awkward follow-up calls.",
+      desc: "Every slot offered is checked against your live Square or Acuity calendar the moment a client asks. No back and forth, no booking errors, no awkward follow-up calls.",
     },
     {
       icon: BarChart2,
@@ -202,7 +202,7 @@ function Features() {
     {
       icon: CheckCircle,
       title: "HIPAA-Friendly",
-      desc: "Apivo collects only what a standard booking form does — name, contact, service, and time. No clinical data, no PHI. Your client records never leave Acuity.",
+      desc: "Apivo collects only what a standard booking form does — name, contact, service, and time. No clinical data, no PHI. Your client records never leave Square or Acuity.",
     },
   ];
   return (
@@ -257,7 +257,7 @@ function Demo() {
                 "Real-time calendar availability check",
                 "Service and pricing questions answered instantly",
                 "Appointment placed directly on calendar",
-                "Contact saved to Acuity",
+                "Contact saved to Square or Acuity",
               ].map((c, i) => (
                 <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
                   <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />
@@ -387,8 +387,8 @@ function FAQ() {
       a: "Before going live, we build a custom knowledge base for your practice — covering your full service menu, pricing, treatment details, contraindications, policies, and the FAQs your front desk handles every day. The AI is trained on this and only answers based on it. It will never pull generic information from the internet or guess at an answer. If it doesn't know something, it says so and offers to have a staff member follow up. This is what makes Apivo an expert, not just a booking link.",
     },
     {
-      q: "Do you work with Acuity Scheduling?",
-      a: "Yes — Acuity is our primary integration. We sync directly with your Acuity calendar, see live availability, and book appointments in real time. Acuity clients are typically live within 48 hours of onboarding. We also support Mindbody, Boulevard, and Jane App — approximately 7 days for each.",
+      q: "Do you work with Square or Acuity Scheduling?",
+      a: "Yes — Square and Acuity are our primary integrations. We sync directly with your Square or Acuity calendar, see live availability, and book appointments in real time. Square and Acuity clients are typically live within 48 hours of onboarding. We also support Mindbody, Boulevard, and Jane App — approximately 7 days for each.",
     },
     {
       q: "Does Apivo replace my front desk?",
@@ -408,7 +408,7 @@ function FAQ() {
     },
     {
       q: "Is my client data secure?",
-      a: "Yes. Apivo collects only what a standard booking form does — name, contact, service, and appointment time. No clinical data, no PHI. Every client's data is isolated and stored securely — no practice can see another's information. Your client records never leave Acuity.",
+      a: "Yes. Apivo collects only what a standard booking form does — name, contact, service, and appointment time. No clinical data, no PHI. Every client's data is isolated and stored securely — no practice can see another's information. Your client records never leave Square or Acuity.",
     },
   ];
   return (

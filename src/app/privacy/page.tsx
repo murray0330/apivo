@@ -98,6 +98,7 @@ export default function PrivacyPolicy() {
                     { name: "ElevenLabs", purpose: "Multi-language voice and text processing", link: "elevenlabs.io/privacy" },
                     { name: "Azure OpenAI (GPT)", purpose: "Language model inference and AI response generation", link: "microsoft.com/privacy" },
                     { name: "n8n", purpose: "Workflow automation and data routing", link: "n8n.io/privacy" },
+                    { name: "Square Appointments", purpose: "Appointment scheduling and calendar sync", link: "squareup.com/us/en/legal/general/privacy" },
                     { name: "Acuity Scheduling", purpose: "Appointment scheduling and calendar sync", link: "acuityscheduling.com/privacy" },
                     { name: "Supabase", purpose: "Database storage for bookings, knowledge base, and client profiles", link: "supabase.com/privacy" },
                     { name: "Vercel", purpose: "Chat widget deployment and hosting", link: "vercel.com/legal/privacy-policy" },

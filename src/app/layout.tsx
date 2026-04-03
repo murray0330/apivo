@@ -5,10 +5,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "AI Booking Assistant for Med Spas | Apivo",
   description:
-    "Apivo is an AI chat widget built for Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
+    "Apivo is an AI chat widget built for Square or Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
   keywords: [
     "AI booking assistant for med spas",
-    "Acuity Scheduling chatbot",
+    "Square or Acuity Scheduling chatbot",
     "med spa booking automation",
     "AI receptionist med spa",
     "AI booking assistant",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI Booking Assistant for Med Spas | Apivo",
     description:
-      "Apivo is an AI chat widget built for Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
+      "Apivo is an AI chat widget built for Square or Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
     url: "https://apivo.ai",
     siteName: "Apivo",
     locale: "en_US",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AI Booking Assistant for Med Spas | Apivo",
     description:
-      "Apivo is an AI chat widget built for Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
+      "Apivo is an AI chat widget built for Square or Acuity-powered med spas. It knows your services, pricing, and FAQs — books appointments 24/7 without your staff touching it. Live in 48 hours.",
     site: "@apivo_ai",
   },
   alternates: {
