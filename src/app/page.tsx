@@ -99,7 +99,7 @@ function ValueProp() {
             Your Front Desk Automated.
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Apivo is an AI booking assistant built specifically for med spas on Square or Acuity.
+            Apivo is an AI booking assistant built specifically for med spas on Square.
             It lives on your website, trained on your services, pricing, and FAQs — answers real questions,
             books appointments in real time, and speaks your clients&apos; language, in 29+ languages automatically.
           </p>
@@ -141,8 +141,8 @@ function HowItWorks() {
     },
     {
       num: "02",
-      title: "We Sync With Square or Acuity",
-      desc: "We sync directly with your Square or Acuity Scheduling calendar — your AI sees live availability and books appointments without conflicts.",
+      title: "We Sync With Square",
+      desc: "We sync directly with your Square calendar — your AI sees live availability and books appointments without conflicts.",
     },
     {
       num: "03",
@@ -187,12 +187,12 @@ function Features() {
     {
       icon: RefreshCw,
       title: "Full Lifecycle",
-      desc: "Book, reschedule, and cancel — all through the chat. Your Square or Acuity calendar updates in real time, every time.",
+      desc: "Book, reschedule, and cancel — all through the chat. Your Square calendar updates in real time, every time.",
     },
     {
       icon: Calendar,
       title: "Real-Time Availability",
-      desc: "Every slot offered is checked against your live Square or Acuity calendar the moment a client asks. No back and forth, no booking errors, no awkward follow-up calls.",
+      desc: "Every slot offered is checked against your live Square calendar the moment a client asks. No back and forth, no booking errors, no awkward follow-up calls.",
     },
     {
       icon: BarChart2,
@@ -202,7 +202,7 @@ function Features() {
     {
       icon: CheckCircle,
       title: "HIPAA-Friendly",
-      desc: "Apivo collects only what a standard booking form does — name, contact, service, and time. No clinical data, no PHI. Your client records never leave Square or Acuity.",
+      desc: "Apivo collects only what a standard booking form does — name, contact, service, and time. No clinical data, no PHI. Your client records never leave Square.",
     },
   ];
   return (
@@ -257,7 +257,7 @@ function Demo() {
                 "Real-time calendar availability check",
                 "Service and pricing questions answered instantly",
                 "Appointment placed directly on calendar",
-                "Contact saved to Square or Acuity",
+                "Contact saved to Square",
               ].map((c, i) => (
                 <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
                   <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />

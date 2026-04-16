@@ -558,7 +558,7 @@ function BookingConfirmation() {
         <p className="mt-0.5 text-xs text-zinc-500">Added to calendar. Confirmation email sent.</p>
         <ul className="mt-2 space-y-1.5">
           {[
-            { Icon: Calendar, text: 'Square or Acuity updated' },
+            { Icon: Calendar, text: 'Square updated' },
             { Icon: Mail, text: 'Confirmation email sent' },
             { Icon: Users, text: 'Contact saved to CRM' },
           ].map(({ Icon, text }) => (
