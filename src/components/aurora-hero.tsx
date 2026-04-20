@@ -20,7 +20,7 @@ export default function AuroraHero() {
 
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
-          <span className="text-indigo-500">Stop Losing</span> Clients<br />
+          <span className="text-indigo-500">Stop Losing</span> Bookings<br />
           <span className="whitespace-nowrap">After Hours</span>
         </h1>
 
