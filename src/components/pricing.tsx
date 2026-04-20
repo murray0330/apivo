@@ -96,7 +96,9 @@ export default function Pricing() {
 
             <div className="mt-10">
               <a
-                href="#contact"
+                href={yearly ? "#contact" : "https://square.link/u/3kGWFxFI"}
+                target={yearly ? undefined : "_blank"}
+                rel={yearly ? undefined : "noopener noreferrer"}
                 className="block rounded-full bg-white py-3 text-center text-sm font-semibold text-indigo-500 transition-colors hover:bg-indigo-50"
               >
                 Lock In ${price}/Month
