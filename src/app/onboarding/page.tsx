@@ -1,8 +1,10 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useRef, useCallback, useEffect } from 'react'
 import Image from 'next/image'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -251,13 +253,13 @@ export default function OnboardingPage() {
     const ext = file.name.split('.').pop()
     const path = `${safeBusiness}/${prefix}-${Date.now()}.${ext}`
 
-    const { error } = await supabase.storage
+    const { error } = await getSupabase().storage
       .from('client-files')
       .upload(path, file, { upsert: true })
 
     if (error) throw new Error(`Upload failed for ${prefix}: ${error.message}`)
 
-    const { data } = supabase.storage.from('client-files').getPublicUrl(path)
+    const { data } = getSupabase().storage.from('client-files').getPublicUrl(path)
     return data.publicUrl
   }
 
@@ -324,7 +326,7 @@ export default function OnboardingPage() {
       const fileUrls = Object.fromEntries(uploadResults)
 
       // Insert row into clients table
-      const { error: insertError } = await supabase.from('clients').insert([
+      const { error: insertError } = await getSupabase().from('clients').insert([
         {
           full_name: form.full_name.trim(),
           business_name: form.business_name.trim(),
