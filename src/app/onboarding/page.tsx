@@ -14,7 +14,6 @@ interface FormData {
   website_url: string
   phone: string
   email: string
-  square_location_id: string
   staff_languages: string
   additional_notes: string
   excluded_treatments: string
@@ -23,6 +22,64 @@ interface FormData {
 interface FileSlot {
   file: File | null
   dragging: boolean
+}
+
+// ── Square Connect Section ────────────────────────────────────────────────────
+
+function SquareLogo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="22" height="22" rx="4" fill="currentColor" />
+      <rect x="7" y="7" width="10" height="10" rx="1.5" fill="white" />
+    </svg>
+  )
+}
+
+interface SquareConnectSectionProps {
+  connected: boolean
+  onConnect: () => void
+  onDisconnect: () => void
+}
+
+function SquareConnectSection({ connected, onConnect, onDisconnect }: SquareConnectSectionProps) {
+  if (connected) {
+    return (
+      <div className="flex items-center justify-between py-1">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-50 border border-green-200">
+            <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-zinc-800">Square account connected ✓</span>
+        </div>
+        <button
+          type="button"
+          onClick={onDisconnect}
+          className="text-xs text-zinc-400 hover:text-zinc-600 underline underline-offset-2 transition-colors"
+        >
+          Disconnect
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={onConnect}
+        className="w-full flex items-center justify-center gap-3 rounded-xl border border-[#006AFF] bg-white px-4 py-3 text-sm font-semibold text-[#006AFF] transition-colors hover:bg-[#006AFF]/5"
+      >
+        <SquareLogo className="h-5 w-5 text-[#006AFF] shrink-0" />
+        Connect Your Square Account
+      </button>
+      <p className="mt-2.5 text-xs text-zinc-400 leading-relaxed">
+        We&apos;ll securely connect to your Square account to enable live booking. You&apos;ll be
+        redirected to Square and back in under a minute.
+      </p>
+    </div>
+  )
 }
 
 // ── File Upload Area ──────────────────────────────────────────────────────────
@@ -158,6 +215,23 @@ function FieldLabel({ children, optional }: { children: React.ReactNode; optiona
   )
 }
 
+const SQUARE_SCOPES = [
+  'APPOINTMENTS_READ',
+  'APPOINTMENTS_WRITE',
+  'APPOINTMENTS_BUSINESS_SETTINGS_READ',
+  'BOOKINGS_READ',
+  'BOOKINGS_WRITE',
+  'CUSTOMERS_READ',
+  'CUSTOMERS_WRITE',
+  'MERCHANT_PROFILE_READ',
+  'ORDERS_READ',
+  'ORDERS_WRITE',
+  'PAYMENTS_READ',
+  'ITEMS_READ',
+  'TEAM_MEMBERS_READ',
+  'TEAM_MEMBERS_WRITE',
+].join(' ')
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function OnboardingPage() {
@@ -167,18 +241,20 @@ export default function OnboardingPage() {
     website_url: '',
     phone: '',
     email: '',
-    square_location_id: '',
     staff_languages: '',
     additional_notes: '',
     excluded_treatments: '',
   })
 
+  const [squareConnected, setSquareConnected] = useState(false)
+  const [squareMerchantId, setSquareMerchantId] = useState('')
+
   const [files, setFiles] = useState<Record<string, FileSlot>>({
-    services: { file: null, dragging: false },
-    policies: { file: null, dragging: false },
-    pricing:  { file: null, dragging: false },
-    aftercare:{ file: null, dragging: false },
-    other:    { file: null, dragging: false },
+    services:  { file: null, dragging: false },
+    policies:  { file: null, dragging: false },
+    pricing:   { file: null, dragging: false },
+    aftercare: { file: null, dragging: false },
+    other:     { file: null, dragging: false },
   })
 
   const [submitting, setSubmitting] = useState(false)
@@ -186,9 +262,55 @@ export default function OnboardingPage() {
   const [success, setSuccess] = useState(false)
 
   useEffect(() => {
-    const email = new URLSearchParams(window.location.search).get('email')
+    const params = new URLSearchParams(window.location.search)
+
+    const email = params.get('email')
     if (email) setForm((f) => ({ ...f, email }))
+
+    const squareOk  = params.get('square_connected') === 'true'
+    const merchantId = params.get('merchant_id') ?? ''
+    const returnedState = params.get('state') ?? ''
+
+    if (squareOk && merchantId) {
+      // Validate state to guard against CSRF
+      const savedState = sessionStorage.getItem('square_oauth_state')
+      if (savedState && returnedState && savedState !== returnedState) {
+        setError('Square connection failed: state mismatch. Please try again.')
+      } else {
+        setSquareConnected(true)
+        setSquareMerchantId(merchantId)
+        sessionStorage.removeItem('square_oauth_state')
+        // Clean query params without a page reload
+        window.history.replaceState({}, '', '/onboarding')
+      }
+    }
+
+    const squareError = params.get('square_error')
+    if (squareError) {
+      setError(`Square connection failed: ${squareError}. Please try again.`)
+      window.history.replaceState({}, '', '/onboarding')
+    }
   }, [])
+
+  const handleSquareConnect = () => {
+    const state = crypto.randomUUID()
+    sessionStorage.setItem('square_oauth_state', state)
+
+    const params = new URLSearchParams({
+      client_id:    process.env.NEXT_PUBLIC_SQUARE_APP_ID ?? '',
+      scope:        SQUARE_SCOPES,
+      session:      'false',
+      state,
+      redirect_uri: 'https://apivo.ai/api/square/callback',
+    })
+
+    window.location.href = `https://connect.squareup.com/oauth2/authorize?${params}`
+  }
+
+  const handleSquareDisconnect = () => {
+    setSquareConnected(false)
+    setSquareMerchantId('')
+  }
 
   const setFile     = (key: string, file: File | null) => setFiles((p) => ({ ...p, [key]: { ...p[key], file } }))
   const setDragging = (key: string, d: boolean)        => setFiles((p) => ({ ...p, [key]: { ...p[key], dragging: d } }))
@@ -210,8 +332,18 @@ export default function OnboardingPage() {
     e.preventDefault()
     setError(null)
 
-    if (!files.services.file) { setError('Please upload your Services Menu.'); return }
-    if (!files.policies.file) { setError('Please upload your Cancellation & Rescheduling Policy.'); return }
+    if (!squareConnected) {
+      setError('Please connect your Square account before submitting.')
+      return
+    }
+    if (!files.services.file) {
+      setError('Please upload your Services Menu.')
+      return
+    }
+    if (!files.policies.file) {
+      setError('Please upload your Cancellation & Rescheduling Policy.')
+      return
+    }
 
     setSubmitting(true)
     try {
@@ -220,9 +352,9 @@ export default function OnboardingPage() {
         uploadFile(files.services.file,  biz, 'services').then((u) => ['services_file_url', u]),
         uploadFile(files.policies.file!, biz, 'policies').then((u) => ['policies_file_url', u]),
       ]
-      if (files.pricing.file)  uploads.push(uploadFile(files.pricing.file,  biz, 'pricing') .then((u) => ['pricing_file_url',  u]))
+      if (files.pricing.file)   uploads.push(uploadFile(files.pricing.file,   biz, 'pricing')  .then((u) => ['pricing_file_url',  u]))
       if (files.aftercare.file) uploads.push(uploadFile(files.aftercare.file, biz, 'aftercare').then((u) => ['aftercare_file_url', u]))
-      if (files.other.file)    uploads.push(uploadFile(files.other.file,    biz, 'other')   .then((u) => ['other_file_url',    u]))
+      if (files.other.file)     uploads.push(uploadFile(files.other.file,     biz, 'other')    .then((u) => ['other_file_url',    u]))
 
       const fileUrls = Object.fromEntries(await Promise.all(uploads))
 
@@ -232,7 +364,7 @@ export default function OnboardingPage() {
         email:               form.email.trim(),
         phone:               form.phone.trim(),
         website_url:         form.website_url.trim(),
-        square_location_id:  form.square_location_id.trim(),
+        square_location_id:  squareMerchantId,
         staff_languages:     form.staff_languages.trim()     || null,
         additional_notes:    form.additional_notes.trim()    || null,
         excluded_treatments: form.excluded_treatments.trim() || null,
@@ -297,7 +429,7 @@ export default function OnboardingPage() {
       {/* Form body */}
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto px-4 sm:px-6 py-10 space-y-5">
 
-        {/* Section 1 */}
+        {/* Section 1 — Your Business */}
         <SectionCard title="Your Business">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -325,18 +457,16 @@ export default function OnboardingPage() {
           </div>
         </SectionCard>
 
-        {/* Section 2 */}
+        {/* Section 2 — Square Account */}
         <SectionCard title="Your Square Account">
-          <div>
-            <FieldLabel>Square Location ID</FieldLabel>
-            <input type="text" name="square_location_id" required value={form.square_location_id} onChange={handleChange} placeholder="LXXXXXXXXXXXXXXXXX" className={inputClass} />
-            <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-              Find this in your Square Dashboard → Locations → click your location → the ID is in the URL
-            </p>
-          </div>
+          <SquareConnectSection
+            connected={squareConnected}
+            onConnect={handleSquareConnect}
+            onDisconnect={handleSquareDisconnect}
+          />
         </SectionCard>
 
-        {/* Section 3 */}
+        {/* Section 3 — Knowledge Base Files */}
         <SectionCard title="Knowledge Base Files">
           <FileUploadArea id="services"  label="Your Services Menu"                                       required value={files.services.file}  dragging={files.services.dragging}  onChange={(f) => setFile('services',  f)} onDragChange={(d) => setDragging('services',  d)} />
           <FileUploadArea id="policies"  label="Cancellation & Rescheduling Policy"                       required value={files.policies.file}  dragging={files.policies.dragging}  onChange={(f) => setFile('policies',  f)} onDragChange={(d) => setDragging('policies',  d)} />
@@ -345,7 +475,7 @@ export default function OnboardingPage() {
           <FileUploadArea id="other"     label="Any other material you'd want your front desk to reference (sensitive skin concerns, skin prep, shaving, acne, etc.)" value={files.other.file} dragging={files.other.dragging} onChange={(f) => setFile('other', f)} onDragChange={(d) => setDragging('other', d)} />
         </SectionCard>
 
-        {/* Section 4 */}
+        {/* Section 4 — Additional Info */}
         <SectionCard title="Additional Info">
           <div>
             <FieldLabel optional>Languages spoken by staff</FieldLabel>
