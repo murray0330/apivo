@@ -515,8 +515,7 @@ function Footer() {
             {
               title: "Company",
               links: [
-                { text: "Contact", href: "#contact" },
-                { text: "hello@apivo.ai", href: "mailto:hello@apivo.ai" },
+                { text: "Contact", href: "mailto:hello@apivo.ai" },
                 { text: "FAQ", href: "#faq" },
               ],
             },
