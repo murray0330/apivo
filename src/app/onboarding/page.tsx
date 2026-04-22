@@ -235,6 +235,7 @@ export default function OnboardingPage() {
 
   const [squareConnected, setSquareConnected] = useState(false)
   const [squareError, setSquareError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
   const [files, setFiles] = useState<Record<string, FileSlot>>({
     services:  { file: null, dragging: false },
@@ -250,6 +251,13 @@ export default function OnboardingPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
+
+    // Restore form data saved before Square OAuth redirect
+    const saved = sessionStorage.getItem('onboarding_form')
+    if (saved) {
+      try { setForm((f) => ({ ...f, ...JSON.parse(saved) })) } catch {}
+      sessionStorage.removeItem('onboarding_form')
+    }
 
     const email = params.get('email')
     if (email) setForm((f) => ({ ...f, email }))
@@ -272,6 +280,7 @@ export default function OnboardingPage() {
       return
     }
     setSquareError(null)
+    sessionStorage.setItem('onboarding_form', JSON.stringify(form))
     const params = new URLSearchParams({ business_name: form.business_name.trim() })
     window.location.href = `https://n8n.srv1150282.hstgr.cloud/webhook/square-auth?${params}`
   }
@@ -282,8 +291,11 @@ export default function OnboardingPage() {
 
   const setFile     = (key: string, file: File | null) => setFiles((p) => ({ ...p, [key]: { ...p[key], file } }))
   const setDragging = (key: string, d: boolean)        => setFiles((p) => ({ ...p, [key]: { ...p[key], dragging: d } }))
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setForm((f) => ({ ...f, [name]: value }))
+    if (fieldErrors[name]) setFieldErrors((fe) => { const n = { ...fe }; delete n[name]; return n })
+  }
 
   const uploadFile = async (file: File, businessName: string, prefix: string): Promise<string> => {
     const safe = businessName.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-')
@@ -300,25 +312,30 @@ export default function OnboardingPage() {
     e.preventDefault()
     setError(null)
 
-    if (!squareConnected) {
-      setError('Please connect your Square account before submitting.')
-      return
-    }
-    if (!files.services.file) {
-      setError('Please upload your Services Menu.')
-      return
-    }
-    if (!files.policies.file) {
-      setError('Please upload your Cancellation & Rescheduling Policy.')
-      return
-    }
+    // Collect all field-level errors up front
+    const errors: Record<string, string> = {}
+    if (!form.full_name.trim())     errors.full_name     = 'Full name is required.'
+    if (!form.business_name.trim()) errors.business_name = 'Business name is required.'
+    if (!form.website_url.trim())   errors.website_url   = 'Website URL is required.'
+    if (!form.phone.trim())         errors.phone         = 'Phone number is required.'
+    if (!form.email.trim())         errors.email         = 'Email address is required.'
+    if (!squareConnected)           errors.square        = 'Please connect your Square account.'
+    if (!files.services.file)       errors.services      = 'Please upload your Services Menu.'
+    if (!files.policies.file)       errors.policies      = 'Please upload your Cancellation & Rescheduling Policy.'
 
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      const firstKey = Object.keys(errors)[0]
+      document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+    setFieldErrors({})
     setSubmitting(true)
     try {
       const biz = form.business_name
       const uploads: Array<Promise<[string, string]>> = [
-        uploadFile(files.services.file,  biz, 'services').then((u) => ['services_file_url', u]),
-        uploadFile(files.policies.file!, biz, 'policies').then((u) => ['policies_file_url', u]),
+        uploadFile(files.services.file!,  biz, 'services').then((u) => ['services_file_url', u]),
+        uploadFile(files.policies.file!, biz,  'policies').then((u) => ['policies_file_url', u]),
       ]
       if (files.pricing.file)   uploads.push(uploadFile(files.pricing.file,   biz, 'pricing')  .then((u) => ['pricing_file_url',  u]))
       if (files.aftercare.file) uploads.push(uploadFile(files.aftercare.file, biz, 'aftercare').then((u) => ['aftercare_file_url', u]))
@@ -399,45 +416,59 @@ staff_languages:     form.staff_languages.trim()     || null,
         {/* Section 1 — Your Business */}
         <SectionCard title="Your Business">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+            <div id="field-full_name">
               <FieldLabel>Full Name</FieldLabel>
-              <input type="text" name="full_name" required value={form.full_name} onChange={handleChange} placeholder="Jane Smith" className={inputClass} />
+              <input type="text" name="full_name" value={form.full_name} onChange={handleChange} placeholder="Jane Smith" className={inputClass + (fieldErrors.full_name ? ' border-red-400' : '')} />
+              {fieldErrors.full_name && <p className="mt-1 text-xs text-red-600">{fieldErrors.full_name}</p>}
             </div>
-            <div>
+            <div id="field-business_name">
               <FieldLabel>Med Spa Business Name</FieldLabel>
-              <input type="text" name="business_name" required value={form.business_name} onChange={handleChange} placeholder="Glow Aesthetics" className={inputClass} />
+              <input type="text" name="business_name" value={form.business_name} onChange={handleChange} placeholder="Glow Aesthetics" className={inputClass + (fieldErrors.business_name ? ' border-red-400' : '')} />
+              {fieldErrors.business_name && <p className="mt-1 text-xs text-red-600">{fieldErrors.business_name}</p>}
             </div>
           </div>
-          <div>
+          <div id="field-website_url">
             <FieldLabel>Website URL</FieldLabel>
-            <input type="url" name="website_url" required value={form.website_url} onChange={handleChange} placeholder="https://yourspa.com" className={inputClass} />
+            <input type="url" name="website_url" value={form.website_url} onChange={handleChange} placeholder="https://yourspa.com" className={inputClass + (fieldErrors.website_url ? ' border-red-400' : '')} />
+            {fieldErrors.website_url && <p className="mt-1 text-xs text-red-600">{fieldErrors.website_url}</p>}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+            <div id="field-phone">
               <FieldLabel>Best Phone Number</FieldLabel>
-              <input type="tel" name="phone" required value={form.phone} onChange={handleChange} placeholder="+1 (555) 000-0000" className={inputClass} />
+              <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="+1 (555) 000-0000" className={inputClass + (fieldErrors.phone ? ' border-red-400' : '')} />
+              {fieldErrors.phone && <p className="mt-1 text-xs text-red-600">{fieldErrors.phone}</p>}
             </div>
-            <div>
+            <div id="field-email">
               <FieldLabel>Email Address</FieldLabel>
-              <input type="email" name="email" required value={form.email} onChange={handleChange} placeholder="jane@yourspa.com" className={inputClass} />
+              <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="jane@yourspa.com" className={inputClass + (fieldErrors.email ? ' border-red-400' : '')} />
+              {fieldErrors.email && <p className="mt-1 text-xs text-red-600">{fieldErrors.email}</p>}
             </div>
           </div>
         </SectionCard>
 
         {/* Section 2 — Square Account */}
-        <SectionCard title="Your Square Account">
-          <SquareConnectSection
-            connected={squareConnected}
-            error={squareError}
-            onConnect={handleSquareConnect}
-            onDisconnect={handleSquareDisconnect}
-          />
-        </SectionCard>
+        <div id="field-square">
+          <SectionCard title="Your Square Account">
+            <SquareConnectSection
+              connected={squareConnected}
+              error={squareError}
+              onConnect={handleSquareConnect}
+              onDisconnect={handleSquareDisconnect}
+            />
+            {fieldErrors.square && <p className="mt-1 text-xs text-red-600">{fieldErrors.square}</p>}
+          </SectionCard>
+        </div>
 
         {/* Section 3 — Knowledge Base Files */}
         <SectionCard title="Knowledge Base Files">
-          <FileUploadArea id="services"  label="Your Services Menu"                                       required value={files.services.file}  dragging={files.services.dragging}  onChange={(f) => setFile('services',  f)} onDragChange={(d) => setDragging('services',  d)} />
-          <FileUploadArea id="policies"  label="Cancellation & Rescheduling Policy"                       required value={files.policies.file}  dragging={files.policies.dragging}  onChange={(f) => setFile('policies',  f)} onDragChange={(d) => setDragging('policies',  d)} />
+          <div id="field-services">
+            <FileUploadArea id="services" label="Your Services Menu" required value={files.services.file} dragging={files.services.dragging} onChange={(f) => { setFile('services', f); setFieldErrors((fe) => { const n = {...fe}; delete n.services; return n }) }} onDragChange={(d) => setDragging('services', d)} />
+            {fieldErrors.services && <p className="mt-1 text-xs text-red-600">{fieldErrors.services}</p>}
+          </div>
+          <div id="field-policies">
+            <FileUploadArea id="policies" label="Cancellation & Rescheduling Policy" required value={files.policies.file} dragging={files.policies.dragging} onChange={(f) => { setFile('policies', f); setFieldErrors((fe) => { const n = {...fe}; delete n.policies; return n }) }} onDragChange={(d) => setDragging('policies', d)} />
+            {fieldErrors.policies && <p className="mt-1 text-xs text-red-600">{fieldErrors.policies}</p>}
+          </div>
           <FileUploadArea id="pricing"   label="Pricing List (if separate from services menu)"                     value={files.pricing.file}   dragging={files.pricing.dragging}   onChange={(f) => setFile('pricing',   f)} onDragChange={(d) => setDragging('pricing',   d)} />
           <FileUploadArea id="aftercare" label="Aftercare Instructions"                                            value={files.aftercare.file} dragging={files.aftercare.dragging} onChange={(f) => setFile('aftercare', f)} onDragChange={(d) => setDragging('aftercare', d)} />
           <FileUploadArea id="other"     label="Any other material you'd want your front desk to reference (sensitive skin concerns, skin prep, shaving, acne, etc.)" value={files.other.file} dragging={files.other.dragging} onChange={(f) => setFile('other', f)} onDragChange={(d) => setDragging('other', d)} />
@@ -459,27 +490,6 @@ staff_languages:     form.staff_languages.trim()     || null,
             <textarea name="excluded_treatments" value={form.excluded_treatments} onChange={handleChange} rows={3} placeholder="e.g. injectable medications, off-label procedures…" className={textareaClass} />
           </div>
         </SectionCard>
-
-        {/* Section 5 — Calendly */}
-        <div className="rounded-2xl border border-black/[.08] bg-white shadow-[0_2px_20px_rgba(0,0,0,.06)] overflow-hidden">
-          <div className="px-6 pt-6 pb-4 sm:px-7">
-            <div className="flex items-center gap-3 mb-1">
-              <div className="h-5 w-1 rounded-full bg-indigo-500" />
-              <h2 className="text-base font-semibold text-zinc-900 sm:text-lg">Book Your 20-Minute Kickoff Call</h2>
-            </div>
-            <p className="text-sm text-zinc-500 ml-4">
-              Pick a time that works for you. We&apos;ll walk through your setup together.
-            </p>
-          </div>
-          <iframe
-            src="https://calendly.com/apivo"
-            title="Book a kickoff call"
-            width="100%"
-            height="620"
-            frameBorder="0"
-            className="block border-t border-black/[.06]"
-          />
-        </div>
 
         {/* Error */}
         {error && (
