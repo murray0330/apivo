@@ -310,57 +310,66 @@ export default function OnboardingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError(null)
+    console.log('[handleSubmit] called', { form, squareConnected, files: Object.fromEntries(Object.entries(files).map(([k, v]) => [k, v.file?.name ?? null])) })
 
-    // Collect all field-level errors up front
-    const errors: Record<string, string> = {}
-    if (!form.full_name.trim())     errors.full_name     = 'Full name is required.'
-    if (!form.business_name.trim()) errors.business_name = 'Business name is required.'
-    if (!form.website_url.trim())   errors.website_url   = 'Website URL is required.'
-    if (!form.phone.trim())         errors.phone         = 'Phone number is required.'
-    if (!form.email.trim())         errors.email         = 'Email address is required.'
-    if (!squareConnected)           errors.square        = 'Please connect your Square account.'
-    if (!files.services.file)       errors.services      = 'Please upload your Services Menu.'
-    if (!files.policies.file)       errors.policies      = 'Please upload your Cancellation & Rescheduling Policy.'
-
-    if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors)
-      const firstKey = Object.keys(errors)[0]
-      document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      return
-    }
-    setFieldErrors({})
-    setSubmitting(true)
     try {
+      setError(null)
+
+      // Collect all field-level errors up front
+      const errors: Record<string, string> = {}
+      if (!form.full_name.trim())     errors.full_name     = 'Full name is required.'
+      if (!form.business_name.trim()) errors.business_name = 'Business name is required.'
+      if (!form.website_url.trim())   errors.website_url   = 'Website URL is required.'
+      if (!form.phone.trim())         errors.phone         = 'Phone number is required.'
+      if (!form.email.trim())         errors.email         = 'Email address is required.'
+      if (!squareConnected)           errors.square        = 'Please connect your Square account.'
+      if (!files.services.file)       errors.services      = 'Please upload your Services Menu.'
+      if (!files.policies.file)       errors.policies      = 'Please upload your Cancellation & Rescheduling Policy.'
+
+      if (Object.keys(errors).length > 0) {
+        setFieldErrors(errors)
+        const firstKey = Object.keys(errors)[0]
+        document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        console.log('[handleSubmit] validation failed', errors)
+        return
+      }
+      setFieldErrors({})
+      setSubmitting(true)
+
       const biz = form.business_name
       const uploads: Array<Promise<[string, string]>> = [
-        uploadFile(files.services.file!,  biz, 'services').then((u) => ['services_file_url', u]),
-        uploadFile(files.policies.file!, biz,  'policies').then((u) => ['policies_file_url', u]),
+        uploadFile(files.services.file!,  biz, 'services').then((u) => ['services_file_url', u] as [string, string]),
+        uploadFile(files.policies.file!,  biz, 'policies').then((u) => ['policies_file_url', u] as [string, string]),
       ]
-      if (files.pricing.file)   uploads.push(uploadFile(files.pricing.file,   biz, 'pricing')  .then((u) => ['pricing_file_url',  u]))
-      if (files.aftercare.file) uploads.push(uploadFile(files.aftercare.file, biz, 'aftercare').then((u) => ['aftercare_file_url', u]))
-      if (files.other.file)     uploads.push(uploadFile(files.other.file,     biz, 'other')    .then((u) => ['other_file_url',    u]))
+      if (files.pricing.file)   uploads.push(uploadFile(files.pricing.file,   biz, 'pricing')  .then((u) => ['pricing_file_url',  u] as [string, string]))
+      if (files.aftercare.file) uploads.push(uploadFile(files.aftercare.file, biz, 'aftercare').then((u) => ['aftercare_file_url', u] as [string, string]))
+      if (files.other.file)     uploads.push(uploadFile(files.other.file,     biz, 'other')    .then((u) => ['other_file_url',    u] as [string, string]))
 
+      console.log('[handleSubmit] uploading files…')
       const fileUrls = Object.fromEntries(await Promise.all(uploads))
+      console.log('[handleSubmit] files uploaded', fileUrls)
 
-      const { error: insertError } = await getSupabase().from('clients').insert([{
+      const insertPayload = {
         full_name:           form.full_name.trim(),
         business_name:       form.business_name.trim(),
         email:               form.email.trim(),
         phone:               form.phone.trim(),
         website_url:         form.website_url.trim(),
-staff_languages:     form.staff_languages.trim()     || null,
+        staff_languages:     form.staff_languages.trim()     || null,
         additional_notes:    form.additional_notes.trim()    || null,
         excluded_treatments: form.excluded_treatments.trim() || null,
         onboarding_status:   'submitted',
         ...fileUrls,
-      }])
+      }
+      console.log('[handleSubmit] inserting into clients…', insertPayload)
 
+      const { error: insertError } = await getSupabase().from('clients').insert([insertPayload])
       if (insertError) throw new Error(`Could not save your information: ${insertError.message}`)
 
+      console.log('[handleSubmit] success')
       setSuccess(true)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err) {
+      console.error('[handleSubmit] error', err)
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
       setSubmitting(false)
@@ -380,11 +389,12 @@ staff_languages:     form.staff_languages.trim()     || null,
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-zinc-900 sm:text-3xl mb-3">
+          <h1 className="text-2xl font-bold text-zinc-900 sm:text-3xl mb-4">
             You&apos;re all set, {firstName}.
           </h1>
           <p className="text-zinc-500 text-base leading-relaxed">
-            Check your email for next steps — we&apos;ll see you at your kickoff call.
+            We&apos;ll have your AI receptionist live within 48 hours.
+            We&apos;ll be in touch at <span className="font-medium text-zinc-700">{form.email}</span>.
           </p>
         </div>
       </main>
@@ -429,7 +439,7 @@ staff_languages:     form.staff_languages.trim()     || null,
           </div>
           <div id="field-website_url">
             <FieldLabel>Website URL</FieldLabel>
-            <input type="url" name="website_url" value={form.website_url} onChange={handleChange} placeholder="https://yourspa.com" className={inputClass + (fieldErrors.website_url ? ' border-red-400' : '')} />
+            <input type="text" name="website_url" value={form.website_url} onChange={handleChange} placeholder="https://yourspa.com" className={inputClass + (fieldErrors.website_url ? ' border-red-400' : '')} />
             {fieldErrors.website_url && <p className="mt-1 text-xs text-red-600">{fieldErrors.website_url}</p>}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -510,10 +520,10 @@ staff_languages:     form.staff_languages.trim()     || null,
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
-              Uploading &amp; Saving…
+              Submitting…
             </>
           ) : (
-            'Submit & Book My Kickoff Call'
+            'Submit My Information'
           )}
         </button>
 
