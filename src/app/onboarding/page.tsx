@@ -37,11 +37,12 @@ function SquareLogo({ className }: { className?: string }) {
 
 interface SquareConnectSectionProps {
   connected: boolean
+  error: string | null
   onConnect: () => void
   onDisconnect: () => void
 }
 
-function SquareConnectSection({ connected, onConnect, onDisconnect }: SquareConnectSectionProps) {
+function SquareConnectSection({ connected, error, onConnect, onDisconnect }: SquareConnectSectionProps) {
   if (connected) {
     return (
       <div className="flex items-center justify-between py-1">
@@ -74,6 +75,9 @@ function SquareConnectSection({ connected, onConnect, onDisconnect }: SquareConn
         <SquareLogo className="h-5 w-5 text-[#006AFF] shrink-0" />
         Connect Your Square Account
       </button>
+      {error && (
+        <p className="mt-2 text-xs font-medium text-red-600">{error}</p>
+      )}
       <p className="mt-2.5 text-xs text-zinc-400 leading-relaxed">
         We&apos;ll securely connect to your Square account to enable live booking. You&apos;ll be
         redirected to Square and back in under a minute.
@@ -230,6 +234,7 @@ export default function OnboardingPage() {
   })
 
   const [squareConnected, setSquareConnected] = useState(false)
+  const [squareError, setSquareError] = useState<string | null>(null)
 
   const [files, setFiles] = useState<Record<string, FileSlot>>({
     services:  { file: null, dragging: false },
@@ -263,10 +268,10 @@ export default function OnboardingPage() {
 
   const handleSquareConnect = () => {
     if (!form.business_name.trim()) {
-      setError('Please enter your business name before connecting Square.')
+      setSquareError('Please enter your business name before connecting Square.')
       return
     }
-    setError(null)
+    setSquareError(null)
     const params = new URLSearchParams({ business_name: form.business_name.trim() })
     window.location.href = `https://n8n.srv1150282.hstgr.cloud/webhook/square-auth?${params}`
   }
@@ -423,6 +428,7 @@ staff_languages:     form.staff_languages.trim()     || null,
         <SectionCard title="Your Square Account">
           <SquareConnectSection
             connected={squareConnected}
+            error={squareError}
             onConnect={handleSquareConnect}
             onDisconnect={handleSquareDisconnect}
           />
