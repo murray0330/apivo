@@ -215,23 +215,6 @@ function FieldLabel({ children, optional }: { children: React.ReactNode; optiona
   )
 }
 
-const SQUARE_SCOPES = [
-  'APPOINTMENTS_READ',
-  'APPOINTMENTS_WRITE',
-  'APPOINTMENTS_BUSINESS_SETTINGS_READ',
-  'BOOKINGS_READ',
-  'BOOKINGS_WRITE',
-  'CUSTOMERS_READ',
-  'CUSTOMERS_WRITE',
-  'MERCHANT_PROFILE_READ',
-  'ORDERS_READ',
-  'ORDERS_WRITE',
-  'PAYMENTS_READ',
-  'ITEMS_READ',
-  'TEAM_MEMBERS_READ',
-  'TEAM_MEMBERS_WRITE',
-].join(' ')
-
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function OnboardingPage() {
@@ -247,7 +230,6 @@ export default function OnboardingPage() {
   })
 
   const [squareConnected, setSquareConnected] = useState(false)
-  const [squareMerchantId, setSquareMerchantId] = useState('')
 
   const [files, setFiles] = useState<Record<string, FileSlot>>({
     services:  { file: null, dragging: false },
@@ -267,22 +249,9 @@ export default function OnboardingPage() {
     const email = params.get('email')
     if (email) setForm((f) => ({ ...f, email }))
 
-    const squareOk  = params.get('square_connected') === 'true'
-    const merchantId = params.get('merchant_id') ?? ''
-    const returnedState = params.get('state') ?? ''
-
-    if (squareOk && merchantId) {
-      // Validate state to guard against CSRF
-      const savedState = sessionStorage.getItem('square_oauth_state')
-      if (savedState && returnedState && savedState !== returnedState) {
-        setError('Square connection failed: state mismatch. Please try again.')
-      } else {
-        setSquareConnected(true)
-        setSquareMerchantId(merchantId)
-        sessionStorage.removeItem('square_oauth_state')
-        // Clean query params without a page reload
-        window.history.replaceState({}, '', '/onboarding')
-      }
+    if (params.get('square_connected') === 'true') {
+      setSquareConnected(true)
+      window.history.replaceState({}, '', '/onboarding')
     }
 
     const squareError = params.get('square_error')
@@ -293,23 +262,17 @@ export default function OnboardingPage() {
   }, [])
 
   const handleSquareConnect = () => {
-    const state = crypto.randomUUID()
-    sessionStorage.setItem('square_oauth_state', state)
-
-    const params = new URLSearchParams({
-      client_id:    process.env.NEXT_PUBLIC_SQUARE_APP_ID ?? '',
-      scope:        SQUARE_SCOPES,
-      session:      'false',
-      state,
-      redirect_uri: 'https://apivo.ai/api/square/callback',
-    })
-
-    window.location.href = `https://connect.squareup.com/oauth2/authorize?${params}`
+    if (!form.business_name.trim()) {
+      setError('Please enter your business name before connecting Square.')
+      return
+    }
+    setError(null)
+    const params = new URLSearchParams({ business_name: form.business_name.trim() })
+    window.location.href = `https://n8n.srv1150282.hstgr.cloud/webhook/square-auth?${params}`
   }
 
   const handleSquareDisconnect = () => {
     setSquareConnected(false)
-    setSquareMerchantId('')
   }
 
   const setFile     = (key: string, file: File | null) => setFiles((p) => ({ ...p, [key]: { ...p[key], file } }))
@@ -364,8 +327,7 @@ export default function OnboardingPage() {
         email:               form.email.trim(),
         phone:               form.phone.trim(),
         website_url:         form.website_url.trim(),
-        square_location_id:  squareMerchantId,
-        staff_languages:     form.staff_languages.trim()     || null,
+staff_languages:     form.staff_languages.trim()     || null,
         additional_notes:    form.additional_notes.trim()    || null,
         excluded_treatments: form.excluded_treatments.trim() || null,
         onboarding_status:   'submitted',
