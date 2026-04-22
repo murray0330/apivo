@@ -274,10 +274,17 @@ export default function OnboardingPage() {
       const supabase = getSupabase();
       const slug = form.business_name.trim().toLowerCase().replace(/\s+/g, "-");
 
+      console.log("[supabase] URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+      console.log("[supabase] anon key present:", !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
       async function uploadFile(file: File, prefix: string): Promise<string> {
         const ext = file.name.split(".").pop();
         const path = `${slug}/${prefix}-${Date.now()}.${ext}`;
-        const { error } = await supabase.storage.from("client-files").upload(path, file, { upsert: true });
+        console.log(`[upload:${prefix}] bucket=client-files path=${path} size=${file.size} type=${file.type}`);
+        const { data: uploadData, error } = await supabase.storage
+          .from("client-files")
+          .upload(path, file, { upsert: true });
+        console.log(`[upload:${prefix}] response →`, { uploadData, error });
         if (error) throw new Error(`Upload failed (${prefix}): ${error.message}`);
         const { data } = supabase.storage.from("client-files").getPublicUrl(path);
         return data.publicUrl;
