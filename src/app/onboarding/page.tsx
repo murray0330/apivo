@@ -164,7 +164,7 @@ export default function OnboardingPage() {
         email:             form.email.trim(),
         phone:             form.phone.trim(),
         website_url:       form.website_url.trim(),
-        onboarding_status: "submitted",
+        onboarding_status: "pending",
       });
 
       if (insertError) throw new Error(insertError.message);
