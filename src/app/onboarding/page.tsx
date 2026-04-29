@@ -158,13 +158,13 @@ export default function OnboardingPage() {
       console.log("[supabase] anon key present:", !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
       console.log("[handleSubmit] inserting row…");
 
-      const { error: insertError } = await supabase.from("clients").insert({
+      const { error: insertError } = await supabase.from("clients").upsert({
         full_name:         form.full_name.trim(),
         business_name:     form.business_name.trim(),
         email:             form.email.trim(),
         phone:             form.phone.trim(),
         website_url:       form.website_url.trim(),
-      });
+      }, { onConflict: "email" });
 
       if (insertError) throw new Error(insertError.message);
 
