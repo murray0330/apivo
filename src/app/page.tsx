@@ -439,18 +439,18 @@ function Contact() {
                 Get Started
               </p>
               <h2 className="mt-2 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl md:text-4xl">
-                Ready to Fill Your Calendar
+                <span className="text-indigo-500">Stop Losing</span> Bookings
                 <br />
-                After Hours?
+                After Hours
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
-                See exactly what your clients will experience. Chat with our AI to book a free consultation — no forms, no phone tag, no emailing back and forth.
+                Start your free 30-day trial today. No setup fee, no contract — Apivo is live on your website in 48 hours.
               </p>
               <ul className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
                 {[
-                  "Free consultation",
-                  "No contracts",
-                  "Live in 48 hours",
+                  "Free for 30 days — no credit card required",
+                  "Live on your website in 48 hours",
+                  "Cancel anytime, no questions asked",
                 ].map((c, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
                     <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />
