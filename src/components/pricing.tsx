@@ -9,8 +9,8 @@ const YEARLY_MONTHLY_PRICE = Math.round(MONTHLY_PRICE * (1 - YEARLY_DISCOUNT));
 const YEARLY_TOTAL = YEARLY_MONTHLY_PRICE * 12;
 
 const features = [
-  "AI Chat Widget for your website",
-  "Knowledge base trained on your practice",
+  "Apivo booking assistant for your website",
+  "Knowledge base trained on your business",
   "24/7 appointment booking, rescheduling & canceling",
   "Real-time analytics dashboard",
   "Square integration — live in 48 hours",
@@ -85,7 +85,7 @@ export default function Pricing() {
               </div>
               {yearly ? (
                 <p className="mt-3 text-sm text-indigo-100/80">
-                  Billed annually. Save ${((MONTHLY_PRICE - YEARLY_MONTHLY_PRICE) * 12).toLocaleString()} — price locked forever after your first year.
+                  Billed annually at ${YEARLY_TOTAL.toLocaleString()}. Save ${((MONTHLY_PRICE - YEARLY_MONTHLY_PRICE) * 12).toLocaleString()} — rate locked forever.
                 </p>
               ) : (
                 <p className="mt-3 text-sm text-indigo-100/80">
