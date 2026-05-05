@@ -75,8 +75,8 @@ function ValueProp() {
     },
     {
       stat: "$0",
-      label: "No setup fee — free 30-day trial",
-      desc: "Get started with no upfront cost. Cancel anytime during your trial, no questions asked.",
+      label: "Free for your first 30 days",
+      desc: "No setup fee. No contract. Cancel anytime, no questions asked.",
       icon: DollarSign,
     },
     {
