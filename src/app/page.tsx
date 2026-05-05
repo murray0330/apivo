@@ -62,28 +62,28 @@ function SocialProof() {
 function ValueProp() {
   const benefits = [
     {
-      stat: "$3,000+",
-      label: "Saved per Month",
-      desc: "Replace repetitive front-desk labor with AI. Keep your team focused on high-value work.",
-      icon: DollarSign,
-    },
-    {
-      stat: "30%",
-      label: "More Appointments",
-      desc: "Never miss an after-hours booking. Your AI captures and books inquiries around the clock.",
-      icon: Calendar,
-    },
-    {
-      stat: "3+ hrs",
-      label: "Back Every Day",
-      desc: "Stop answering the same questions every day. Your AI handles every service, pricing, and FAQ inquiry automatically — giving your team hours back.",
+      stat: "48 hrs",
+      label: "Live on your website in 48 hours",
+      desc: "From signup to live on your website — fully trained on your treatments, policies, and pricing.",
       icon: Clock,
     },
     {
       stat: "24/7",
-      label: "Always Available",
-      desc: "Whether it's 2pm or 2am, your AI is on — answering questions, booking appointments, never putting a client on hold.",
+      label: "Always available — never after hours",
+      desc: "Whether it's 2pm or 2am, your AI is on — answering questions and booking appointments.",
       icon: Globe,
+    },
+    {
+      stat: "$0",
+      label: "No setup fee — free 30-day trial",
+      desc: "Get started with no upfront cost. Cancel anytime during your trial, no questions asked.",
+      icon: DollarSign,
+    },
+    {
+      stat: "1 click",
+      label: "Square connected in one click",
+      desc: "Connect your Square account in seconds. Your AI sees live availability and books without conflicts.",
+      icon: Calendar,
     },
   ];
 
@@ -96,12 +96,12 @@ function ValueProp() {
             What Apivo Does
           </span>
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl md:text-4xl">
-            Your Front Desk Automated.
+            Your Always Available Booking Assistant
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Apivo is an AI booking assistant built specifically for med spas on Square.
-            It lives on your website, trained on your services, pricing, and FAQs — answers real questions,
-            books appointments in real time, and speaks your clients&apos; language, in 29+ languages automatically.
+            Apivo is a booking assistant built specifically for med spas on Square.
+            It lives on your website, trained on your treatments, pricing, and policies — answers real questions,
+            books appointments directly into your Square calendar, and captures revenue around the clock.
           </p>
         </div>
 
@@ -250,7 +250,7 @@ function Demo() {
           <div>
             <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Try It Right Now</h3>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-base">
-              Step into your client&apos;s shoes. This is the same AI your website visitors will experience — trained on your services, knowing your availability, booking appointments in real time without your staff involved.
+              It&apos;s 10:47pm. A potential client found your med spa. They have questions. They want to book. There&apos;s no one there to answer. Here&apos;s what happens when Apivo is on your website.
             </p>
             <ul className="mt-4 space-y-2 sm:mt-6">
               {[
