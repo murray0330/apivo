@@ -25,7 +25,7 @@ export default function AuroraHero() {
         </h1>
 
         {/* Subheading */}
-        <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
+        <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-2xl sm:text-base md:text-lg">
           The booking assistant built for med spas on Square — trained on your treatments, policies, and pricing. Always available. Never guessing.
         </p>
 
