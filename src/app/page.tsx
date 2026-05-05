@@ -137,7 +137,7 @@ function HowItWorks() {
     {
       num: "01",
       title: "Tell Us About Your Business",
-      desc: "Share your services, hours, booking rules, and FAQs. We configure your AI to sound like a member of your team.",
+      desc: "We build your knowledge base — trained on your treatments, pricing, and policies. No work required on your end.",
     },
     {
       num: "02",
@@ -147,7 +147,7 @@ function HowItWorks() {
     {
       num: "03",
       title: "Embed & Go Live",
-      desc: "One snippet on your website. Your AI is live in 48 hours — answering questions, booking appointments, and handling reschedules and cancellations 24/7.",
+      desc: "One snippet on your website. Apivo is live — answering questions, booking appointments, and handling reschedules and cancellations 24/7.",
     },
   ];
   return (
@@ -176,7 +176,7 @@ function Features() {
     {
       icon: MessageSquare,
       title: "Knows Your Business",
-      desc: "Trained on your services, pricing, treatments, and FAQs — answers client questions like a team member before booking the appointment. It never guesses. It only knows your practice.",
+      desc: "Trained on your services, pricing, treatments, and FAQs — answers client questions like a team member before booking the appointment. It never guesses. It only knows your business.",
       highlight: true,
     },
     {
@@ -197,7 +197,7 @@ function Features() {
     {
       icon: BarChart2,
       title: "Your Dashboard",
-      desc: "Every booking, reschedule, and cancellation logged in real time. See appointments, time saved, and revenue attributed to your AI — all in one place.",
+      desc: "Every booking, reschedule, and cancellation logged in real time. See appointments, time saved, and revenue attributed to Apivo — all in one place.",
     },
     {
       icon: CheckCircle,
@@ -303,7 +303,7 @@ function NotCalendly() {
             Apivo is a team member.<br className="hidden sm:block" /> Not a booking form.
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Other tools hand your clients a calendar grid. Apivo is an AI receptionist for med spas — it actually converses.
+            Other tools hand your clients a calendar grid. Apivo has a conversation, answers their questions, and books the appointment — before they leave your website.
           </p>
         </div>
 
@@ -337,7 +337,7 @@ function NotCalendly() {
             <ul className="mt-5 space-y-3">
               {[
                 "Has a real conversation",
-                "Trained on your services, pricing, and FAQs",
+                "Trained on your treatments, pricing, and policies",
                 "Answers any client question accurately",
                 "Handles special requests naturally",
                 "Books after hours, 24/7",
