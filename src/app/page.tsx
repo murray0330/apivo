@@ -439,7 +439,7 @@ function Contact() {
                 Get Started
               </p>
               <h2 className="mt-2 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl md:text-4xl">
-                <span className="text-indigo-500">Stop Losing</span> Bookings
+                Stop Losing Bookings
                 <br />
                 After Hours
               </h2>
