@@ -25,28 +25,28 @@ import {
    Social Proof
    ================================================================ */
 function SocialProof() {
-  const cities = [
-    "Chesapeake",
-    "Hampton",
-    "Newport News",
-    "Norfolk",
-    "Virginia Beach",
-    "Williamsburg",
+  const features = [
+    "Books into Square 24/7",
+    "Auto-updates Square CRM",
+    "Recognizes returning clients",
+    "Smart booking notes",
+    "Trained on your treatments",
+    "Live ROI dashboard",
   ];
   return (
     <section className="border-y border-black/[.05] bg-[#fafafa] py-8 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-zinc-400 sm:mb-6 sm:text-sm">
-          Serving Med Spas Across Virginia
+          Native integration with Square Appointments
         </p>
         <div className="relative mx-auto max-w-2xl overflow-hidden">
           <div className="industry-track flex w-max gap-4 sm:gap-6">
-            {[...cities, ...cities].map((city, i) => (
+            {[...features, ...features].map((feature, i) => (
               <span
                 key={i}
                 className="shrink-0 rounded-full border border-black/[.08] bg-white px-3 py-1.5 text-[11px] font-light text-zinc-500 sm:px-4 sm:py-2 sm:text-xs"
               >
-                {city}
+                {feature}
               </span>
             ))}
           </div>

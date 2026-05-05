@@ -26,7 +26,7 @@ export default function AuroraHero() {
 
         {/* Subheading */}
         <p className="max-w-[90vw] text-left text-sm font-light leading-relaxed tracking-tight text-zinc-600 sm:max-w-xl sm:text-base md:text-lg">
-          Not a booking link. An AI receptionist built for med spas — trained on your services, pricing, and FAQs — that answers real questions and books appointments 24/7, completely hands-free.
+          The booking assistant built for med spas on Square — trained on your treatments, policies, and pricing. Always available. Never guessing.
         </p>
 
         {/* CTA Buttons */}
@@ -47,7 +47,7 @@ export default function AuroraHero() {
 
         {/* Micro Details */}
         <ul className="mt-4 flex gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["Personalized Chatbot", "Syncs with Square", "Cancel Anytime"].map(
+          {["Built for med spas on Square", "Live on your website in 48 hours", "Free 30-day trial — no contract"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
                 <span className="text-indigo-500">✓</span>
