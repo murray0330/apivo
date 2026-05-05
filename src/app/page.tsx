@@ -64,7 +64,7 @@ function ValueProp() {
     {
       stat: "48 hrs",
       label: "Live on your website",
-      desc: "Fully trained on your treatments, policies, and pricing.",
+      desc: "Trained on your treatments, policies, and pricing — ready to answer from day one.",
       icon: Clock,
     },
     {
