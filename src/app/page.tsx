@@ -63,14 +63,14 @@ function ValueProp() {
   const benefits = [
     {
       stat: "48 hrs",
-      label: "Live on your website in 48 hours",
-      desc: "From signup to live on your website — fully trained on your treatments, policies, and pricing.",
+      label: "Live on your website",
+      desc: "Fully trained on your treatments, policies, and pricing.",
       icon: Clock,
     },
     {
       stat: "24/7",
-      label: "Always available — never after hours",
-      desc: "Whether it's 2pm or 2am, your AI is on — answering questions and booking appointments.",
+      label: "Always available",
+      desc: "Whether it's 2pm or 2am, Apivo is there — answering questions and booking appointments.",
       icon: Globe,
     },
     {
@@ -81,8 +81,8 @@ function ValueProp() {
     },
     {
       stat: "1 click",
-      label: "Square connected in one click",
-      desc: "Connect your Square account in seconds. Your AI sees live availability and books without conflicts.",
+      label: "Square connected",
+      desc: "Connect your Square account in seconds.",
       icon: Calendar,
     },
   ];
