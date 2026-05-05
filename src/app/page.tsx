@@ -379,36 +379,44 @@ function Calculator() {
 function FAQ() {
   const items = [
     {
-      q: "How is this different from Calendly or other booking tools?",
-      a: "Calendly and booking tools do one thing — they show your availability and collect a name. They have no knowledge of your business. They can't tell a visitor which treatment is right for them, explain what a service involves, or answer a single question about your practice. Apivo does all of that — because it's trained on your specific knowledge base before it goes live. That's what turns a browser into a booking.",
+      q: "How is this different from Square's built-in booking?",
+      a: "Square's booking page does one thing — it shows your availability and collects a name. It has no knowledge of your business. It can't tell a visitor which treatment is right for them, explain what a service involves, answer a question about pricing, or handle a special request. It just shows a grid of times.\n\nApivo has a conversation. It's trained on your treatments, pricing, and policies — so it answers real questions before booking the appointment. That's what turns a browser into a booking.",
     },
     {
-      q: "How does the AI know about my services and pricing?",
-      a: "Before going live, we build a custom knowledge base for your practice — covering your full service menu, pricing, treatment details, contraindications, policies, and the FAQs your front desk handles every day. The AI is trained on this and only answers based on it. It will never pull generic information from the internet or guess at an answer. If it doesn't know something, it says so and offers to have a staff member follow up. This is what makes Apivo an expert, not just a booking link.",
-    },
-    {
-      q: "What scheduling software do you integrate with?",
-      a: "Square and Acuity are our primary integrations. We sync directly with your calendar, see live availability, and book appointments in real time — typically live within 48 hours of onboarding. We also support Mindbody, Boulevard, and Jane App — approximately 7 days for each.",
+      q: "We already have a chatbot — how is Apivo different?",
+      a: "Most chatbots are generic. They answer broad questions with scripted responses and hand the client a booking link when they're done. They guess. They get things wrong. And they lose the client before the appointment is booked.\n\nApivo is not a chatbot. It's a booking assistant trained specifically on your business — your treatments, your pricing, your policies, your aftercare. It only answers from what it's been trained on. It never guesses. And it doesn't just hand off to a booking link — it completes the booking before the client leaves your website.",
     },
     {
       q: "Does Apivo replace my front desk?",
-      a: "No. Apivo handles inbound booking inquiries from your website so your team can focus on in-person clients and higher-value tasks. It works alongside your existing staff, not instead of them.",
+      a: "No. Apivo handles inbound booking inquiries from your website so your team can focus on in-person clients and higher-value tasks. It works alongside your existing staff — not instead of them.\n\nThink of it this way: your front desk shouldn't be answering the same questions over and over at midnight. Apivo handles that so she doesn't have to.",
+    },
+    {
+      q: "How does Apivo know about my services and pricing?",
+      a: "Before going live, we build a custom knowledge base for your business — covering your full treatment menu, pricing, service details, pre and post care instructions, policies, and the FAQs your front desk handles every day.\n\nApivo is trained on this and only answers based on it. It will never pull generic information from the internet or guess at an answer. If it doesn't know something, it says so and offers to have a staff member follow up. This is what makes Apivo an expert — not just a booking link.",
+    },
+    {
+      q: "Will Apivo live on my Square booking page?",
+      a: "Apivo lives on your website — not on the Square booking page. The goal is to complete the entire booking conversation before the client ever needs to navigate away. They ask a question, get an accurate answer trained on your business, and book — all without leaving your site.\n\nThat's actually a better experience than sending them to a generic Square booking page. Your website is branded. Your website is where trust is built. Apivo keeps them there.",
+    },
+    {
+      q: "What if my treatments or pricing change?",
+      a: "Just email us. We update your knowledge base within 24 hours of any request. New treatment, price change, seasonal promotion, updated policy — send it over and it's live the same day.\n\nThat's included in your monthly plan. No extra fees, no tickets, no waiting.",
+    },
+    {
+      q: "Is Apivo HIPAA compliant?",
+      a: "Apivo is designed to be HIPAA-friendly. We only collect basic booking information — name, contact details, service, and appointment time. We never collect, store, or transmit protected health information. No medical history, no diagnoses, no treatment records.\n\nBecause Apivo doesn't handle PHI, a Business Associate Agreement is not required for our current scope of services. Your client records never leave Square.",
+    },
+    {
+      q: "What if Apivo can't answer a question?",
+      a: "Apivo is configured to acknowledge what it doesn't know and offer to have a staff member follow up. It will never guess or fabricate an answer. Accuracy is the priority — always.\n\nIf a question falls outside the knowledge base, Apivo says so clearly and keeps the client engaged rather than losing them.",
     },
     {
       q: "Is there a contract?",
-      a: "The monthly plan is month-to-month — cancel anytime, no commitment. The annual plan is a one-year commitment billed upfront at a 35% discount, with your price locked forever after that first year.",
-    },
-    {
-      q: "How quickly will I see results?",
-      a: "Your AI is live and booking from day one. The impact grows over time as it captures after-hours and overflow inquiries that would have previously gone unanswered.",
-    },
-    {
-      q: "What if the AI can't answer a question?",
-      a: "The agent is configured to acknowledge what it doesn't know and offer to have a staff member follow up. It will never guess or fabricate an answer. Accuracy is the priority.",
+      a: "The monthly plan is month-to-month — cancel anytime, no commitment required.\n\nThe annual plan is a one-year commitment billed upfront at a 35% discount. Your rate is locked forever from day one — it will never increase as long as your subscription stays active.",
     },
     {
       q: "Is my client data secure?",
-      a: "Yes. Apivo collects only what a standard booking form does — name, contact, service, and appointment time. No clinical data, no PHI. Every client's data is isolated and stored securely — no practice can see another's information. Your client records never leave Square or Acuity.",
+      a: "Yes. Apivo collects only what a standard booking form does — name, contact, service, and appointment time. No clinical data, no PHI. Every client's data is isolated and stored securely — no business can see another's information.\n\nYour client records never leave Square.",
     },
   ];
   return (

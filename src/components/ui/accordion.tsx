@@ -54,9 +54,11 @@ export function FaqAccordion({ items, defaultOpen }: FaqAccordionProps) {
             </Accordion.ItemIndicator>
           </Accordion.ItemTrigger>
           <AnimatedContent>
-            <p className="px-1 pb-4 text-xs leading-relaxed text-zinc-500 sm:text-sm">
-              {item.a}
-            </p>
+            <div className="px-1 pb-4 text-xs leading-relaxed text-zinc-500 sm:text-sm">
+              {item.a.split("\n\n").map((para, j) => (
+                <p key={j} className={j > 0 ? "mt-3" : ""}>{para}</p>
+              ))}
+            </div>
           </AnimatedContent>
         </Accordion.Item>
       ))}
