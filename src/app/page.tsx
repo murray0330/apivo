@@ -62,27 +62,27 @@ function SocialProof() {
 function ValueProp() {
   const benefits = [
     {
-      stat: "48 hrs",
-      label: "Live on your website",
-      desc: "Trained on your treatments, policies, and pricing — ready to answer from day one.",
+      stat: "Synced",
+      label: "Your Calls Booked",
+      desc: "Every call is answered, and every client is logged in Square automatically — when it's a booking, the appointment, treatment, and time sync with zero manual entry.",
       icon: Clock,
     },
     {
-      stat: "24/7",
-      label: "Always available",
-      desc: "Whether it's 2pm or 2am, Apivo is there — answering questions and booking appointments.",
+      stat: "VIP",
+      label: "Never Talking to a Stranger",
+      desc: "Returning clients are recognized automatically — Apivo already knows who they are, so they never have to start from scratch.",
       icon: Globe,
     },
     {
-      stat: "$0",
-      label: "Free for your first 30 days",
-      desc: "No setup fee. No contract. Cancel anytime, no questions asked.",
+      stat: "Trained",
+      label: "Never Guesses",
+      desc: "Apivo only answers from what it actually knows about your treatments, pricing, and policies — and every booking comes with notes on exactly what the client asked about.",
       icon: DollarSign,
     },
     {
-      stat: "1 click",
-      label: "Square connected",
-      desc: "Connect your Square account in seconds.",
+      stat: "ROI",
+      label: "See It Pay for Itself",
+      desc: "Every call answered, every booking captured, every dollar of after-hours revenue — visible in real time.",
       icon: Calendar,
     },
   ];
@@ -92,16 +92,14 @@ function ValueProp() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Intro */}
         <div className="mx-auto max-w-2xl text-center">
-          <span className="inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-600 sm:text-xs">
+          <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
             What Apivo Does
-          </span>
+          </p>
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl md:text-4xl">
             Your Always Available Booking Assistant
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Apivo is a booking assistant built specifically for med spas on Square.
-            It lives on your website, trained on your treatments, pricing, and policies — answers real questions,
-            books appointments directly into your Square calendar, and captures revenue around the clock.
+            Apivo is a booking assistant built specifically for med spas on Square. Trained on your treatments, pricing, and policies, it answers your phone, books appointments directly into your Square calendar, and captures revenue around the clock.
           </p>
         </div>
 
