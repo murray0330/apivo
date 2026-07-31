@@ -9,14 +9,9 @@ import { FaqAccordion } from "@/components/ui/accordion";
 import {
   Calendar,
   MessageSquare,
-  Mail,
-  Users,
   RefreshCw,
   Globe,
-  Star,
-  DollarSign,
   CheckCircle,
-  Clock,
   BarChart2,
 } from "lucide-react";
 
@@ -65,25 +60,21 @@ function ValueProp() {
       stat: "Synced",
       label: "Your Calls Booked",
       desc: "Every call is answered, and every client is logged in Square automatically — when it's a booking, the appointment, treatment, and time sync with zero manual entry.",
-      icon: Clock,
     },
     {
       stat: "VIP",
       label: "Never Talking to a Stranger",
       desc: "Returning clients are recognized automatically — Apivo already knows who they are, so they never have to start from scratch.",
-      icon: Globe,
     },
     {
       stat: "Trained",
       label: "Never Guesses",
       desc: "Apivo only answers from what it actually knows about your treatments, pricing, and policies — and every booking comes with notes on exactly what the client asked about.",
-      icon: DollarSign,
     },
     {
       stat: "ROI",
       label: "See It Pay for Itself",
       desc: "Every call answered, every booking captured, every dollar of after-hours revenue — visible in real time.",
-      icon: Calendar,
     },
   ];
 
@@ -108,16 +99,15 @@ function ValueProp() {
           {benefits.map((b) => (
             <div
               key={b.label}
-              className="rounded-2xl border border-black/[.08] bg-white p-5 shadow-[0_2px_20px_rgba(0,0,0,.06)] sm:p-6"
+              className="overflow-hidden rounded-2xl border border-black/[.08] shadow-[0_2px_20px_rgba(0,0,0,.06)]"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50">
-                <b.icon className="h-5 w-5 text-indigo-500" strokeWidth={1.5} />
+              <div className="bg-indigo-500 px-5 py-4 sm:px-6">
+                <p className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">{b.stat}</p>
+                <p className="mt-0.5 text-sm font-medium text-indigo-100">{b.label}</p>
               </div>
-              <p className="mt-4 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
-                {b.stat}
-              </p>
-              <p className="mt-0.5 text-sm font-semibold text-zinc-700">{b.label}</p>
-              <p className="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-[13px]">{b.desc}</p>
+              <div className="bg-white p-5 sm:p-6">
+                <p className="text-xs leading-relaxed text-zinc-500 sm:text-[13px]">{b.desc}</p>
+              </div>
             </div>
           ))}
         </div>
