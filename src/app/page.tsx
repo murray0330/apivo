@@ -101,11 +101,10 @@ function ValueProp() {
               key={b.label}
               className="overflow-hidden rounded-2xl border border-black/[.08] shadow-[0_2px_20px_rgba(0,0,0,.06)]"
             >
-              <div className="bg-indigo-500 px-5 py-4 sm:px-6">
-                <p className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">{b.stat}</p>
-              </div>
+              <div className="bg-indigo-500 h-2" />
               <div className="bg-white p-5 sm:p-6">
-                <p className="text-sm font-semibold text-zinc-800">{b.label}</p>
+                <p className="text-xl font-extrabold tracking-tight text-indigo-500 sm:text-2xl">{b.stat}</p>
+                <p className="mt-1 text-sm font-semibold text-zinc-800">{b.label}</p>
                 <p className="mt-2 text-xs leading-relaxed text-zinc-500 sm:text-[13px]">{b.desc}</p>
               </div>
             </div>
