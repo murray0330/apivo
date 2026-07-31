@@ -21,7 +21,7 @@ export default function AuroraHero() {
         {/* Headline */}
         <h1 className="text-left text-[clamp(2rem,8vw,4.5rem)] font-extralight leading-[1.08] tracking-tight text-zinc-900">
           <span className="text-indigo-500">Stop Losing</span> Bookings<br />
-          <span className="whitespace-nowrap">After Hours</span>
+          <span className="whitespace-nowrap">to Missed Calls</span>
         </h1>
 
         {/* Subheading */}
@@ -47,7 +47,7 @@ export default function AuroraHero() {
 
         {/* Micro Details */}
         <ul className="mt-4 flex gap-4 text-xs font-light tracking-tight text-zinc-500 sm:mt-8 sm:gap-6 sm:text-sm">
-          {["Built for med spas on Square", "Live on your website in 48 hours", "Free 30-day trial — no contract"].map(
+          {["Built for med spas on Square", "Live on your phone in 48 hours", "Free 14-day trial — no contract"].map(
             (detail) => (
               <li key={detail} className="flex items-center gap-2">
                 <span className="text-indigo-500">✓</span>
