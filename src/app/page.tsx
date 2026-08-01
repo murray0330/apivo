@@ -1,5 +1,5 @@
-import DemoChatbot from "@/components/demo-chatbot";
 import AuroraHero from "@/components/aurora-hero";
+import DemoSection from "@/components/demo-section";
 import ChatCtaButton from "@/components/chat-cta-button";
 import RevenueCalculator from "@/components/revenue-calculator";
 import PricingSection from "@/components/pricing";
@@ -225,57 +225,6 @@ function Features() {
   );
 }
 
-/* ================================================================
-   Demo
-   ================================================================ */
-function Demo() {
-  return (
-    <section id="demo" className="bg-[#fafafa] py-16 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHead tag="Our Product" title="Experience It Yourself" />
-        <div className="mt-10 grid gap-8 sm:mt-16 md:grid-cols-2 md:items-start">
-          <div>
-            <h3 className="text-lg font-semibold text-zinc-900 sm:text-xl">Try It Right Now</h3>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-base">
-              It&apos;s 10:47pm. A potential client found your med spa. They have questions. They want to book. There&apos;s no one there to answer. Here&apos;s what happens when Apivo is on your website.
-            </p>
-            <ul className="mt-4 space-y-2 sm:mt-6">
-              {[
-                "Real-time calendar availability check",
-                "Service and pricing questions answered instantly",
-                "Appointment placed directly on calendar",
-                "Contact saved to Square",
-              ].map((c, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
-                  <CheckCircle className="h-4 w-4 shrink-0 text-indigo-500" />
-                  {c}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              {[
-                { stat: "< 90s", label: "Average booking time" },
-                { stat: "24/7", label: "Always available" },
-                { stat: "29+", label: "Languages Supported" },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-2xl border border-black/[.08] bg-white p-3 text-center shadow-[0_2px_12px_rgba(0,0,0,.05)]"
-                >
-                  <p className="text-xl font-extrabold tracking-tight text-zinc-900 sm:text-2xl">{item.stat}</p>
-                  <p className="mt-1 text-[10px] leading-tight text-zinc-400 sm:text-[11px]">{item.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mx-auto w-full max-w-sm">
-            <DemoChatbot />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ================================================================
    Not Calendly
@@ -580,7 +529,7 @@ export default function HomePage() {
       </div>
       <SocialProof />
       <ValueProp />
-      <Demo />
+      <DemoSection />
       <HowItWorks />
       <Features />
       <NotCalendly />
