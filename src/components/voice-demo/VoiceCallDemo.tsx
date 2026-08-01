@@ -180,8 +180,12 @@ const WAVE_BH = [45, 80, 60, 90, 50, 75, 40, 85, 55];
 function VoiceTyping() {
   return (
     <div
-      className="flex items-center gap-[3px] rounded-2xl rounded-bl-sm px-4 py-3"
-      style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.07)", width: "fit-content" }}
+      className="flex items-center gap-[3px] rounded-2xl rounded-bl-sm px-3 py-2.5"
+      style={{
+        background: "rgba(255,255,255,0.1)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        width: "fit-content",
+      }}
     >
       {WAVE_BH.map((h, i) => (
         <span
@@ -190,7 +194,7 @@ function VoiceTyping() {
           style={{
             display: "inline-block",
             width: "3px",
-            height: "16px",
+            height: "14px",
             borderRadius: "2px",
             background: "rgba(255,255,255,0.55)",
             ["--vc-bh" as string]: `${h}%`,
@@ -214,7 +218,7 @@ function SquareMsg({ action }: { action: CalendarAction }) {
   const { text, color } = map[action];
   return (
     <div
-      className="rounded-xl px-3 py-2 text-center text-[11px] font-medium text-white/80"
+      className="rounded-xl px-3 py-1.5 text-center text-[11px] font-medium text-white/80"
       style={{ background: color, border: "1px solid rgba(255,255,255,0.1)" }}
     >
       {text}
@@ -248,7 +252,6 @@ export default function VoiceCallDemo() {
     if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
   }, []);
 
-  // Returns a promise that resolves when audio ends (or after placeholder duration)
   const playAudio = useCallback((src: string): Promise<void> => {
     stopAudio();
     return new Promise((resolve) => {
@@ -320,116 +323,186 @@ export default function VoiceCallDemo() {
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
-      <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-white/10"
-        style={{
-          height: "min(520px, calc(100vh - 200px))",
-          background: "linear-gradient(160deg, #2a2a2e 0%, #1c1c1e 60%)",
-          boxShadow: "0 4px 32px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.05)",
-        }}
-      >
-        {/* ── Header ──────────────────────────────────────── */}
-        <div className="flex shrink-0 items-center gap-2.5 border-b px-4 py-3"
-          style={{ borderColor: "rgba(255,255,255,0.08)" }}
-        >
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
-            style={{ background: "linear-gradient(135deg, #6366f1, #818cf8)", boxShadow: "0 2px 8px rgba(99,102,241,0.4)" }}
-          >
-            <img src="/apivo-logo.png" alt="Apivo" style={{ height: "14px", width: "auto", objectFit: "contain" }} />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-sm font-semibold text-white">Chloe · ABC Med Spa</span>
-            <span className="mt-0.5 text-[10px] font-medium" style={{ color: "#22c55e" }}>
-              <span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e", marginRight: "4px", verticalAlign: "middle" }} />
-              Live call · {timer}
-            </span>
-          </div>
-          <button
-            onClick={startDemo}
-            title="End call"
-            className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95"
-            style={{ background: "#ff3b30", boxShadow: "0 2px 10px rgba(255,59,48,0.4)" }}
-          >
-            <PhoneOff style={{ width: "14px", height: "14px", color: "#fff" }} strokeWidth={2.5} />
-          </button>
-        </div>
+      {/* iPhone wrapper — 290px phone chrome */}
+      <div className="mx-auto" style={{ width: "290px" }}>
 
-        {/* ── Messages ─────────────────────────────────────── */}
+        {/* Phone body — outer dark frame */}
         <div
-          ref={bodyRef}
-          className="flex flex-1 flex-col gap-2.5 overflow-y-auto p-4"
-          style={{ background: "rgba(0,0,0,0.15)" }}
+          className="relative"
+          style={{
+            background: "#1c1c1e",
+            borderRadius: "44px",
+            padding: "8px",
+            boxShadow:
+              "0 0 0 1px rgba(255,255,255,0.10), 0 0 0 2px rgba(255,255,255,0.03), 0 28px 72px rgba(0,0,0,0.55)",
+          }}
         >
-          {messages.map((msg) => {
-            if (msg.kind === "chloe") return (
-              <div key={msg.id} className="flex justify-start">
-                <div
-                  className="max-w-[80%] rounded-2xl rounded-bl-sm px-4 py-2.5 text-[0.84rem] leading-relaxed"
-                  style={{
-                    background: "rgba(255,255,255,0.1)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "rgba(255,255,255,0.92)",
-                  }}
-                >
-                  {msg.text}
-                </div>
-              </div>
-            );
-            if (msg.kind === "user") return (
-              <div key={msg.id} className="flex justify-end">
-                <div
-                  className="max-w-[80%] rounded-2xl rounded-br-sm px-4 py-2.5 text-[0.84rem] leading-relaxed text-white"
-                  style={{ background: "#6366f1", boxShadow: "0 2px 10px rgba(99,102,241,0.35)" }}
-                >
-                  {msg.text}
-                </div>
-              </div>
-            );
-            if (msg.kind === "typing") return (
-              <div key={msg.id} className="flex justify-start">
-                <VoiceTyping />
-              </div>
-            );
-            if (msg.kind === "square") return (
-              <div key={msg.id} className="flex justify-center">
-                <SquareMsg action={msg.squareAction!} />
-              </div>
-            );
-            return null;
-          })}
+          {/* Side buttons (decorative) */}
+          {/* Silent switch */}
+          <div style={{ position: "absolute", left: "-3px", top: "48px",  width: "3px", height: "20px", background: "#3a3a3c", borderRadius: "2px 0 0 2px" }} />
+          {/* Volume up */}
+          <div style={{ position: "absolute", left: "-3px", top: "78px",  width: "3px", height: "30px", background: "#3a3a3c", borderRadius: "2px 0 0 2px" }} />
+          {/* Volume down */}
+          <div style={{ position: "absolute", left: "-3px", top: "118px", width: "3px", height: "30px", background: "#3a3a3c", borderRadius: "2px 0 0 2px" }} />
+          {/* Power */}
+          <div style={{ position: "absolute", right: "-3px", top: "94px", width: "3px", height: "60px", background: "#3a3a3c", borderRadius: "0 2px 2px 0" }} />
 
-          {/* Choice pill buttons — same structure as chat widget */}
-          {choices.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-1">
-              {choices.map((c) => (
-                <button
-                  key={c.label}
-                  onClick={() => handleChoice(c)}
-                  className="rounded-full px-3.5 py-2 text-[0.84rem] font-medium transition-all"
-                  style={{
-                    border: "1px solid rgba(255,255,255,0.18)",
-                    background: "rgba(255,255,255,0.07)",
-                    color: "rgba(255,255,255,0.85)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(99,102,241,0.35)";
-                    e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)";
-                    e.currentTarget.style.color = "#fff";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
-                    e.currentTarget.style.color = "rgba(255,255,255,0.85)";
-                  }}
-                >
-                  {c.label}
-                </button>
-              ))}
+          {/* Screen */}
+          <div
+            className="flex flex-col overflow-hidden"
+            style={{
+              background: "linear-gradient(160deg, #2e2e32 0%, #1c1c1e 60%)",
+              borderRadius: "36px",
+              height: "560px",
+            }}
+          >
+            {/* Dynamic Island */}
+            <div className="flex shrink-0 justify-center" style={{ paddingTop: "10px", paddingBottom: "5px" }}>
+              <div style={{ width: "94px", height: "26px", background: "#000", borderRadius: "16px" }} />
             </div>
-          )}
+
+            {/* Status bar */}
+            <div
+              className="flex shrink-0 items-center justify-between"
+              style={{ padding: "0 20px 5px" }}
+            >
+              <span style={{ fontSize: "11px", fontWeight: 600, color: "rgba(255,255,255,0.85)", letterSpacing: "0.01em" }}>
+                11:24
+              </span>
+              <div className="flex items-center gap-1.5">
+                {/* Cellular signal */}
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="rgba(255,255,255,0.75)">
+                  <rect x="0"   y="5.5" width="2.5" height="4.5" rx="0.5"/>
+                  <rect x="3.8" y="3.5" width="2.5" height="6.5" rx="0.5"/>
+                  <rect x="7.6" y="1.5" width="2.5" height="8.5" rx="0.5"/>
+                  <rect x="11.4" y="0"  width="2.5" height="10"  rx="0.5"/>
+                </svg>
+                {/* WiFi */}
+                <svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+                  <path d="M0.5 3.5C3 1.3 10 1.3 12.5 3.5" stroke="rgba(255,255,255,0.75)" strokeWidth="1.3" strokeLinecap="round"/>
+                  <path d="M2.5 6C4.2 4.6 8.8 4.6 10.5 6" stroke="rgba(255,255,255,0.75)" strokeWidth="1.3" strokeLinecap="round"/>
+                  <path d="M4.7 8.3C5.4 7.7 7.6 7.7 8.3 8.3" stroke="rgba(255,255,255,0.75)" strokeWidth="1.3" strokeLinecap="round"/>
+                  <circle cx="6.5" cy="9.7" r="0.7" fill="rgba(255,255,255,0.75)"/>
+                </svg>
+                {/* Battery */}
+                <svg width="22" height="10" viewBox="0 0 22 10" fill="none">
+                  <rect x="0.5" y="0.5" width="18" height="9" rx="2"   stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
+                  <rect x="19"  y="3.5" width="2"  height="3" rx="1"   fill="rgba(255,255,255,0.5)"/>
+                  <rect x="1.5" y="1.5" width="14" height="7" rx="1.5" fill="rgba(255,255,255,0.75)"/>
+                </svg>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
+
+            {/* ── Call header ──────────────────────────── */}
+            <div className="flex shrink-0 items-center gap-2 px-3 py-2">
+              <div
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
+                style={{
+                  background: "linear-gradient(135deg, #6366f1, #818cf8)",
+                  boxShadow: "0 2px 6px rgba(99,102,241,0.45)",
+                }}
+              >
+                <img src="/apivo-logo.png" alt="Apivo" style={{ height: "12px", width: "auto", objectFit: "contain" }} />
+              </div>
+              <div className="flex min-w-0 flex-1 flex-col leading-none">
+                <span className="truncate text-xs font-semibold text-white">Chloe · ABC Med Spa</span>
+                <span className="mt-0.5 flex items-center gap-1 text-[10px] font-medium" style={{ color: "#22c55e" }}>
+                  <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#22c55e" }} />
+                  Live call · {timer}
+                </span>
+              </div>
+              <button
+                onClick={startDemo}
+                title="End call"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95"
+                style={{ background: "#ff3b30", boxShadow: "0 2px 8px rgba(255,59,48,0.4)" }}
+              >
+                <PhoneOff style={{ width: "12px", height: "12px", color: "#fff" }} strokeWidth={2.5} />
+              </button>
+            </div>
+
+            {/* ── Messages ─────────────────────────────── */}
+            <div
+              ref={bodyRef}
+              className="flex flex-1 flex-col gap-2 overflow-y-auto p-3"
+              style={{ background: "rgba(0,0,0,0.12)" }}
+            >
+              {messages.map((msg) => {
+                if (msg.kind === "chloe") return (
+                  <div key={msg.id} className="flex justify-start">
+                    <div
+                      className="max-w-[85%] rounded-2xl rounded-bl-sm px-3 py-2 text-xs leading-relaxed"
+                      style={{
+                        background: "rgba(255,255,255,0.1)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        color: "rgba(255,255,255,0.92)",
+                      }}
+                    >
+                      {msg.text}
+                    </div>
+                  </div>
+                );
+                if (msg.kind === "user") return (
+                  <div key={msg.id} className="flex justify-end">
+                    <div
+                      className="max-w-[85%] rounded-2xl rounded-br-sm px-3 py-2 text-xs leading-relaxed text-white"
+                      style={{ background: "#6366f1", boxShadow: "0 2px 8px rgba(99,102,241,0.3)" }}
+                    >
+                      {msg.text}
+                    </div>
+                  </div>
+                );
+                if (msg.kind === "typing") return (
+                  <div key={msg.id} className="flex justify-start">
+                    <VoiceTyping />
+                  </div>
+                );
+                if (msg.kind === "square") return (
+                  <div key={msg.id} className="flex justify-center">
+                    <SquareMsg action={msg.squareAction!} />
+                  </div>
+                );
+                return null;
+              })}
+
+              {/* Choice pill buttons — flex-wrap, not full-width */}
+              {choices.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-0.5">
+                  {choices.map((c) => (
+                    <button
+                      key={c.label}
+                      onClick={() => handleChoice(c)}
+                      className="rounded-full px-3 py-1.5 text-[0.72rem] font-medium transition-all"
+                      style={{
+                        border: "1px solid rgba(255,255,255,0.18)",
+                        background: "rgba(255,255,255,0.07)",
+                        color: "rgba(255,255,255,0.85)",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "rgba(99,102,241,0.35)";
+                        e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)";
+                        e.currentTarget.style.color = "#fff";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
+                        e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+                      }}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* ── Restart below — matches chat widget ─────────────── */}
+      {/* Restart below — matches chat widget */}
       <div className="mt-3 flex justify-center">
         <button
           onClick={startDemo}
