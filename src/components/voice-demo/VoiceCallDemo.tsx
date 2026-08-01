@@ -405,7 +405,7 @@ export default function VoiceCallDemo() {
                   boxShadow: "0 2px 6px rgba(99,102,241,0.45)",
                 }}
               >
-                <img src="/apivo-logo.png" alt="Apivo" style={{ height: "12px", width: "auto", objectFit: "contain" }} />
+                <img src="/apivo-favicon_white.png" alt="Apivo" style={{ height: "14px", width: "14px", objectFit: "contain" }} />
               </div>
               <div className="flex min-w-0 flex-1 flex-col leading-none">
                 <span className="truncate text-xs font-semibold text-white">Chloe · ABC Med Spa</span>
