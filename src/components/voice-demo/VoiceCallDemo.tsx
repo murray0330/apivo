@@ -1,28 +1,30 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { PhoneOff } from "lucide-react";
 
 // ─── Keyframe injection ───────────────────────────────────────────────────────
 
 const STYLES = `
 @keyframes vcBar {
-  from { height: 6%; opacity: 0.3; }
-  to   { height: var(--vc-bh, 65%); opacity: 0.85; }
+  from { height: 15%; opacity: 0.35; }
+  to   { height: var(--vc-bh, 85%); opacity: 0.9; }
 }
-.vc-bar-active {
-  animation: vcBar var(--vc-dur, 0.6s) ease-in-out var(--vc-delay, 0s) infinite alternate;
-}
-@keyframes vcBadge {
-  from { opacity: 0; transform: translateY(5px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.vc-badge-in { animation: vcBadge 0.35s ease forwards; }
+.vc-bar { animation: vcBar var(--vc-dur, 0.55s) ease-in-out var(--vc-delay, 0s) infinite alternate; }
 `;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type CalendarAction = "book" | "move" | "cancel";
+type MsgKind = "chloe" | "user" | "typing" | "square";
+
+interface Msg {
+  id: number;
+  kind: MsgKind;
+  text?: string;
+  squareAction?: CalendarAction;
+}
+
 interface Choice { label: string; next: string; }
 interface ConvNode {
   audioSrc: string;
@@ -171,26 +173,29 @@ function useCallTimer() {
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
 
-// ─── Waveform ─────────────────────────────────────────────────────────────────
+// ─── Voice typing indicator (waveform in a bubble) ────────────────────────────
 
-const BH = [22, 42, 60, 28, 70, 44, 18, 75, 36, 62, 24, 68, 46, 30, 64, 50, 20, 72, 38, 55, 27, 65, 40, 33, 58];
+const WAVE_BH = [45, 80, 60, 90, 50, 75, 40, 85, 55];
 
-function Waveform({ active }: { active: boolean }) {
+function VoiceTyping() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "3px", height: "28px" }} aria-hidden>
-      {BH.map((h, i) => (
+    <div
+      className="flex items-center gap-[3px] rounded-2xl rounded-bl-sm px-4 py-3"
+      style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.07)", width: "fit-content" }}
+    >
+      {WAVE_BH.map((h, i) => (
         <span
           key={i}
-          className={active ? "vc-bar-active" : ""}
+          className="vc-bar"
           style={{
-            flex: 1,
+            display: "inline-block",
+            width: "3px",
+            height: "16px",
             borderRadius: "2px",
-            background: "rgba(255,255,255,0.5)",
-            minHeight: "2px",
-            height: active ? undefined : `${Math.max(h * 0.26, 5)}%`,
+            background: "rgba(255,255,255,0.55)",
             ["--vc-bh" as string]: `${h}%`,
-            ["--vc-dur" as string]: `${0.46 + ((i * 31) % 36) / 100}s`,
-            ["--vc-delay" as string]: `${((i * 67) % 680) / 1000}s`,
+            ["--vc-dur" as string]: `${0.45 + i * 0.06}s`,
+            ["--vc-delay" as string]: `${i * 0.07}s`,
           }}
         />
       ))}
@@ -198,20 +203,19 @@ function Waveform({ active }: { active: boolean }) {
   );
 }
 
-// ─── Square notification ──────────────────────────────────────────────────────
+// ─── Square inline banner ─────────────────────────────────────────────────────
 
-function SquareBanner({ action }: { action: CalendarAction | null }) {
-  if (!action) return null;
-  const map: Record<CalendarAction, { text: string; bg: string }> = {
-    book:   { text: "✓ Booked to your Square calendar", bg: "rgba(34,197,94,0.18)" },
-    move:   { text: "✓ Appointment moved in Square",    bg: "rgba(234,179,8,0.18)"  },
-    cancel: { text: "✓ Cancelled in Square",            bg: "rgba(239,68,68,0.18)"  },
+function SquareMsg({ action }: { action: CalendarAction }) {
+  const map: Record<CalendarAction, { text: string; color: string }> = {
+    book:   { text: "✓ Booked to your Square calendar", color: "rgba(34,197,94,0.2)"  },
+    move:   { text: "✓ Appointment moved in Square",    color: "rgba(234,179,8,0.2)"   },
+    cancel: { text: "✓ Cancelled in Square",            color: "rgba(239,68,68,0.2)"   },
   };
-  const { text, bg } = map[action];
+  const { text, color } = map[action];
   return (
     <div
-      className="vc-badge-in mx-4 mb-3 rounded-xl px-3 py-2 text-center text-[10px] font-medium text-white"
-      style={{ background: bg, border: "1px solid rgba(255,255,255,0.1)" }}
+      className="rounded-xl px-3 py-2 text-center text-[11px] font-medium text-white/80"
+      style={{ background: color, border: "1px solid rgba(255,255,255,0.1)" }}
     >
       {text}
     </div>
@@ -220,17 +224,23 @@ function SquareBanner({ action }: { action: CalendarAction | null }) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function VoiceCallDemo() {
-  const [nodeId, setNodeId]         = useState("opening");
-  const [lastChoice, setLastChoice] = useState<string | null>(null);
-  const [waveActive, setWaveActive] = useState(false);
-  const [visible, setVisible]       = useState(true);
-  const [calAction, setCalAction]   = useState<CalendarAction | null>(null);
+const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+let msgCounter = 0;
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timer = useCallTimer();
-  const node = NODES[nodeId];
+export default function VoiceCallDemo() {
+  const [messages, setMessages]     = useState<Msg[]>([]);
+  const [choices, setChoices]       = useState<Choice[]>([]);
+  const [running, setRunning]       = useState(false);
+  const bodyRef                     = useRef<HTMLDivElement>(null);
+  const audioRef                    = useRef<HTMLAudioElement | null>(null);
+  const timerRef                    = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timer                       = useCallTimer();
+
+  const scrollBottom = useCallback(() => {
+    if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+  }, []);
+
+  useEffect(() => { scrollBottom(); }, [messages, choices, scrollBottom]);
 
   const stopAudio = useCallback(() => {
     audioRef.current?.pause();
@@ -238,221 +248,198 @@ export default function VoiceCallDemo() {
     if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
   }, []);
 
-  const playAudio = useCallback((src: string) => {
+  // Returns a promise that resolves when audio ends (or after placeholder duration)
+  const playAudio = useCallback((src: string): Promise<void> => {
     stopAudio();
-    setWaveActive(true);
-    const audio = new Audio(src);
-    audioRef.current = audio;
-    const done = () => setWaveActive(false);
-    audio.onended = done;
-    audio.onerror = () => { timerRef.current = setTimeout(done, 3200); };
-    audio.play().catch(() => { timerRef.current = setTimeout(done, 3200); });
+    return new Promise((resolve) => {
+      const audio = new Audio(src);
+      audioRef.current = audio;
+      const done = () => { stopAudio(); resolve(); };
+      audio.onended = done;
+      audio.onerror = () => { timerRef.current = setTimeout(done, 2400); };
+      audio.play().catch(() => { timerRef.current = setTimeout(done, 2400); });
+    });
   }, [stopAudio]);
 
-  useEffect(() => {
-    playAudio(node.audioSrc);
-    return stopAudio;
-  }, [nodeId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const go = (fn: () => void) => {
-    setVisible(false);
-    setTimeout(() => { fn(); setVisible(true); }, 260);
+  const addMsg = (msg: Omit<Msg, "id">): number => {
+    const id = ++msgCounter;
+    setMessages((prev) => [...prev, { ...msg, id }]);
+    return id;
   };
 
-  const handleChoice = (c: Choice) => {
-    go(() => {
-      const next = NODES[c.next];
-      setLastChoice(c.label);
-      setNodeId(c.next);
-      if (next?.calendarAction) setCalAction(next.calendarAction);
-    });
+  const removeMsg = (id: number) => {
+    setMessages((prev) => prev.filter((m) => m.id !== id));
   };
 
-  const handleReset = () => {
-    go(() => {
-      setNodeId("opening");
-      setLastChoice(null);
-      setCalAction(null);
-    });
-  };
+  const startDemo = useCallback(async () => {
+    if (running) return;
+    setRunning(true);
+    stopAudio();
+    msgCounter = 0;
+    setMessages([]);
+    setChoices([]);
+
+    await delay(300);
+    const typId = addMsg({ kind: "typing" });
+    await playAudio(NODES.opening.audioSrc);
+    removeMsg(typId);
+    addMsg({ kind: "chloe", text: NODES.opening.chloeText });
+    await delay(200);
+    setChoices(NODES.opening.choices ?? []);
+    setRunning(false);
+  }, [running, playAudio, stopAudio]);
+
+  useEffect(() => { startDemo(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleChoice = useCallback(async (choice: Choice) => {
+    if (running) return;
+    setRunning(true);
+    setChoices([]);
+
+    addMsg({ kind: "user", text: choice.label });
+    await delay(300);
+
+    const next = NODES[choice.next];
+    const typId = addMsg({ kind: "typing" });
+    await playAudio(next.audioSrc);
+    removeMsg(typId);
+
+    addMsg({ kind: "chloe", text: next.chloeText });
+
+    if (next.calendarAction) {
+      await delay(300);
+      addMsg({ kind: "square", squareAction: next.calendarAction });
+    }
+
+    await delay(200);
+    setChoices(next.choices ?? []);
+    setRunning(false);
+  }, [running, playAudio]);
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
-      <div className="flex flex-col items-center">
-        {/* ── iPhone frame — fixed 330 × 560 ────────────────── */}
-        <div
-          style={{
-            width: "330px",
-            height: "560px",
-            background: "linear-gradient(160deg, #2a2a2e 0%, #1c1c1e 60%)",
-            borderRadius: "44px",
-            border: "1px solid rgba(255,255,255,0.1)",
-            boxShadow: "0 28px 64px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.05)",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-          }}
+      <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-white/10"
+        style={{
+          height: "min(520px, calc(100vh - 200px))",
+          background: "linear-gradient(160deg, #2a2a2e 0%, #1c1c1e 60%)",
+          boxShadow: "0 4px 32px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.05)",
+        }}
+      >
+        {/* ── Header ──────────────────────────────────────── */}
+        <div className="flex shrink-0 items-center gap-2.5 border-b px-4 py-3"
+          style={{ borderColor: "rgba(255,255,255,0.08)" }}
         >
-          {/* Notch */}
-          <div style={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}>
-            <div style={{ height: "24px", width: "110px", background: "#000", borderRadius: "0 0 18px 18px" }} />
-          </div>
-
-          {/* Status bar */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 28px 0", color: "rgba(255,255,255,0.4)", fontSize: "10px" }}>
-            <span>9:41</span>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
-                <rect x="0" y="4" width="2" height="6" rx="1" opacity=".4"/>
-                <rect x="3" y="2.5" width="2" height="7.5" rx="1" opacity=".6"/>
-                <rect x="6" y="1" width="2" height="9" rx="1" opacity=".8"/>
-                <rect x="9" y="0" width="2" height="10" rx="1"/>
-              </svg>
-              <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor">
-                <rect x="0" y="0" width="13" height="10" rx="2" opacity=".35"/>
-                <rect x="0.5" y="0.5" width="11" height="9" rx="1.5" opacity=".9"/>
-                <rect x="13.5" y="3" width="2" height="4" rx="1" opacity=".5"/>
-              </svg>
-            </div>
-          </div>
-
-          {/* Caller info */}
-          <div style={{ textAlign: "center", padding: "12px 24px 10px" }}>
-            <div style={{
-              margin: "0 auto 10px",
-              width: "52px", height: "52px",
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, #6366f1, #818cf8)",
-              boxShadow: "0 4px 16px rgba(99,102,241,0.4)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <img src="/apivo-logo.png" alt="Apivo" style={{ height: "22px", width: "auto", objectFit: "contain" }} />
-            </div>
-            <p style={{ color: "#fff", fontSize: "17px", fontWeight: 600, margin: 0 }}>ABC Med Spa</p>
-            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px", marginTop: "2px" }}>Chloe · AI Booking Assistant</p>
-            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "13px", fontWeight: 300, marginTop: "6px", fontVariantNumeric: "tabular-nums" }}>{timer}</p>
-          </div>
-
-          {/* Waveform */}
-          <div style={{ margin: "0 20px 12px", background: "rgba(255,255,255,0.06)", borderRadius: "14px", padding: "10px 16px 8px" }}>
-            <Waveform active={waveActive} />
-            <p style={{ margin: "6px 0 0", textAlign: "center", fontSize: "9px", color: "rgba(255,255,255,0.28)" }}>
-              {waveActive ? "Chloe is speaking…" : "Tap a response"}
-            </p>
-          </div>
-
-          {/* Square badge */}
-          <SquareBanner action={calAction} />
-
-          {/* Conversation — cross-fades, flex-1 so it fills remaining height */}
-          <div
-            style={{
-              flex: 1,
-              padding: "0 16px",
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(5px)",
-              transition: "opacity 0.26s ease, transform 0.26s ease",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-            }}
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+            style={{ background: "linear-gradient(135deg, #6366f1, #818cf8)", boxShadow: "0 2px 8px rgba(99,102,241,0.4)" }}
           >
-            {/* Chloe bubble — top-left corner flat */}
-            <div style={{
-              background: "rgba(255,255,255,0.09)",
-              border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: "0 16px 16px 16px",
-              padding: "10px 14px",
-              marginBottom: "10px",
-            }}>
-              <p style={{ margin: "0 0 4px", fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.06em", color: "rgba(255,255,255,0.28)" }}>Chloe</p>
-              <p style={{ margin: 0, fontSize: "12px", fontWeight: 300, lineHeight: 1.55, color: "rgba(255,255,255,0.9)" }}>{node.chloeText}</p>
-            </div>
-
-            {/* Visitor last choice — top-right corner flat */}
-            {lastChoice && (
-              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "10px" }}>
-                <div style={{
-                  background: "#6366f1",
-                  borderRadius: "16px 0 16px 16px",
-                  padding: "9px 14px",
-                  maxWidth: "82%",
-                  boxShadow: "0 2px 12px rgba(99,102,241,0.35)",
-                }}>
-                  <p style={{ margin: 0, fontSize: "12px", color: "#fff" }}>{lastChoice}</p>
-                </div>
-              </div>
-            )}
-
-            {/* Choice buttons */}
-            {node.choices && (
-              <div style={{ display: "flex", flexDirection: "column", gap: "6px", paddingBottom: "12px" }}>
-                {node.choices.map((c) => (
-                  <button
-                    key={c.label}
-                    onClick={() => handleChoice(c)}
-                    style={{
-                      width: "100%",
-                      background: "rgba(255,255,255,0.08)",
-                      border: "1px solid rgba(255,255,255,0.13)",
-                      borderRadius: "999px",
-                      padding: "8px 16px",
-                      textAlign: "left",
-                      fontSize: "11px",
-                      fontWeight: 300,
-                      color: "rgba(255,255,255,0.85)",
-                      cursor: "pointer",
-                      transition: "background 0.15s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.15)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-            )}
+            <img src="/apivo-logo.png" alt="Apivo" style={{ height: "14px", width: "auto", objectFit: "contain" }} />
           </div>
-
-          {/* End call */}
-          <div style={{ display: "flex", justifyContent: "center", paddingBottom: "28px", paddingTop: "4px" }}>
-            <button
-              onClick={handleReset}
-              title="End call"
-              style={{
-                width: "60px", height: "60px",
-                borderRadius: "50%",
-                background: "#ff3b30",
-                boxShadow: "0 4px 20px rgba(255,59,48,0.45)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                border: "none", cursor: "pointer",
-                transition: "transform 0.15s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <PhoneOff style={{ width: "22px", height: "22px", color: "#fff" }} strokeWidth={2} />
-            </button>
+          <div className="flex flex-col leading-none">
+            <span className="text-sm font-semibold text-white">Chloe · ABC Med Spa</span>
+            <span className="mt-0.5 text-[10px] font-medium" style={{ color: "#22c55e" }}>
+              <span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e", marginRight: "4px", verticalAlign: "middle" }} />
+              Live call · {timer}
+            </span>
           </div>
-        </div>
-
-        {/* ── Restart demo — below the phone ───────────────── */}
-        <div style={{ height: "28px", display: "flex", alignItems: "center", marginTop: "10px" }}>
           <button
-            onClick={handleReset}
-            style={{
-              background: "none", border: "none",
-              fontSize: "12px", color: "#a1a1aa",
-              cursor: "pointer", transition: "color 0.15s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#6366f1")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#a1a1aa")}
+            onClick={startDemo}
+            title="End call"
+            className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95"
+            style={{ background: "#ff3b30", boxShadow: "0 2px 10px rgba(255,59,48,0.4)" }}
           >
-            ↺ Restart demo
+            <PhoneOff style={{ width: "14px", height: "14px", color: "#fff" }} strokeWidth={2.5} />
           </button>
         </div>
+
+        {/* ── Messages ─────────────────────────────────────── */}
+        <div
+          ref={bodyRef}
+          className="flex flex-1 flex-col gap-2.5 overflow-y-auto p-4"
+          style={{ background: "rgba(0,0,0,0.15)" }}
+        >
+          {messages.map((msg) => {
+            if (msg.kind === "chloe") return (
+              <div key={msg.id} className="flex justify-start">
+                <div
+                  className="max-w-[80%] rounded-2xl rounded-bl-sm px-4 py-2.5 text-[0.84rem] leading-relaxed"
+                  style={{
+                    background: "rgba(255,255,255,0.1)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    color: "rgba(255,255,255,0.92)",
+                  }}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            );
+            if (msg.kind === "user") return (
+              <div key={msg.id} className="flex justify-end">
+                <div
+                  className="max-w-[80%] rounded-2xl rounded-br-sm px-4 py-2.5 text-[0.84rem] leading-relaxed text-white"
+                  style={{ background: "#6366f1", boxShadow: "0 2px 10px rgba(99,102,241,0.35)" }}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            );
+            if (msg.kind === "typing") return (
+              <div key={msg.id} className="flex justify-start">
+                <VoiceTyping />
+              </div>
+            );
+            if (msg.kind === "square") return (
+              <div key={msg.id} className="flex justify-center">
+                <SquareMsg action={msg.squareAction!} />
+              </div>
+            );
+            return null;
+          })}
+
+          {/* Choice pill buttons — same structure as chat widget */}
+          {choices.length > 0 && (
+            <div className="flex flex-wrap gap-2 pt-1">
+              {choices.map((c) => (
+                <button
+                  key={c.label}
+                  onClick={() => handleChoice(c)}
+                  className="rounded-full px-3.5 py-2 text-[0.84rem] font-medium transition-all"
+                  style={{
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    background: "rgba(255,255,255,0.07)",
+                    color: "rgba(255,255,255,0.85)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(99,102,241,0.35)";
+                    e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)";
+                    e.currentTarget.style.color = "#fff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
+                    e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+                  }}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Restart below — matches chat widget ─────────────── */}
+      <div className="mt-3 flex justify-center">
+        <button
+          onClick={startDemo}
+          className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+          </svg>
+          Restart Demo
+        </button>
       </div>
     </>
   );
