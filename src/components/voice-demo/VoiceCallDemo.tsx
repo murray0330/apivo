@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { MicOff, Mic, Volume2, PhoneOff, Grid3X3 } from "lucide-react";
+import { PhoneOff } from "lucide-react";
 
 // ─── Keyframe injection ───────────────────────────────────────────────────────
 
@@ -13,17 +13,16 @@ const STYLES = `
 .vc-bar-active {
   animation: vcBar var(--vc-dur, 0.6s) ease-in-out var(--vc-delay, 0s) infinite alternate;
 }
-@keyframes vcSlideUp {
-  from { opacity: 0; transform: translateY(6px); }
+@keyframes vcBadge {
+  from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.vc-badge-in { animation: vcSlideUp 0.35s ease forwards; }
+.vc-badge-in { animation: vcBadge 0.35s ease forwards; }
 `;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type CalendarAction = "book" | "move" | "cancel";
-
 interface Choice { label: string; next: string; }
 interface ConvNode {
   audioSrc: string;
@@ -178,7 +177,7 @@ const BH = [22, 42, 60, 28, 70, 44, 18, 75, 36, 62, 24, 68, 46, 30, 64, 50, 20, 
 
 function Waveform({ active }: { active: boolean }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "3px", height: "30px" }} aria-hidden>
+    <div style={{ display: "flex", alignItems: "center", gap: "3px", height: "28px" }} aria-hidden>
       {BH.map((h, i) => (
         <span
           key={i}
@@ -186,9 +185,9 @@ function Waveform({ active }: { active: boolean }) {
           style={{
             flex: 1,
             borderRadius: "2px",
-            background: "rgba(255,255,255,0.55)",
+            background: "rgba(255,255,255,0.5)",
             minHeight: "2px",
-            height: active ? undefined : `${Math.max(h * 0.28, 6)}%`,
+            height: active ? undefined : `${Math.max(h * 0.26, 5)}%`,
             ["--vc-bh" as string]: `${h}%`,
             ["--vc-dur" as string]: `${0.46 + ((i * 31) % 36) / 100}s`,
             ["--vc-delay" as string]: `${((i * 67) % 680) / 1000}s`,
@@ -199,7 +198,7 @@ function Waveform({ active }: { active: boolean }) {
   );
 }
 
-// ─── Square notification banner ───────────────────────────────────────────────
+// ─── Square notification ──────────────────────────────────────────────────────
 
 function SquareBanner({ action }: { action: CalendarAction | null }) {
   if (!action) return null;
@@ -212,7 +211,7 @@ function SquareBanner({ action }: { action: CalendarAction | null }) {
   return (
     <div
       className="vc-badge-in mx-4 mb-3 rounded-xl px-3 py-2 text-center text-[10px] font-medium text-white"
-      style={{ background: bg, border: "1px solid rgba(255,255,255,0.12)" }}
+      style={{ background: bg, border: "1px solid rgba(255,255,255,0.1)" }}
     >
       {text}
     </div>
@@ -227,8 +226,6 @@ export default function VoiceCallDemo() {
   const [waveActive, setWaveActive] = useState(false);
   const [visible, setVisible]       = useState(true);
   const [calAction, setCalAction]   = useState<CalendarAction | null>(null);
-  const [muted, setMuted]           = useState(false);
-  const [loud, setLoud]             = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -281,189 +278,180 @@ export default function VoiceCallDemo() {
 
   return (
     <>
-      {/* Inject keyframe styles once */}
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
-      <div className="mx-auto w-full max-w-[290px]">
-        {/* ── iPhone frame ─────────────────────────────────────── */}
+      <div className="flex flex-col items-center">
+        {/* ── iPhone frame — fixed 330 × 560 ────────────────── */}
         <div
-          className="relative overflow-hidden rounded-[44px] border border-white/10"
           style={{
+            width: "330px",
+            height: "560px",
             background: "linear-gradient(160deg, #2a2a2e 0%, #1c1c1e 60%)",
-            boxShadow: "0 28px 64px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.06)",
+            borderRadius: "44px",
+            border: "1px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 28px 64px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.05)",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
           }}
         >
           {/* Notch */}
-          <div className="flex justify-center pt-3">
-            <div className="h-6 w-[110px] rounded-b-2xl bg-black" />
+          <div style={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}>
+            <div style={{ height: "24px", width: "110px", background: "#000", borderRadius: "0 0 18px 18px" }} />
           </div>
 
           {/* Status bar */}
-          <div className="flex items-center justify-between px-7 pt-1.5 pb-0.5 text-[10px] text-white/40">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 28px 0", color: "rgba(255,255,255,0.4)", fontSize: "10px" }}>
             <span>9:41</span>
-            <div className="flex items-center gap-1.5">
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
               <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
                 <rect x="0" y="4" width="2" height="6" rx="1" opacity=".4"/>
                 <rect x="3" y="2.5" width="2" height="7.5" rx="1" opacity=".6"/>
                 <rect x="6" y="1" width="2" height="9" rx="1" opacity=".8"/>
                 <rect x="9" y="0" width="2" height="10" rx="1"/>
               </svg>
-              <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
-                <rect x="0" y="0" width="11" height="10" rx="1.5" opacity=".35"/>
-                <rect x="0.5" y="0.5" width="9" height="9" rx="1" fill="currentColor" opacity=".85"/>
-                <rect x="11.5" y="3" width="2" height="4" rx="1" opacity=".5"/>
+              <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor">
+                <rect x="0" y="0" width="13" height="10" rx="2" opacity=".35"/>
+                <rect x="0.5" y="0.5" width="11" height="9" rx="1.5" opacity=".9"/>
+                <rect x="13.5" y="3" width="2" height="4" rx="1" opacity=".5"/>
               </svg>
             </div>
           </div>
 
           {/* Caller info */}
-          <div className="px-6 pt-3 pb-4 text-center">
-            <div
-              className="mx-auto mb-3 flex h-[52px] w-[52px] items-center justify-center rounded-full text-lg font-bold text-white"
-              style={{ background: "linear-gradient(135deg, #6366f1, #818cf8)", boxShadow: "0 4px 16px rgba(99,102,241,0.4)" }}
-            >
-              C
+          <div style={{ textAlign: "center", padding: "12px 24px 10px" }}>
+            <div style={{
+              margin: "0 auto 10px",
+              width: "52px", height: "52px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #6366f1, #818cf8)",
+              boxShadow: "0 4px 16px rgba(99,102,241,0.4)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <img src="/apivo-logo.png" alt="Apivo" style={{ height: "22px", width: "auto", objectFit: "contain" }} />
             </div>
-            <p className="text-[17px] font-semibold text-white">ABC Med Spa</p>
-            <p className="mt-0.5 text-[11px] text-white/50">Chloe · AI Booking Assistant</p>
-            <p className="mt-2 text-sm font-light tabular-nums text-white/70">{timer}</p>
+            <p style={{ color: "#fff", fontSize: "17px", fontWeight: 600, margin: 0 }}>ABC Med Spa</p>
+            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px", marginTop: "2px" }}>Chloe · AI Booking Assistant</p>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "13px", fontWeight: 300, marginTop: "6px", fontVariantNumeric: "tabular-nums" }}>{timer}</p>
           </div>
 
           {/* Waveform */}
-          <div
-            className="mx-5 mb-4 rounded-2xl px-4 py-3"
-            style={{ background: "rgba(255,255,255,0.06)" }}
-          >
+          <div style={{ margin: "0 20px 12px", background: "rgba(255,255,255,0.06)", borderRadius: "14px", padding: "10px 16px 8px" }}>
             <Waveform active={waveActive} />
-            <p className="mt-1.5 text-center text-[9px] text-white/30">
+            <p style={{ margin: "6px 0 0", textAlign: "center", fontSize: "9px", color: "rgba(255,255,255,0.28)" }}>
               {waveActive ? "Chloe is speaking…" : "Tap a response"}
             </p>
           </div>
 
-          {/* Square notification */}
+          {/* Square badge */}
           <SquareBanner action={calAction} />
 
-          {/* Conversation — cross-fade */}
+          {/* Conversation — cross-fades, flex-1 so it fills remaining height */}
           <div
-            className="mx-4 mb-4"
             style={{
+              flex: 1,
+              padding: "0 16px",
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(5px)",
               transition: "opacity 0.26s ease, transform 0.26s ease",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
             }}
           >
-            {/* Chloe bubble */}
-            <div
-              className="mb-3 rounded-2xl px-4 py-3"
-              style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.06)" }}
-            >
-              <p className="mb-1 text-[9px] uppercase tracking-wider text-white/30">Chloe</p>
-              <p className="text-[12px] font-light leading-relaxed text-white/90">{node.chloeText}</p>
+            {/* Chloe bubble — top-left corner flat */}
+            <div style={{
+              background: "rgba(255,255,255,0.09)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: "0 16px 16px 16px",
+              padding: "10px 14px",
+              marginBottom: "10px",
+            }}>
+              <p style={{ margin: "0 0 4px", fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.06em", color: "rgba(255,255,255,0.28)" }}>Chloe</p>
+              <p style={{ margin: 0, fontSize: "12px", fontWeight: 300, lineHeight: 1.55, color: "rgba(255,255,255,0.9)" }}>{node.chloeText}</p>
             </div>
 
-            {/* Visitor last response */}
+            {/* Visitor last choice — top-right corner flat */}
             {lastChoice && (
-              <div className="mb-3 flex justify-end">
-                <div
-                  className="max-w-[82%] rounded-2xl px-4 py-2.5"
-                  style={{ background: "#6366f1", boxShadow: "0 2px 12px rgba(99,102,241,0.35)" }}
-                >
-                  <p className="text-[12px] text-white">{lastChoice}</p>
+              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "10px" }}>
+                <div style={{
+                  background: "#6366f1",
+                  borderRadius: "16px 0 16px 16px",
+                  padding: "9px 14px",
+                  maxWidth: "82%",
+                  boxShadow: "0 2px 12px rgba(99,102,241,0.35)",
+                }}>
+                  <p style={{ margin: 0, fontSize: "12px", color: "#fff" }}>{lastChoice}</p>
                 </div>
               </div>
             )}
 
             {/* Choice buttons */}
-            {node.choices ? (
-              <div className="flex flex-col gap-1.5">
+            {node.choices && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", paddingBottom: "12px" }}>
                 {node.choices.map((c) => (
                   <button
                     key={c.label}
                     onClick={() => handleChoice(c)}
-                    className="w-full rounded-full px-4 py-2 text-left text-[11px] font-light text-white/85 transition-all active:scale-[0.98]"
                     style={{
+                      width: "100%",
                       background: "rgba(255,255,255,0.08)",
-                      border: "1px solid rgba(255,255,255,0.14)",
+                      border: "1px solid rgba(255,255,255,0.13)",
+                      borderRadius: "999px",
+                      padding: "8px 16px",
+                      textAlign: "left",
+                      fontSize: "11px",
+                      fontWeight: 300,
+                      color: "rgba(255,255,255,0.85)",
+                      cursor: "pointer",
+                      transition: "background 0.15s",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.14)")}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.15)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
                   >
                     {c.label}
                   </button>
                 ))}
               </div>
-            ) : (
-              <div className="text-center">
-                <button
-                  onClick={handleReset}
-                  className="text-[10px] text-white/25 transition-colors hover:text-white/50"
-                >
-                  ↺ Start over
-                </button>
-              </div>
             )}
           </div>
 
-          {/* ── Call controls ─────────────────────────────────── */}
-          <div className="px-8 pb-9 pt-1">
-            {/* Three icon buttons */}
-            <div className="mb-6 flex justify-around">
-              <button
-                onClick={() => setMuted((m) => !m)}
-                className="flex flex-col items-center gap-1.5"
-              >
-                <div
-                  className="flex h-[52px] w-[52px] items-center justify-center rounded-full transition-colors"
-                  style={{ background: muted ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.14)" }}
-                >
-                  {muted
-                    ? <MicOff className="h-5 w-5 text-[#1c1c1e]" strokeWidth={1.75} />
-                    : <Mic className="h-5 w-5 text-white" strokeWidth={1.75} />
-                  }
-                </div>
-                <span className="text-[10px] text-white/40">mute</span>
-              </button>
-
-              <button className="flex flex-col items-center gap-1.5">
-                <div
-                  className="flex h-[52px] w-[52px] items-center justify-center rounded-full"
-                  style={{ background: "rgba(255,255,255,0.14)" }}
-                >
-                  <Grid3X3 className="h-5 w-5 text-white" strokeWidth={1.75} />
-                </div>
-                <span className="text-[10px] text-white/40">keypad</span>
-              </button>
-
-              <button
-                onClick={() => setLoud((l) => !l)}
-                className="flex flex-col items-center gap-1.5"
-              >
-                <div
-                  className="flex h-[52px] w-[52px] items-center justify-center rounded-full transition-colors"
-                  style={{ background: loud ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.14)" }}
-                >
-                  <Volume2
-                    className="h-5 w-5"
-                    strokeWidth={1.75}
-                    style={{ color: loud ? "#1c1c1e" : "white" }}
-                  />
-                </div>
-                <span className="text-[10px] text-white/40">speaker</span>
-              </button>
-            </div>
-
-            {/* End call */}
-            <div className="flex justify-center">
-              <button
-                onClick={handleReset}
-                className="flex h-[64px] w-[64px] items-center justify-center rounded-full transition-transform active:scale-95"
-                style={{ background: "#ff3b30", boxShadow: "0 4px 20px rgba(255,59,48,0.45)" }}
-                title="End call (restarts demo)"
-              >
-                <PhoneOff className="h-6 w-6 text-white" strokeWidth={2} />
-              </button>
-            </div>
+          {/* End call */}
+          <div style={{ display: "flex", justifyContent: "center", paddingBottom: "28px", paddingTop: "4px" }}>
+            <button
+              onClick={handleReset}
+              title="End call"
+              style={{
+                width: "60px", height: "60px",
+                borderRadius: "50%",
+                background: "#ff3b30",
+                boxShadow: "0 4px 20px rgba(255,59,48,0.45)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                border: "none", cursor: "pointer",
+                transition: "transform 0.15s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              <PhoneOff style={{ width: "22px", height: "22px", color: "#fff" }} strokeWidth={2} />
+            </button>
           </div>
+        </div>
+
+        {/* ── Restart demo — below the phone ───────────────── */}
+        <div style={{ height: "28px", display: "flex", alignItems: "center", marginTop: "10px" }}>
+          <button
+            onClick={handleReset}
+            style={{
+              background: "none", border: "none",
+              fontSize: "12px", color: "#a1a1aa",
+              cursor: "pointer", transition: "color 0.15s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#6366f1")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#a1a1aa")}
+          >
+            ↺ Restart demo
+          </button>
         </div>
       </div>
     </>
