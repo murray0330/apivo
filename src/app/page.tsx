@@ -174,7 +174,7 @@ function Features() {
     {
       icon: RefreshCw,
       title: "Full Lifecycle",
-      desc: "Book, reschedule, and cancel — all through the chat. Your Square calendar updates in real time, every time.",
+      desc: "Book, reschedule, and cancel. Your Square calendar updates in real time, every time.",
     },
     {
       icon: Calendar,
