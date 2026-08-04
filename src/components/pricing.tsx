@@ -40,7 +40,7 @@ export default function Pricing() {
         </div>
 
         {/* Toggle */}
-        <div className="mb-8 flex justify-center">
+        <div className="mb-8 flex flex-col items-center gap-2">
           <div className="inline-flex items-center rounded-full border border-black/[.08] bg-[#f4f4f5] p-1">
             <button
               onClick={() => setYearly(false)}
@@ -54,18 +54,16 @@ export default function Pricing() {
             </button>
             <button
               onClick={() => setYearly(true)}
-              className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all ${
+              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
                 yearly
                   ? "bg-white text-zinc-900 shadow-sm"
                   : "text-zinc-500 hover:text-zinc-700"
               }`}
             >
               Yearly
-              <span className="rounded-full bg-indigo-500 px-2 py-0.5 text-[10px] font-semibold text-white">
-                Save 35%
-              </span>
             </button>
           </div>
+          <p className="text-xs font-semibold text-indigo-500">Save 35% with annual billing</p>
         </div>
 
         {/* Card — horizontal split */}
