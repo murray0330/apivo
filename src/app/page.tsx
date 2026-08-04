@@ -57,22 +57,22 @@ function SocialProof() {
 function ValueProp() {
   const benefits = [
     {
-      stat: "Synced",
+      stat: "Books",
       label: "Your Calls Booked",
-      desc: "Every call is answered, and every client is logged in Square automatically — when it's a booking, the appointment, treatment, and time sync with zero manual entry.",
+      desc: "Every call is booked directly into Square, 24/7 — with notes on exactly what the client asked about, every time.",
     },
     {
-      stat: "VIP",
+      stat: "Syncs",
       label: "Never Talking to a Stranger",
-      desc: "Returning clients are recognized automatically — Apivo already knows who they are, so they never have to start from scratch.",
+      desc: "Every client is automatically logged and updated in Square — and recognized the moment they call again, so they never have to start from scratch.",
     },
     {
-      stat: "Trained",
+      stat: "Knows",
       label: "Never Guesses",
-      desc: "Apivo only answers from what it actually knows about your treatments, pricing, and policies — and every booking comes with notes on exactly what the client asked about.",
+      desc: "Apivo only answers from what it actually knows about your treatments, pricing, and policies. It never guesses.",
     },
     {
-      stat: "ROI",
+      stat: "Delivers",
       label: "See It Pay for Itself",
       desc: "Every call answered, every booking captured, every dollar of after-hours revenue — visible in real time.",
     },
