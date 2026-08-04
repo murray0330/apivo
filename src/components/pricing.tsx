@@ -9,11 +9,12 @@ const YEARLY_MONTHLY_PRICE = Math.round(MONTHLY_PRICE * (1 - YEARLY_DISCOUNT));
 const YEARLY_TOTAL = YEARLY_MONTHLY_PRICE * 12;
 
 const features = [
-  "Apivo booking assistant for your website",
+  "Apivo booking assistant for your med spa phone",
+  "Bonus: Apivo booking assistant website chat widget",
   "Knowledge base trained on your business",
   "24/7 appointment booking, rescheduling & canceling",
   "Real-time analytics dashboard",
-  "Square integration — live in 48 hours",
+  "Live on your phone and website in 48 hours",
   "29+ language support",
   "White-glove setup & onboarding",
   "Ongoing support",
@@ -40,7 +41,7 @@ export default function Pricing() {
         </div>
 
         {/* Toggle */}
-        <div className="mb-8 flex flex-col items-center gap-2">
+        <div className="mb-8 flex justify-center">
           <div className="inline-flex items-center rounded-full border border-black/[.08] bg-[#f4f4f5] p-1">
             <button
               onClick={() => setYearly(false)}
@@ -63,7 +64,6 @@ export default function Pricing() {
               Yearly
             </button>
           </div>
-          <p className="text-xs font-semibold text-indigo-500">Save 35% with annual billing</p>
         </div>
 
         {/* Card — horizontal split */}
@@ -99,7 +99,7 @@ export default function Pricing() {
                 rel="noopener noreferrer"
                 className="block rounded-full bg-white py-3 text-center text-sm font-semibold text-indigo-500 transition-colors hover:bg-indigo-50"
               >
-                Lock In ${price}/Month
+                Start Your Free 14-Day Trial
               </a>
               {!yearly && (
                 <p className="mt-3 text-center text-xs text-indigo-200">
