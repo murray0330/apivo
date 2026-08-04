@@ -9,7 +9,7 @@ const YEARLY_MONTHLY_PRICE = Math.round(MONTHLY_PRICE * (1 - YEARLY_DISCOUNT));
 const YEARLY_TOTAL = YEARLY_MONTHLY_PRICE * 12;
 
 const features = [
-  "Apivo booking assistant for your med spa phone",
+  "Apivo booking assistant for your phone",
   "Bonus: Apivo booking assistant website chat widget",
   "Knowledge base trained on your business",
   "24/7 appointment booking, rescheduling & canceling",
