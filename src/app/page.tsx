@@ -315,24 +315,16 @@ function Calculator() {
 function FAQ() {
   const items = [
     {
+      q: "We already have someone answering our phones — why do we need this?",
+      a: "That's exactly who Apivo works best alongside, not against. It picks up what your team can't get to — during treatments, when the line's busy, or after hours — so your front desk doesn't have to choose between the client in the chair and the one on the phone.\n\nAnd unlike a generic assistant that guesses, Apivo is trained specifically on your treatments, pricing, and policies — it only answers from what it actually knows about your business, and it completes the booking on the spot rather than just taking a message. If a client ever wants to talk to a real person, Apivo transfers them live, on the spot — no hold, no waiting for a callback.",
+    },
+    {
       q: "How is this different from Square's built-in booking?",
-      a: "Square's booking page does one thing — it shows your availability and collects a name. It has no knowledge of your business. It can't tell a visitor which treatment is right for them, explain what a service involves, answer a question about pricing, or handle a special request. It just shows a grid of times.\n\nApivo has a conversation. It's trained on your treatments, pricing, and policies — so it answers real questions before booking the appointment. That's what turns a browser into a booking.",
-    },
-    {
-      q: "We already have a chatbot — how is Apivo different?",
-      a: "Most chatbots are generic. They answer broad questions with scripted responses and hand the client a booking link when they're done. They guess. They get things wrong. And they lose the client before the appointment is booked.\n\nApivo is not a chatbot. It's a booking assistant trained specifically on your business — your treatments, your pricing, your policies, your aftercare. It only answers from what it's been trained on. It never guesses. And it doesn't just hand off to a booking link — it completes the booking before the client leaves your website.",
-    },
-    {
-      q: "Does Apivo replace my front desk?",
-      a: "No. Apivo handles inbound booking inquiries from your website so your team can focus on in-person clients and higher-value tasks. It works alongside your existing staff — not instead of them.\n\nThink of it this way: your front desk shouldn't be answering the same questions over and over at midnight. Apivo handles that so she doesn't have to.",
+      a: "Square's booking page does one thing — it shows your availability and collects a name. It has no knowledge of your business. It can't tell a visitor which treatment is right for them, explain what a service involves, answer a question about pricing, or handle a special request. It just shows a grid of times.\n\nApivo has a conversation. It's trained on your treatments, pricing, and policies — so it answers real questions before booking the appointment. That's what turns a conversation into a booking.",
     },
     {
       q: "How does Apivo know about my services and pricing?",
       a: "Before going live, we build a custom knowledge base for your business — covering your full treatment menu, pricing, service details, pre and post care instructions, policies, and the FAQs your front desk handles every day.\n\nApivo is trained on this and only answers based on it. It will never pull generic information from the internet or guess at an answer. If it doesn't know something, it says so and offers to have a staff member follow up. This is what makes Apivo an expert — not just a booking link.",
-    },
-    {
-      q: "Will Apivo live on my Square booking page?",
-      a: "Apivo lives on your website — not on the Square booking page. The goal is to complete the entire booking conversation before the client ever needs to navigate away. They ask a question, get an accurate answer trained on your business, and book — all without leaving your site.\n\nThat's actually a better experience than sending them to a generic Square booking page. Your website is branded. Your website is where trust is built. Apivo keeps them there.",
     },
     {
       q: "What if my treatments or pricing change?",
@@ -357,7 +349,7 @@ function FAQ() {
   ];
   return (
     <section id="faq" className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHead tag="FAQ" title="Questions & Answers" />
         <div className="mt-10 rounded-2xl border border-zinc-100 bg-white px-4 shadow-[0_4px_32px_rgba(0,0,0,.07)] sm:mt-16 sm:px-8">
           <FaqAccordion items={items} />
