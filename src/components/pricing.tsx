@@ -99,7 +99,7 @@ export default function Pricing() {
                 rel="noopener noreferrer"
                 className="block rounded-full bg-white py-3 text-center text-sm font-semibold text-indigo-500 transition-colors hover:bg-indigo-50"
               >
-                Start Your Free 14-Day Trial
+                Start Free Trial
               </a>
               {!yearly && (
                 <p className="mt-3 text-center text-xs text-indigo-200">
