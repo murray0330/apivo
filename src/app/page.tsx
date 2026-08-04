@@ -383,17 +383,12 @@ function Contact() {
                 Get Started
               </p>
               <h2 className="mt-2 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl md:text-4xl">
-                Stop Losing Bookings
-                <br />
-                After Hours
+                Stop Losing Bookings to Missed Calls
               </h2>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
-                Start your free 30-day trial today. No setup fee, no contract — Apivo is live on your website in 48 hours.
-              </p>
               <ul className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
                 {[
-                  "Free for 30 days — no credit card required",
-                  "Live on your website in 48 hours",
+                  "Free for 14 days — no credit card required",
+                  "Live on your phone in 48 hours",
                   "Cancel anytime, no questions asked",
                 ].map((c, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
