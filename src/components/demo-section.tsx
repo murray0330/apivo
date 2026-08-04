@@ -6,13 +6,13 @@ import DemoChatbot from "@/components/demo-chatbot";
 import VoiceCallDemo from "@/components/voice-demo/VoiceCallDemo";
 
 const VOICE_COPY = {
-  heading: "Hear It in Action",
-  body: "It's 11:24pm. A client calls your med spa after hours. Here's what happens when Chloe picks up.",
+  heading: "Try It Right Now",
+  body: "It's 2:15pm. A potential client calls your med spa. They have questions. They want to book. See Apivo in action.",
   bullets: [
-    "Caller recognized instantly — no re-introduction needed",
-    "Conversation flows naturally, just like a real call",
-    "Appointment booked directly into your Square calendar",
-    "Notes saved automatically after every booking",
+    "Real-time calendar availability check",
+    "Service and pricing questions answered instantly",
+    "Appointment placed directly on calendar",
+    "Phone number automatically captured",
   ],
 };
 
