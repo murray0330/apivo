@@ -133,8 +133,8 @@ function HowItWorks() {
     },
     {
       num: "03",
-      title: "Embed & Go Live",
-      desc: "One snippet on your website. Apivo is live — answering questions, booking appointments, and handling reschedules and cancellations 24/7.",
+      title: "Go Live",
+      desc: "Your existing number, no new number to give out. Apivo picks up every call — answering questions, booking appointments, and handling reschedules and cancellations 24/7.",
     },
   ];
   return (
