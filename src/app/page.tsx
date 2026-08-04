@@ -239,7 +239,7 @@ function NotCalendly() {
             Apivo is a team member.<br className="hidden sm:block" /> Not a booking form.
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Other tools hand your clients a calendar grid. Apivo has a conversation, answers their questions, and books the appointment — before they leave your website.
+            Other tools hand your clients a calendar grid. Apivo has a conversation, answers their questions, and books the appointment — 24/7.
           </p>
         </div>
 
@@ -250,11 +250,11 @@ function NotCalendly() {
             <h3 className="mt-3 text-lg font-semibold text-zinc-500 sm:text-xl">Shows a grid of times.</h3>
             <ul className="mt-5 space-y-3">
               {[
+                "Misses calls when no one's available",
                 "Shows a grid of times",
                 "Selects a slot with no context",
                 "Cannot answer service or pricing questions",
                 "No special requests handled",
-                "Misses inquiries after hours",
                 "English only",
                 "Feels like filling out a form",
               ].map((item) => (
@@ -272,11 +272,11 @@ function NotCalendly() {
             <h3 className="mt-3 text-lg font-semibold text-zinc-900 sm:text-xl">Actually converses.</h3>
             <ul className="mt-5 space-y-3">
               {[
+                "Never misses a call, 24/7",
                 "Has a real conversation",
                 "Trained on your treatments, pricing, and policies",
                 "Answers any client question accurately",
                 "Handles special requests naturally",
-                "Books after hours, 24/7",
                 "29+ languages, automatically",
                 "Feels like a team member",
               ].map((item) => (
