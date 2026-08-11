@@ -404,13 +404,16 @@ export default function VoiceCallDemo() {
             {/* ── IDLE: outgoing call dialer ────────────────────── */}
             {phase === "idle" ? (
               <div className="flex flex-1 flex-col">
-                {/* Contact name — floats in upper space */}
-                <div className="flex flex-1 items-center justify-center">
+                {/* Name — pinned to upper 42% so keypad sits low */}
+                <div
+                  className="flex items-center justify-center"
+                  style={{ flex: "0 0 42%" }}
+                >
                   <p className="text-lg font-semibold text-white">ABC Med Spa</p>
                 </div>
 
                 {/* Keypad */}
-                <div className="grid grid-cols-3 gap-y-5 px-4">
+                <div className="grid grid-cols-3 gap-y-4 px-5">
                   {[
                     { d: "1", s: "" },     { d: "2", s: "ABC" },  { d: "3", s: "DEF" },
                     { d: "4", s: "GHI" },  { d: "5", s: "JKL" },  { d: "6", s: "MNO" },
@@ -419,24 +422,24 @@ export default function VoiceCallDemo() {
                   ].map(({ d, s }) => (
                     <div key={d} className="flex justify-center">
                       <div
-                        className="flex h-14 w-14 flex-col items-center justify-center rounded-full"
+                        className="flex h-11 w-11 flex-col items-center justify-center rounded-full"
                         style={{ background: "rgba(255,255,255,0.13)" }}
                       >
-                        <span className="text-2xl font-light leading-none text-white">{d}</span>
-                        {s && <span className="mt-0.5 text-[8px] font-semibold tracking-widest text-white/55">{s}</span>}
+                        <span className="text-xl font-light leading-none text-white">{d}</span>
+                        {s && <span className="mt-0.5 text-[7px] font-semibold tracking-widest text-white/55">{s}</span>}
                       </div>
                     </div>
                   ))}
                 </div>
 
                 {/* Call button */}
-                <div className="flex flex-col items-center justify-center gap-2 py-7">
+                <div className="flex flex-1 flex-col items-center justify-center gap-1.5">
                   <button
                     onClick={answerCall}
-                    className="flex h-16 w-16 items-center justify-center rounded-full transition-transform active:scale-95"
+                    className="flex h-14 w-14 items-center justify-center rounded-full transition-transform active:scale-95"
                     style={{ background: "#22c55e", boxShadow: "0 4px 20px rgba(34,197,94,0.5)" }}
                   >
-                    <Phone style={{ width: "26px", height: "26px", color: "#fff" }} strokeWidth={2} />
+                    <Phone style={{ width: "24px", height: "24px", color: "#fff" }} strokeWidth={2} />
                   </button>
                   <p className="text-[11px] text-white/30">Tap to call</p>
                 </div>
