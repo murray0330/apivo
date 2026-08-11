@@ -404,13 +404,13 @@ export default function VoiceCallDemo() {
             {/* ── IDLE: outgoing call dialer ────────────────────── */}
             {phase === "idle" ? (
               <div className="flex flex-1 flex-col">
-                {/* Contact name */}
-                <div className="px-4 pb-3 pt-4 text-center">
+                {/* Contact name — floats in upper space */}
+                <div className="flex flex-1 items-center justify-center">
                   <p className="text-lg font-semibold text-white">ABC Med Spa</p>
                 </div>
 
                 {/* Keypad */}
-                <div className="grid grid-cols-3 gap-y-3 px-5 py-2">
+                <div className="grid grid-cols-3 gap-y-5 px-4">
                   {[
                     { d: "1", s: "" },     { d: "2", s: "ABC" },  { d: "3", s: "DEF" },
                     { d: "4", s: "GHI" },  { d: "5", s: "JKL" },  { d: "6", s: "MNO" },
@@ -430,7 +430,7 @@ export default function VoiceCallDemo() {
                 </div>
 
                 {/* Call button */}
-                <div className="flex flex-1 flex-col items-center justify-center gap-2">
+                <div className="flex flex-col items-center justify-center gap-2 py-7">
                   <button
                     onClick={answerCall}
                     className="flex h-16 w-16 items-center justify-center rounded-full transition-transform active:scale-95"
