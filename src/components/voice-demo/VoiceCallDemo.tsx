@@ -170,13 +170,14 @@ const NODES: Record<string, ConvNode> = {
 
 // ─── Timer (only ticks while active) ─────────────────────────────────────────
 
-function useCallTimer(active: boolean) {
+function useCallTimer(active: boolean, frozen: boolean) {
   const [s, setS] = useState(0);
   useEffect(() => {
     if (!active) { setS(0); return; }
+    if (frozen) return;
     const id = setInterval(() => setS((n) => n + 1), 1000);
     return () => clearInterval(id);
-  }, [active]);
+  }, [active, frozen]);
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
 
@@ -243,10 +244,11 @@ export default function VoiceCallDemo() {
   const [messages, setMessages]     = useState<Msg[]>([]);
   const [choices, setChoices]       = useState<Choice[]>([]);
   const [running, setRunning]       = useState(false);
+  const [timerFrozen, setTimerFrozen] = useState(false);
   const bodyRef                     = useRef<HTMLDivElement>(null);
   const audioRef                    = useRef<HTMLAudioElement | null>(null);
   const timerRef                    = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timer                       = useCallTimer(phase === "active");
+  const timer                       = useCallTimer(phase === "active", timerFrozen);
 
   const scrollBottom = useCallback(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
@@ -307,9 +309,7 @@ export default function VoiceCallDemo() {
     setChoices([]);
 
     await delay(300);
-    const typId = addMsg({ kind: "typing" });
     await playAudio(NODES.opening.audioSrc);
-    removeMsg(typId);
     const msgId = addMsg({ kind: "chloe", text: "" });
     await streamWords(msgId, NODES.opening.chloeText);
     await delay(200);
@@ -324,6 +324,7 @@ export default function VoiceCallDemo() {
     setMessages([]);
     setChoices([]);
     setRunning(false);
+    setTimerFrozen(false);
     msgCounter = 0;
   }, [stopAudio]);
 
@@ -336,14 +337,13 @@ export default function VoiceCallDemo() {
     await delay(300);
 
     const next = NODES[choice.next];
-    const typId = addMsg({ kind: "typing" });
     await playAudio(next.audioSrc);
-    removeMsg(typId);
 
     const msgId = addMsg({ kind: "chloe", text: "" });
     await streamWords(msgId, next.chloeText);
 
     if (next.calendarAction) {
+      setTimerFrozen(true);
       await delay(300);
       addMsg({ kind: "square", squareAction: next.calendarAction });
     }
