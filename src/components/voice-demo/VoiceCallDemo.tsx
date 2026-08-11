@@ -410,26 +410,21 @@ export default function VoiceCallDemo() {
                 </div>
 
                 {/* Keypad */}
-                <div
-                  className="grid grid-cols-3"
-                  style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-                >
+                <div className="grid grid-cols-3 gap-y-3 px-5 py-2">
                   {[
                     { d: "1", s: "" },     { d: "2", s: "ABC" },  { d: "3", s: "DEF" },
                     { d: "4", s: "GHI" },  { d: "5", s: "JKL" },  { d: "6", s: "MNO" },
                     { d: "7", s: "PQRS" }, { d: "8", s: "TUV" },  { d: "9", s: "WXYZ" },
                     { d: "*", s: "" },     { d: "0", s: "+" },     { d: "#", s: "" },
-                  ].map(({ d, s }, i) => (
-                    <div
-                      key={d}
-                      className="flex flex-col items-center justify-center py-4"
-                      style={{
-                        borderRight: (i + 1) % 3 !== 0 ? "1px solid rgba(255,255,255,0.06)" : undefined,
-                        borderBottom: i < 9 ? "1px solid rgba(255,255,255,0.06)" : undefined,
-                      }}
-                    >
-                      <span className="text-2xl font-light leading-none text-white">{d}</span>
-                      {s && <span className="mt-0.5 text-[8px] font-semibold tracking-widest text-white/35">{s}</span>}
+                  ].map(({ d, s }) => (
+                    <div key={d} className="flex justify-center">
+                      <div
+                        className="flex h-14 w-14 flex-col items-center justify-center rounded-full"
+                        style={{ background: "rgba(255,255,255,0.13)" }}
+                      >
+                        <span className="text-2xl font-light leading-none text-white">{d}</span>
+                        {s && <span className="mt-0.5 text-[8px] font-semibold tracking-widest text-white/55">{s}</span>}
+                      </div>
                     </div>
                   ))}
                 </div>
