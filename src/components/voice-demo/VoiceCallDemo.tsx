@@ -378,7 +378,7 @@ export default function VoiceCallDemo() {
             {/* Status bar */}
             <div className="flex shrink-0 items-center justify-between" style={{ padding: "0 20px 5px" }}>
               <span style={{ fontSize: "11px", fontWeight: 600, color: "rgba(255,255,255,0.85)", letterSpacing: "0.01em" }}>
-                11:24
+                2:15
               </span>
               <div className="flex items-center gap-1.5">
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="rgba(255,255,255,0.75)">
@@ -401,35 +401,41 @@ export default function VoiceCallDemo() {
               </div>
             </div>
 
-            {/* ── IDLE: incoming call pre-screen ───────────────── */}
+            {/* ── IDLE: outgoing call dialer ────────────────────── */}
             {phase === "idle" ? (
-              <div className="flex flex-1 flex-col items-center justify-between px-6 py-6">
-                {/* Caller info */}
-                <div className="flex flex-col items-center gap-4 mt-6">
-                  {/* Avatar with pulsing ring */}
-                  <div className="relative flex items-center justify-center">
-                    <div
-                      className="vc-ring absolute rounded-full"
-                      style={{ width: "88px", height: "88px", background: "rgba(99,102,241,0.3)" }}
-                    />
-                    <div
-                      className="relative flex h-20 w-20 items-center justify-center rounded-full"
-                      style={{
-                        background: "linear-gradient(135deg, #6366f1, #818cf8)",
-                        boxShadow: "0 4px 24px rgba(99,102,241,0.5)",
-                      }}
-                    >
-                      <img src="/apivo-favicon_white.png" alt="Apivo" style={{ height: "30px", width: "30px", objectFit: "contain" }} />
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xl font-semibold text-white">ABC Med Spa</p>
-                    <p className="mt-2 text-xs tracking-wide text-white/30">Calling…</p>
-                  </div>
+              <div className="flex flex-1 flex-col">
+                {/* Contact name */}
+                <div className="px-4 pb-3 pt-4 text-center">
+                  <p className="text-lg font-semibold text-white">ABC Med Spa</p>
                 </div>
 
-                {/* Answer button */}
-                <div className="flex flex-col items-center gap-2">
+                {/* Keypad */}
+                <div
+                  className="grid grid-cols-3"
+                  style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  {[
+                    { d: "1", s: "" },     { d: "2", s: "ABC" },  { d: "3", s: "DEF" },
+                    { d: "4", s: "GHI" },  { d: "5", s: "JKL" },  { d: "6", s: "MNO" },
+                    { d: "7", s: "PQRS" }, { d: "8", s: "TUV" },  { d: "9", s: "WXYZ" },
+                    { d: "*", s: "" },     { d: "0", s: "+" },     { d: "#", s: "" },
+                  ].map(({ d, s }, i) => (
+                    <div
+                      key={d}
+                      className="flex flex-col items-center justify-center py-4"
+                      style={{
+                        borderRight: (i + 1) % 3 !== 0 ? "1px solid rgba(255,255,255,0.06)" : undefined,
+                        borderBottom: i < 9 ? "1px solid rgba(255,255,255,0.06)" : undefined,
+                      }}
+                    >
+                      <span className="text-2xl font-light leading-none text-white">{d}</span>
+                      {s && <span className="mt-0.5 text-[8px] font-semibold tracking-widest text-white/35">{s}</span>}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Call button */}
+                <div className="flex flex-1 flex-col items-center justify-center gap-2">
                   <button
                     onClick={answerCall}
                     className="flex h-16 w-16 items-center justify-center rounded-full transition-transform active:scale-95"
