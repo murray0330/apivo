@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { PhoneOff } from "lucide-react";
+import { Phone, PhoneOff } from "lucide-react";
 
 // ─── Keyframe injection ───────────────────────────────────────────────────────
 
@@ -11,12 +11,18 @@ const STYLES = `
   to   { height: var(--vc-bh, 85%); opacity: 0.9; }
 }
 .vc-bar { animation: vcBar var(--vc-dur, 0.55s) ease-in-out var(--vc-delay, 0s) infinite alternate; }
+@keyframes vcRing {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%       { transform: scale(1.18); opacity: 0.15; }
+}
+.vc-ring { animation: vcRing 1.6s ease-in-out infinite; }
 `;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type CalendarAction = "book" | "move" | "cancel";
 type MsgKind = "chloe" | "user" | "typing" | "square";
+type Phase = "idle" | "active";
 
 interface Msg {
   id: number;
@@ -162,14 +168,15 @@ const NODES: Record<string, ConvNode> = {
   },
 };
 
-// ─── Timer ────────────────────────────────────────────────────────────────────
+// ─── Timer (only ticks while active) ─────────────────────────────────────────
 
-function useCallTimer() {
+function useCallTimer(active: boolean) {
   const [s, setS] = useState(0);
   useEffect(() => {
+    if (!active) { setS(0); return; }
     const id = setInterval(() => setS((n) => n + 1), 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [active]);
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
 
@@ -232,13 +239,14 @@ const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 let msgCounter = 0;
 
 export default function VoiceCallDemo() {
+  const [phase, setPhase]           = useState<Phase>("idle");
   const [messages, setMessages]     = useState<Msg[]>([]);
   const [choices, setChoices]       = useState<Choice[]>([]);
   const [running, setRunning]       = useState(false);
   const bodyRef                     = useRef<HTMLDivElement>(null);
   const audioRef                    = useRef<HTMLAudioElement | null>(null);
   const timerRef                    = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timer                       = useCallTimer();
+  const timer                       = useCallTimer(phase === "active");
 
   const scrollBottom = useCallback(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
@@ -274,8 +282,10 @@ export default function VoiceCallDemo() {
     setMessages((prev) => prev.filter((m) => m.id !== id));
   };
 
-  const startDemo = useCallback(async () => {
+  // Answer the incoming call — transition to active and start conversation
+  const answerCall = useCallback(async () => {
     if (running) return;
+    setPhase("active");
     setRunning(true);
     stopAudio();
     msgCounter = 0;
@@ -292,7 +302,15 @@ export default function VoiceCallDemo() {
     setRunning(false);
   }, [running, playAudio, stopAudio]);
 
-  useEffect(() => { startDemo(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Hang up / restart — go back to idle pre-screen
+  const hangUp = useCallback(() => {
+    stopAudio();
+    setPhase("idle");
+    setMessages([]);
+    setChoices([]);
+    setRunning(false);
+    msgCounter = 0;
+  }, [stopAudio]);
 
   const handleChoice = useCallback(async (choice: Choice) => {
     if (running) return;
@@ -326,7 +344,7 @@ export default function VoiceCallDemo() {
       {/* iPhone wrapper — 290px phone chrome */}
       <div className="mx-auto" style={{ width: "290px" }}>
 
-        {/* Phone body — outer dark frame */}
+        {/* Phone body */}
         <div
           className="relative"
           style={{
@@ -337,14 +355,10 @@ export default function VoiceCallDemo() {
               "0 0 0 1px rgba(255,255,255,0.10), 0 0 0 2px rgba(255,255,255,0.03), 0 28px 72px rgba(0,0,0,0.55)",
           }}
         >
-          {/* Side buttons (decorative) */}
-          {/* Silent switch */}
+          {/* Side buttons */}
           <div style={{ position: "absolute", left: "-3px", top: "48px",  width: "3px", height: "20px", background: "#3a3a3c", borderRadius: "2px 0 0 2px" }} />
-          {/* Volume up */}
           <div style={{ position: "absolute", left: "-3px", top: "78px",  width: "3px", height: "30px", background: "#3a3a3c", borderRadius: "2px 0 0 2px" }} />
-          {/* Volume down */}
           <div style={{ position: "absolute", left: "-3px", top: "118px", width: "3px", height: "30px", background: "#3a3a3c", borderRadius: "2px 0 0 2px" }} />
-          {/* Power */}
           <div style={{ position: "absolute", right: "-3px", top: "94px", width: "3px", height: "60px", background: "#3a3a3c", borderRadius: "0 2px 2px 0" }} />
 
           {/* Screen */}
@@ -362,29 +376,23 @@ export default function VoiceCallDemo() {
             </div>
 
             {/* Status bar */}
-            <div
-              className="flex shrink-0 items-center justify-between"
-              style={{ padding: "0 20px 5px" }}
-            >
+            <div className="flex shrink-0 items-center justify-between" style={{ padding: "0 20px 5px" }}>
               <span style={{ fontSize: "11px", fontWeight: 600, color: "rgba(255,255,255,0.85)", letterSpacing: "0.01em" }}>
                 11:24
               </span>
               <div className="flex items-center gap-1.5">
-                {/* Cellular signal */}
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="rgba(255,255,255,0.75)">
                   <rect x="0"   y="5.5" width="2.5" height="4.5" rx="0.5"/>
                   <rect x="3.8" y="3.5" width="2.5" height="6.5" rx="0.5"/>
                   <rect x="7.6" y="1.5" width="2.5" height="8.5" rx="0.5"/>
                   <rect x="11.4" y="0"  width="2.5" height="10"  rx="0.5"/>
                 </svg>
-                {/* WiFi */}
                 <svg width="13" height="10" viewBox="0 0 13 10" fill="none">
                   <path d="M0.5 3.5C3 1.3 10 1.3 12.5 3.5" stroke="rgba(255,255,255,0.75)" strokeWidth="1.3" strokeLinecap="round"/>
                   <path d="M2.5 6C4.2 4.6 8.8 4.6 10.5 6" stroke="rgba(255,255,255,0.75)" strokeWidth="1.3" strokeLinecap="round"/>
                   <path d="M4.7 8.3C5.4 7.7 7.6 7.7 8.3 8.3" stroke="rgba(255,255,255,0.75)" strokeWidth="1.3" strokeLinecap="round"/>
                   <circle cx="6.5" cy="9.7" r="0.7" fill="rgba(255,255,255,0.75)"/>
                 </svg>
-                {/* Battery */}
                 <svg width="22" height="10" viewBox="0 0 22 10" fill="none">
                   <rect x="0.5" y="0.5" width="18" height="9" rx="2"   stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
                   <rect x="19"  y="3.5" width="2"  height="3" rx="1"   fill="rgba(255,255,255,0.5)"/>
@@ -393,127 +401,172 @@ export default function VoiceCallDemo() {
               </div>
             </div>
 
-            {/* Divider */}
-            <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
-
-            {/* ── Call header ──────────────────────────── */}
-            <div className="flex shrink-0 items-center gap-2 px-3 py-2">
-              <div
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
-                style={{
-                  background: "linear-gradient(135deg, #6366f1, #818cf8)",
-                  boxShadow: "0 2px 6px rgba(99,102,241,0.45)",
-                }}
-              >
-                <img src="/apivo-favicon_white.png" alt="Apivo" style={{ height: "14px", width: "14px", objectFit: "contain" }} />
-              </div>
-              <div className="flex min-w-0 flex-1 flex-col leading-none">
-                <span className="truncate text-xs font-semibold text-white">Chloe · ABC Med Spa</span>
-                <span className="mt-0.5 flex items-center gap-1 text-[10px] font-medium" style={{ color: "#22c55e" }}>
-                  <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#22c55e" }} />
-                  Live call · {timer}
-                </span>
-              </div>
-              <button
-                onClick={startDemo}
-                title="End call"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95"
-                style={{ background: "#ff3b30", boxShadow: "0 2px 8px rgba(255,59,48,0.4)" }}
-              >
-                <PhoneOff style={{ width: "12px", height: "12px", color: "#fff" }} strokeWidth={2.5} />
-              </button>
-            </div>
-
-            {/* ── Messages ─────────────────────────────── */}
-            <div
-              ref={bodyRef}
-              className="flex flex-1 flex-col gap-2 overflow-y-auto p-3"
-              style={{ background: "rgba(0,0,0,0.12)" }}
-            >
-              {messages.map((msg) => {
-                if (msg.kind === "chloe") return (
-                  <div key={msg.id} className="flex justify-start">
+            {/* ── IDLE: incoming call pre-screen ───────────────── */}
+            {phase === "idle" ? (
+              <div className="flex flex-1 flex-col items-center justify-between px-6 py-6">
+                {/* Caller info */}
+                <div className="flex flex-col items-center gap-4 mt-6">
+                  {/* Avatar with pulsing ring */}
+                  <div className="relative flex items-center justify-center">
                     <div
-                      className="max-w-[85%] rounded-2xl rounded-bl-sm px-3 py-2 text-xs leading-relaxed"
+                      className="vc-ring absolute rounded-full"
+                      style={{ width: "88px", height: "88px", background: "rgba(99,102,241,0.3)" }}
+                    />
+                    <div
+                      className="relative flex h-20 w-20 items-center justify-center rounded-full"
                       style={{
-                        background: "rgba(255,255,255,0.1)",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        color: "rgba(255,255,255,0.92)",
+                        background: "linear-gradient(135deg, #6366f1, #818cf8)",
+                        boxShadow: "0 4px 24px rgba(99,102,241,0.5)",
                       }}
                     >
-                      {msg.text}
+                      <img src="/apivo-favicon_white.png" alt="Apivo" style={{ height: "30px", width: "30px", objectFit: "contain" }} />
                     </div>
                   </div>
-                );
-                if (msg.kind === "user") return (
-                  <div key={msg.id} className="flex justify-end">
-                    <div
-                      className="max-w-[85%] rounded-2xl rounded-br-sm px-3 py-2 text-xs leading-relaxed text-white"
-                      style={{ background: "#6366f1", boxShadow: "0 2px 8px rgba(99,102,241,0.3)" }}
-                    >
-                      {msg.text}
-                    </div>
+                  <div className="text-center">
+                    <p className="text-xl font-semibold text-white">Chloe</p>
+                    <p className="mt-0.5 text-sm text-white/50">ABC Med Spa</p>
+                    <p className="mt-2 text-xs tracking-wide text-white/30">Incoming call…</p>
                   </div>
-                );
-                if (msg.kind === "typing") return (
-                  <div key={msg.id} className="flex justify-start">
-                    <VoiceTyping />
-                  </div>
-                );
-                if (msg.kind === "square") return (
-                  <div key={msg.id} className="flex justify-center">
-                    <SquareMsg action={msg.squareAction!} />
-                  </div>
-                );
-                return null;
-              })}
-
-              {/* Choice pill buttons — flex-wrap, not full-width */}
-              {choices.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 pt-0.5">
-                  {choices.map((c) => (
-                    <button
-                      key={c.label}
-                      onClick={() => handleChoice(c)}
-                      className="rounded-full px-3 py-1.5 text-[0.72rem] font-medium transition-all"
-                      style={{
-                        border: "1px solid rgba(255,255,255,0.18)",
-                        background: "rgba(255,255,255,0.07)",
-                        color: "rgba(255,255,255,0.85)",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(99,102,241,0.35)";
-                        e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)";
-                        e.currentTarget.style.color = "#fff";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
-                        e.currentTarget.style.color = "rgba(255,255,255,0.85)";
-                      }}
-                    >
-                      {c.label}
-                    </button>
-                  ))}
                 </div>
-              )}
-            </div>
+
+                {/* Answer button */}
+                <div className="flex flex-col items-center gap-2">
+                  <button
+                    onClick={answerCall}
+                    className="flex h-16 w-16 items-center justify-center rounded-full transition-transform active:scale-95"
+                    style={{ background: "#22c55e", boxShadow: "0 4px 20px rgba(34,197,94,0.5)" }}
+                  >
+                    <Phone style={{ width: "26px", height: "26px", color: "#fff" }} strokeWidth={2} />
+                  </button>
+                  <p className="text-[11px] text-white/30">Tap to answer</p>
+                </div>
+              </div>
+            ) : (
+              /* ── ACTIVE: live call ───────────────────────────── */
+              <>
+                <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
+
+                {/* Call header */}
+                <div className="flex shrink-0 items-center gap-2 px-3 py-2">
+                  <div
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
+                    style={{
+                      background: "linear-gradient(135deg, #6366f1, #818cf8)",
+                      boxShadow: "0 2px 6px rgba(99,102,241,0.45)",
+                    }}
+                  >
+                    <img src="/apivo-favicon_white.png" alt="Apivo" style={{ height: "12px", width: "12px", objectFit: "contain" }} />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col leading-none">
+                    <span className="truncate text-xs font-semibold text-white">Chloe · ABC Med Spa</span>
+                    <span className="mt-0.5 flex items-center gap-1 text-[10px] font-medium" style={{ color: "#22c55e" }}>
+                      <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#22c55e" }} />
+                      Live call · {timer}
+                    </span>
+                  </div>
+                  <button
+                    onClick={hangUp}
+                    title="End call"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95"
+                    style={{ background: "#ff3b30", boxShadow: "0 2px 8px rgba(255,59,48,0.4)" }}
+                  >
+                    <PhoneOff style={{ width: "12px", height: "12px", color: "#fff" }} strokeWidth={2.5} />
+                  </button>
+                </div>
+
+                {/* Messages */}
+                <div
+                  ref={bodyRef}
+                  className="flex flex-1 flex-col gap-2 overflow-y-auto p-3"
+                  style={{ background: "rgba(0,0,0,0.12)" }}
+                >
+                  {messages.map((msg) => {
+                    if (msg.kind === "chloe") return (
+                      <div key={msg.id} className="flex justify-start">
+                        <div
+                          className="max-w-[85%] rounded-2xl rounded-bl-sm px-3 py-2 text-xs leading-relaxed"
+                          style={{
+                            background: "rgba(255,255,255,0.1)",
+                            border: "1px solid rgba(255,255,255,0.08)",
+                            color: "rgba(255,255,255,0.92)",
+                          }}
+                        >
+                          {msg.text}
+                        </div>
+                      </div>
+                    );
+                    if (msg.kind === "user") return (
+                      <div key={msg.id} className="flex justify-end">
+                        <div
+                          className="max-w-[85%] rounded-2xl rounded-br-sm px-3 py-2 text-xs leading-relaxed text-white"
+                          style={{ background: "#6366f1", boxShadow: "0 2px 8px rgba(99,102,241,0.3)" }}
+                        >
+                          {msg.text}
+                        </div>
+                      </div>
+                    );
+                    if (msg.kind === "typing") return (
+                      <div key={msg.id} className="flex justify-start">
+                        <VoiceTyping />
+                      </div>
+                    );
+                    if (msg.kind === "square") return (
+                      <div key={msg.id} className="flex justify-center">
+                        <SquareMsg action={msg.squareAction!} />
+                      </div>
+                    );
+                    return null;
+                  })}
+
+                  {choices.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 pt-0.5">
+                      {choices.map((c) => (
+                        <button
+                          key={c.label}
+                          onClick={() => handleChoice(c)}
+                          className="rounded-full px-3 py-1.5 text-[0.72rem] font-medium transition-all"
+                          style={{
+                            border: "1px solid rgba(255,255,255,0.18)",
+                            background: "rgba(255,255,255,0.07)",
+                            color: "rgba(255,255,255,0.85)",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(99,102,241,0.35)";
+                            e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)";
+                            e.currentTarget.style.color = "#fff";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+                            e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
+                            e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+                          }}
+                        >
+                          {c.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Restart below — matches chat widget */}
-      <div className="mt-3 flex justify-center">
-        <button
-          onClick={startDemo}
-          className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
-        >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
-          </svg>
-          Restart Demo
-        </button>
-      </div>
+      {/* Restart below — only shown during / after active call */}
+      {phase === "active" && (
+        <div className="mt-3 flex justify-center">
+          <button
+            onClick={hangUp}
+            className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+            </svg>
+            Restart Demo
+          </button>
+        </div>
+      )}
     </>
   );
 }
