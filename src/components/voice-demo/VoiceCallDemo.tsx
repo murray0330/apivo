@@ -423,9 +423,8 @@ export default function VoiceCallDemo() {
                     </div>
                   </div>
                   <div className="text-center">
-                    <p className="text-xl font-semibold text-white">Chloe</p>
-                    <p className="mt-0.5 text-sm text-white/50">ABC Med Spa</p>
-                    <p className="mt-2 text-xs tracking-wide text-white/30">Incoming call…</p>
+                    <p className="text-xl font-semibold text-white">ABC Med Spa</p>
+                    <p className="mt-2 text-xs tracking-wide text-white/30">Calling…</p>
                   </div>
                 </div>
 
@@ -438,7 +437,7 @@ export default function VoiceCallDemo() {
                   >
                     <Phone style={{ width: "26px", height: "26px", color: "#fff" }} strokeWidth={2} />
                   </button>
-                  <p className="text-[11px] text-white/30">Tap to answer</p>
+                  <p className="text-[11px] text-white/30">Tap to call</p>
                 </div>
               </div>
             ) : (
@@ -458,7 +457,7 @@ export default function VoiceCallDemo() {
                     <img src="/apivo-favicon_white.png" alt="Apivo" style={{ height: "12px", width: "12px", objectFit: "contain" }} />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col leading-none">
-                    <span className="truncate text-xs font-semibold text-white">Chloe · ABC Med Spa</span>
+                    <span className="truncate text-xs font-semibold text-white">ABC Med Spa</span>
                     <span className="mt-0.5 flex items-center gap-1 text-[10px] font-medium" style={{ color: "#22c55e" }}>
                       <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#22c55e" }} />
                       Live call · {timer}
