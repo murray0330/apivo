@@ -549,20 +549,18 @@ export default function VoiceCallDemo() {
         </div>
       </div>
 
-      {/* Restart below — only shown during active call */}
-      {phase === "active" && (
-        <div className="mt-3">
-          <button
-            onClick={hangUp}
-            className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
-            </svg>
-            Restart Demo
-          </button>
-        </div>
-      )}
+      {/* Always rendered to keep section height stable; hidden when idle */}
+      <div className="mt-3" style={{ visibility: phase === "active" ? "visible" : "hidden" }}>
+        <button
+          onClick={hangUp}
+          className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+          </svg>
+          Restart Demo
+        </button>
+      </div>
     </div>
   );
 }
