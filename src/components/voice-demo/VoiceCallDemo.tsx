@@ -407,7 +407,7 @@ export default function VoiceCallDemo() {
                 {/* Name — 34% keeps proportions balanced */}
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0 0 36%" }}
+                  style={{ flex: "0 0 18%" }}
                 >
                   <p className="text-lg font-semibold text-white">ABC Med Spa</p>
                 </div>
