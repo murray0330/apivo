@@ -338,11 +338,11 @@ export default function VoiceCallDemo() {
   }, [running, playAudio]);
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
       {/* iPhone wrapper — 290px phone chrome */}
-      <div className="mx-auto" style={{ width: "290px" }}>
+      <div style={{ width: "290px" }}>
 
         {/* Phone body */}
         <div
@@ -549,9 +549,9 @@ export default function VoiceCallDemo() {
         </div>
       </div>
 
-      {/* Restart below — only shown during / after active call */}
+      {/* Restart below — only shown during active call */}
       {phase === "active" && (
-        <div className="mt-3 flex justify-center">
+        <div className="mt-3">
           <button
             onClick={hangUp}
             className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
@@ -563,6 +563,6 @@ export default function VoiceCallDemo() {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
