@@ -404,28 +404,22 @@ export default function VoiceCallDemo() {
             {/* ── IDLE: outgoing call dialer ────────────────────── */}
             {phase === "idle" ? (
               <div className="flex flex-1 flex-col" style={{ paddingBottom: "60px" }}>
-                {/* Name */}
-                <div className="flex items-center justify-center pt-4">
+                {/* Spacer above centers name between top and keypad */}
+                <div className="flex-1" />
+                <div className="flex items-center justify-center">
                   <p className="text-lg font-semibold text-white">ABC Med Spa</p>
                 </div>
-                {/* Spacer pushes keypad + call button to bottom */}
                 <div className="flex-1" />
 
                 {/* Keypad */}
                 <div className="grid grid-cols-3 gap-y-5 px-5">
-                  {[
-                    { d: "1", s: "" },     { d: "2", s: "ABC" },  { d: "3", s: "DEF" },
-                    { d: "4", s: "GHI" },  { d: "5", s: "JKL" },  { d: "6", s: "MNO" },
-                    { d: "7", s: "PQRS" }, { d: "8", s: "TUV" },  { d: "9", s: "WXYZ" },
-                    { d: "*", s: "" },     { d: "0", s: "+" },     { d: "#", s: "" },
-                  ].map(({ d, s }) => (
+                  {["1","2","3","4","5","6","7","8","9","*","0","#"].map((d) => (
                     <div key={d} className="flex justify-center">
                       <div
-                        className="flex h-12 w-12 flex-col items-center justify-center rounded-full"
+                        className="flex h-12 w-12 items-center justify-center rounded-full"
                         style={{ background: "rgba(255,255,255,0.13)" }}
                       >
                         <span className="text-2xl font-light leading-none text-white">{d}</span>
-                        {s && <span className="mt-0.5 text-[8px] font-semibold tracking-widest text-white/55">{s}</span>}
                       </div>
                     </div>
                   ))}
