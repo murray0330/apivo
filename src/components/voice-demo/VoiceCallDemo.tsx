@@ -403,14 +403,13 @@ export default function VoiceCallDemo() {
 
             {/* ── IDLE: outgoing call dialer ────────────────────── */}
             {phase === "idle" ? (
-              <div className="flex flex-1 flex-col">
-                {/* Name — 34% keeps proportions balanced */}
-                <div
-                  className="flex items-center justify-center"
-                  style={{ flex: "0 0 18%" }}
-                >
+              <div className="flex flex-1 flex-col" style={{ paddingBottom: "60px" }}>
+                {/* Name */}
+                <div className="flex items-center justify-center pt-4">
                   <p className="text-lg font-semibold text-white">ABC Med Spa</p>
                 </div>
+                {/* Spacer pushes keypad + call button to bottom */}
+                <div className="flex-1" />
 
                 {/* Keypad */}
                 <div className="grid grid-cols-3 gap-y-5 px-5">
