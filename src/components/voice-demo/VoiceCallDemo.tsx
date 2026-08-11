@@ -282,6 +282,20 @@ export default function VoiceCallDemo() {
     setMessages((prev) => prev.filter((m) => m.id !== id));
   };
 
+  const updateMsg = (id: number, text: string) => {
+    setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text } : m));
+  };
+
+  const streamWords = async (id: number, text: string) => {
+    const words = text.split(" ");
+    let built = "";
+    for (const word of words) {
+      built += (built ? " " : "") + word;
+      updateMsg(id, built);
+      await delay(75);
+    }
+  };
+
   // Answer the incoming call — transition to active and start conversation
   const answerCall = useCallback(async () => {
     if (running) return;
@@ -296,7 +310,8 @@ export default function VoiceCallDemo() {
     const typId = addMsg({ kind: "typing" });
     await playAudio(NODES.opening.audioSrc);
     removeMsg(typId);
-    addMsg({ kind: "chloe", text: NODES.opening.chloeText });
+    const msgId = addMsg({ kind: "chloe", text: "" });
+    await streamWords(msgId, NODES.opening.chloeText);
     await delay(200);
     setChoices(NODES.opening.choices ?? []);
     setRunning(false);
@@ -325,7 +340,8 @@ export default function VoiceCallDemo() {
     await playAudio(next.audioSrc);
     removeMsg(typId);
 
-    addMsg({ kind: "chloe", text: next.chloeText });
+    const msgId = addMsg({ kind: "chloe", text: "" });
+    await streamWords(msgId, next.chloeText);
 
     if (next.calendarAction) {
       await delay(300);
