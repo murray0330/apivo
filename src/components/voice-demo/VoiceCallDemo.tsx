@@ -367,7 +367,7 @@ export default function VoiceCallDemo() {
             style={{
               background: "linear-gradient(160deg, #2e2e32 0%, #1c1c1e 60%)",
               borderRadius: "36px",
-              height: "560px",
+              height: "600px",
             }}
           >
             {/* Dynamic Island */}
@@ -407,7 +407,7 @@ export default function VoiceCallDemo() {
                 {/* Name — 34% keeps proportions balanced */}
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0 0 34%" }}
+                  style={{ flex: "0 0 36%" }}
                 >
                   <p className="text-lg font-semibold text-white">ABC Med Spa</p>
                 </div>
