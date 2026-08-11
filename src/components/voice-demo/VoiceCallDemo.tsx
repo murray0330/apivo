@@ -432,8 +432,8 @@ export default function VoiceCallDemo() {
                   ))}
                 </div>
 
-                {/* Call button */}
-                <div className="flex flex-1 flex-col items-center justify-center gap-1.5">
+                {/* Call button — mt-5 matches gap-y-5 row spacing */}
+                <div className="mt-5 flex flex-col items-center gap-1.5">
                   <button
                     onClick={answerCall}
                     className="flex h-14 w-14 items-center justify-center rounded-full transition-transform active:scale-95"
