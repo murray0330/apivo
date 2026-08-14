@@ -182,12 +182,12 @@ function VoiceBookingConfirmation() {
       </div>
       <div className="min-w-0">
         <p className="text-xs font-semibold text-white">Appointment Booked!</p>
-        <p className="mt-0.5 text-[10px]" style={{ color: "rgba(255,255,255,0.55)" }}>
+        <p className="mt-0.5 text-[10px]" style={{ color: "rgba(255,255,255,0.8)" }}>
           Added to calendar. Confirmation text sent.
         </p>
         <ul className="mt-2 space-y-1">
           {["Square updated", "Confirmation email sent", "Contact saved to CRM"].map((t) => (
-            <li key={t} className="flex items-center gap-1.5 text-[10px]" style={{ color: "rgba(255,255,255,0.45)" }}>
+            <li key={t} className="flex items-center gap-1.5 text-[10px]" style={{ color: "rgba(255,255,255,0.7)" }}>
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
