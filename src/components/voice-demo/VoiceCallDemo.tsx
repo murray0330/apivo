@@ -44,127 +44,51 @@ interface ConvNode {
 const NODES: Record<string, ConvNode> = {
   opening: {
     audioSrc: "/audio/opening.mp3",
-    chloeText: "Great to hear from you again, Jane! Are you calling to book something new, move an existing appointment, or cancel one?",
+    chloeText: "Thank you for calling ABC MedSpa. This is Chloe. How can I help you today?",
     choices: [
-      { label: "Book something new", next: "a-1" },
-      { label: "Move my appointment", next: "b-1" },
-      { label: "Cancel my appointment", next: "c-1" },
+      { label: "New appointment.", next: "service" },
     ],
   },
-  "a-1": {
-    audioSrc: "/audio/path-a-1.mp3",
-    chloeText: "Are you thinking about something specific — like injectables, a facial, laser treatment — or not sure yet?",
+  service: {
+    audioSrc: "/audio/service.mp3",
+    chloeText: "What service would you like to schedule?",
     choices: [
-      { label: "Injectables", next: "a-stub" },
-      { label: "A facial", next: "a-2" },
-      { label: "Laser treatment", next: "a-stub" },
-      { label: "Not sure", next: "a-stub" },
+      { label: "HydraFacial.", next: "first-time" },
     ],
   },
-  "a-stub": {
-    audioSrc: "/audio/path-a-stub.mp3",
-    chloeText: "Great choice — I'll have one of our team members follow up with you shortly to find the perfect option.",
-    choices: null,
-  },
-  "a-2": {
-    audioSrc: "/audio/path-a-2.mp3",
-    chloeText: "We have a few options — HydraFacial, Chemical Peel, or Microneedling. Which were you thinking?",
+  "first-time": {
+    audioSrc: "/audio/first-time.mp3",
+    chloeText: "We absolutely do HydraFacials. Have you had one before, or would this be your first time?",
     choices: [
-      { label: "HydraFacial", next: "a-3" },
-      { label: "Chemical Peel", next: "a-3" },
-      { label: "Microneedling", next: "a-3" },
+      { label: "First time.", next: "scheduling" },
     ],
   },
-  "a-3": {
-    audioSrc: "/audio/path-a-3.mp3",
-    chloeText: "Got it — what day and time works for you?",
+  scheduling: {
+    audioSrc: "/audio/scheduling.mp3",
+    chloeText: "Got it. Since facials don't require a consultation first, we can get you scheduled right away. What day and time works best for you?",
     choices: [
-      { label: "Friday at 2pm", next: "a-4" },
-      { label: "Monday at 10am", next: "a-4" },
-      { label: "I'll pick another day", next: "a-4" },
+      { label: "Monday at 1 PM.", next: "availability" },
     ],
   },
-  "a-4": {
-    audioSrc: "/audio/path-a-4.mp3",
-    chloeText: "That time's open. Any preference on which of our team members you'd like?",
+  availability: {
+    audioSrc: "/audio/availability.mp3",
+    chloeText: "Good news — 1:00 PM is available. Want me to go ahead and lock that in?",
     choices: [
-      { label: "No preference", next: "a-5" },
-      { label: "Yes, let me choose", next: "a-5" },
+      { label: "Yes.", next: "name-request" },
     ],
   },
-  "a-5": {
-    audioSrc: "/audio/path-a-5.mp3",
-    chloeText: "Want me to book it?",
+  "name-request": {
+    audioSrc: "/audio/name-request.mp3",
+    chloeText: "Perfect. Can I get your full name for the reservation?",
     choices: [
-      { label: "Yes, book it", next: "a-6" },
-      { label: "Not yet", next: "a-notyet" },
+      { label: "Jane Smith.", next: "confirmation" },
     ],
   },
-  "a-6": {
-    audioSrc: "/audio/path-a-6.mp3",
-    chloeText: "Done! You're booked for Friday at 2:00 PM.",
+  confirmation: {
+    audioSrc: "/audio/confirmation.mp3",
+    chloeText: "You're all set, Jane. You should receive a confirmation text shortly. We're looking forward to seeing you — if anything comes up before then, just reach out. Have a great day!",
     choices: null,
     calendarAction: "book",
-  },
-  "a-notyet": {
-    audioSrc: "/audio/path-a-notyet.mp3",
-    chloeText: "No problem — just give us a call anytime you're ready. We're here 24/7!",
-    choices: null,
-  },
-  "b-1": {
-    audioSrc: "/audio/path-b-1.mp3",
-    chloeText: "Of course — what new day and time works better?",
-    choices: [
-      { label: "Tuesday at 11am", next: "b-2" },
-      { label: "Thursday at 3pm", next: "b-2" },
-      { label: "I'll pick another day", next: "b-2" },
-    ],
-  },
-  "b-2": {
-    audioSrc: "/audio/path-b-2.mp3",
-    chloeText: "Same provider as before, or would you like to change?",
-    choices: [
-      { label: "Same provider", next: "b-3" },
-      { label: "I'd like to change", next: "b-3" },
-    ],
-  },
-  "b-3": {
-    audioSrc: "/audio/path-b-3.mp3",
-    chloeText: "That time works — want me to lock it in?",
-    choices: [
-      { label: "Yes, lock it in", next: "b-4" },
-      { label: "Not yet", next: "b-notyet" },
-    ],
-  },
-  "b-4": {
-    audioSrc: "/audio/path-b-4.mp3",
-    chloeText: "Done, you're all moved to Tuesday at 11:00 AM.",
-    choices: null,
-    calendarAction: "move",
-  },
-  "b-notyet": {
-    audioSrc: "/audio/path-b-notyet.mp3",
-    chloeText: "No worries — your current appointment is still on the books. Call us anytime!",
-    choices: null,
-  },
-  "c-1": {
-    audioSrc: "/audio/path-c-1.mp3",
-    chloeText: "I can take care of that — just to confirm, you want to cancel your upcoming appointment?",
-    choices: [
-      { label: "Yes, cancel it", next: "c-2" },
-      { label: "No, keep it", next: "c-keep" },
-    ],
-  },
-  "c-2": {
-    audioSrc: "/audio/path-c-2.mp3",
-    chloeText: "Cancelled. We hope to see you again soon.",
-    choices: null,
-    calendarAction: "cancel",
-  },
-  "c-keep": {
-    audioSrc: "/audio/path-c-keep.mp3",
-    chloeText: "No problem at all — we'll keep your appointment as is. See you then!",
-    choices: null,
   },
 };
 
