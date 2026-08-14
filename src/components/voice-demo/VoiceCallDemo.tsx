@@ -43,49 +43,49 @@ interface ConvNode {
 
 const NODES: Record<string, ConvNode> = {
   opening: {
-    audioSrc: "/audio/opening.mp3",
+    audioSrc: "/audio/1.wav",
     chloeText: "Thank you for calling ABC MedSpa. This is Chloe. How can I help you today?",
     choices: [
       { label: "New appointment.", next: "service" },
     ],
   },
   service: {
-    audioSrc: "/audio/service.mp3",
+    audioSrc: "/audio/2.wav",
     chloeText: "What service would you like to schedule?",
     choices: [
       { label: "HydraFacial.", next: "first-time" },
     ],
   },
   "first-time": {
-    audioSrc: "/audio/first-time.mp3",
+    audioSrc: "/audio/3.wav",
     chloeText: "We absolutely do HydraFacials. Have you had one before, or would this be your first time?",
     choices: [
       { label: "First time.", next: "scheduling" },
     ],
   },
   scheduling: {
-    audioSrc: "/audio/scheduling.mp3",
+    audioSrc: "/audio/4.wav",
     chloeText: "Got it. Since facials don't require a consultation first, we can get you scheduled right away. What day and time works best for you?",
     choices: [
       { label: "Monday at 1 PM.", next: "availability" },
     ],
   },
   availability: {
-    audioSrc: "/audio/availability.mp3",
+    audioSrc: "/audio/5.wav",
     chloeText: "Good news — 1:00 PM is available. Want me to go ahead and lock that in?",
     choices: [
       { label: "Yes.", next: "name-request" },
     ],
   },
   "name-request": {
-    audioSrc: "/audio/name-request.mp3",
+    audioSrc: "/audio/6.wav",
     chloeText: "Perfect. Can I get your full name for the reservation?",
     choices: [
       { label: "Jane Smith.", next: "confirmation" },
     ],
   },
   confirmation: {
-    audioSrc: "/audio/confirmation.mp3",
+    audioSrc: "/audio/7.wav",
     chloeText: "You're all set, Jane. You should receive a confirmation text shortly. We're looking forward to seeing you — if anything comes up before then, just reach out. Have a great day!",
     choices: null,
     calendarAction: "book",
