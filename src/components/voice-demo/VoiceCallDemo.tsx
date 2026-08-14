@@ -218,7 +218,7 @@ export default function VoiceCallDemo() {
     for (const word of words) {
       built += (built ? " " : "") + word;
       updateMsg(id, built);
-      await delay(75);
+      await delay(150);
     }
   };
 
@@ -233,9 +233,11 @@ export default function VoiceCallDemo() {
     setChoices([]);
 
     await delay(300);
-    await playAudio(NODES.opening.audioSrc);
     const msgId = addMsg({ kind: "chloe", text: "" });
-    await streamWords(msgId, NODES.opening.chloeText);
+    await Promise.all([
+      playAudio(NODES.opening.audioSrc),
+      streamWords(msgId, NODES.opening.chloeText),
+    ]);
     await delay(200);
     setChoices(NODES.opening.choices ?? []);
     setRunning(false);
@@ -261,10 +263,11 @@ export default function VoiceCallDemo() {
     await delay(300);
 
     const next = NODES[choice.next];
-    await playAudio(next.audioSrc);
-
     const msgId = addMsg({ kind: "chloe", text: "" });
-    await streamWords(msgId, next.chloeText);
+    await Promise.all([
+      playAudio(next.audioSrc),
+      streamWords(msgId, next.chloeText),
+    ]);
 
     if (next.calendarAction) {
       setTimerFrozen(true);
