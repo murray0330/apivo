@@ -21,7 +21,7 @@ const STYLES = `
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type CalendarAction = "book" | "move" | "cancel";
-type MsgKind = "chloe" | "user" | "typing" | "square";
+type MsgKind = "chloe" | "user" | "typing" | "square" | "spinner" | "booked";
 type Phase = "idle" | "active";
 
 interface Msg {
@@ -29,6 +29,7 @@ interface Msg {
   kind: MsgKind;
   text?: string;
   squareAction?: CalendarAction;
+  spinnerLabel?: string;
 }
 
 interface Choice { label: string; next: string; }
@@ -37,6 +38,7 @@ interface ConvNode {
   chloeText: string;
   choices: Choice[] | null;
   calendarAction?: CalendarAction;
+  spinnerBefore?: string;
 }
 
 // ─── Conversation Script ──────────────────────────────────────────────────────
@@ -73,6 +75,7 @@ const NODES: Record<string, ConvNode> = {
   availability: {
     audioSrc: "/audio/5.wav",
     chloeText: "Good news — 1:00 PM is available. Want me to go ahead and lock that in?",
+    spinnerBefore: "Checking calendar availability...",
     choices: [
       { label: "Yes.", next: "name-request" },
     ],
@@ -87,6 +90,7 @@ const NODES: Record<string, ConvNode> = {
   confirmation: {
     audioSrc: "/audio/7.wav",
     chloeText: "You're all set, Jane. You should receive a confirmation text shortly. We're looking forward to seeing you — if anything comes up before then, just reach out. Have a great day!",
+    spinnerBefore: "Booking your appointment...",
     choices: null,
     calendarAction: "book",
   },
@@ -139,21 +143,59 @@ function VoiceTyping() {
   );
 }
 
-// ─── Square inline banner ─────────────────────────────────────────────────────
+// ─── Voice spinner (dark-themed) ─────────────────────────────────────────────
 
-function SquareMsg({ action }: { action: CalendarAction }) {
-  const map: Record<CalendarAction, { text: string; color: string }> = {
-    book:   { text: "✓ Booked to your Square calendar", color: "rgba(34,197,94,0.2)"  },
-    move:   { text: "✓ Appointment moved in Square",    color: "rgba(234,179,8,0.2)"   },
-    cancel: { text: "✓ Cancelled in Square",            color: "rgba(239,68,68,0.2)"   },
-  };
-  const { text, color } = map[action];
+function VoiceSpinner({ label }: { label: string }) {
   return (
     <div
-      className="rounded-xl px-3 py-1.5 text-center text-[11px] font-medium text-white/80"
-      style={{ background: color, border: "1px solid rgba(255,255,255,0.1)" }}
+      className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[11px]"
+      style={{
+        background: "rgba(255,255,255,0.08)",
+        border: "1px solid rgba(255,255,255,0.1)",
+        color: "rgba(255,255,255,0.6)",
+      }}
     >
-      {text}
+      <svg className="h-3 w-3 animate-spin shrink-0" style={{ color: "#818cf8" }} viewBox="0 0 24 24" fill="none">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+      </svg>
+      {label}
+    </div>
+  );
+}
+
+// ─── Booking confirmation card (dark-themed) ──────────────────────────────────
+
+function VoiceBookingConfirmation() {
+  return (
+    <div
+      className="flex items-start gap-2.5 rounded-xl p-3"
+      style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.28)" }}
+    >
+      <div
+        className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+        style={{ background: "rgba(34,197,94,0.25)" }}
+      >
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <div className="min-w-0">
+        <p className="text-xs font-semibold text-white">Appointment Booked!</p>
+        <p className="mt-0.5 text-[10px]" style={{ color: "rgba(255,255,255,0.55)" }}>
+          Added to calendar. Confirmation text sent.
+        </p>
+        <ul className="mt-2 space-y-1">
+          {["Square updated", "Confirmation email sent", "Contact saved to CRM"].map((t) => (
+            <li key={t} className="flex items-center gap-1.5 text-[10px]" style={{ color: "rgba(255,255,255,0.45)" }}>
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              {t}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
@@ -273,6 +315,15 @@ export default function VoiceCallDemo() {
     await delay(300);
 
     const next = NODES[choice.next];
+
+    // Show spinner before audio if this node has one
+    if (next.spinnerBefore) {
+      const spId = addMsg({ kind: "spinner", spinnerLabel: next.spinnerBefore });
+      await delay(1600);
+      removeMsg(spId);
+      await delay(150);
+    }
+
     const duration = await getAudioDuration(next.audioSrc);
     const msgId = addMsg({ kind: "chloe", text: "" });
     await Promise.all([
@@ -282,8 +333,8 @@ export default function VoiceCallDemo() {
 
     if (next.calendarAction) {
       setTimerFrozen(true);
-      await delay(300);
-      addMsg({ kind: "square", squareAction: next.calendarAction });
+      await delay(400);
+      addMsg({ kind: "booked" });
     }
 
     await delay(200);
@@ -460,9 +511,14 @@ export default function VoiceCallDemo() {
                         <VoiceTyping />
                       </div>
                     );
-                    if (msg.kind === "square") return (
-                      <div key={msg.id} className="flex justify-center">
-                        <SquareMsg action={msg.squareAction!} />
+                    if (msg.kind === "spinner") return (
+                      <div key={msg.id} className="flex justify-start">
+                        <VoiceSpinner label={msg.spinnerLabel!} />
+                      </div>
+                    );
+                    if (msg.kind === "booked") return (
+                      <div key={msg.id}>
+                        <VoiceBookingConfirmation />
                       </div>
                     );
                     return null;
