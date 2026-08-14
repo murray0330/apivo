@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { RefreshCw, Calendar, Mail, Users } from 'lucide-react';
+import { RefreshCw, Calendar, Mail, Users, XCircle, Sparkles, Send } from 'lucide-react';
 
 /* ── types ────────────────────────────────────────────────── */
 interface DemoOption {
@@ -17,7 +17,7 @@ interface DemoStep {
   options: DemoOption[];
 }
 
-type MsgKind = 'bot' | 'user' | 'typing' | 'spinner' | 'booked' | 'rescheduled';
+type MsgKind = 'bot' | 'user' | 'typing' | 'spinner' | 'booked' | 'rescheduled' | 'cancelled';
 
 interface ChatMsg {
   id: number;
@@ -26,41 +26,141 @@ interface ChatMsg {
   spinnerLabel?: string;
 }
 
-/* ── demo flow data (ported 1-to-1 from original script.js) ─ */
+/* ── demo flow ───────────────────────────────────────────── */
 const demoFlow: DemoStep[] = [
+  // ── START ────────────────────────────────────────────────────
   {
     id: 'start',
-    bot: "Hi there! Welcome to ABC Dental Clinic. I'm your AI scheduling assistant. How can I help you today?",
+    bot: "Hi! Welcome to ABC Med Spa. To get started, are you a new or returning client?",
     options: [
-      { label: 'Book an appointment', next: 'treatment' },
-      { label: 'Ask a question', next: 'question' },
-      { label: 'Reschedule', next: 'reschedule' },
+      { label: 'New client', next: 'new_patient' },
+      { label: "I've visited before", next: 'existing_patient' },
+      { label: 'I have a question', next: 'question' },
+    ],
+  },
+
+  // ── NEW PATIENT ──────────────────────────────────────────────
+  {
+    id: 'new_patient',
+    user: 'New client',
+    bot: "Great! We'd love to have you. What service are you interested in today?",
+    options: [
+      { label: 'Injectables', next: 'svc_injectables' },
+      { label: 'Skin Rejuvenation', next: 'svc_skin' },
+      { label: 'Body & Hair', next: 'svc_body_hair' },
+      { label: 'Other service', next: 'other_treatment' },
+    ],
+  },
+
+  // ── NEW PATIENT: SERVICE CATEGORIES ─────────────────────────
+  {
+    id: 'svc_injectables',
+    user: 'Injectables',
+    bot: 'Which injectable service are you interested in?',
+    options: [
+      { label: 'Botox / Neurotoxins', next: 'svc_botox' },
+      { label: 'Dermal Fillers', next: 'svc_fillers' },
     ],
   },
   {
-    id: 'treatment',
-    user: "I'd like to book an appointment",
-    bot: "I'd be happy to help! What type of treatment are you interested in?",
+    id: 'svc_skin',
+    user: 'Skin Rejuvenation',
+    bot: 'Which skin treatment are you looking for?',
     options: [
-      { label: 'Cleaning', next: 'cleaning_history' },
-      { label: 'Checkup', next: 'cleaning_history' },
-      { label: 'Other treatment', next: 'other_treatment' },
+      { label: 'Chemical Peels', next: 'svc_peels' },
+      { label: 'HydraFacial', next: 'svc_hydra' },
+      { label: 'Microneedling', next: 'svc_micro' },
+      { label: 'IPL Photofacials', next: 'svc_ipl' },
+      { label: 'Laser Skin Resurfacing', next: 'svc_laser' },
     ],
   },
   {
-    id: 'cleaning_history',
-    user: 'I need a dental cleaning',
-    bot: 'Great choice! When was your last dental cleaning?',
+    id: 'svc_body_hair',
+    user: 'Body & Hair',
+    bot: 'Which service interests you?',
     options: [
-      { label: 'About 6 months ago', next: 'pick_time' },
-      { label: 'Over a year ago', next: 'pick_time' },
-      { label: "I'm not sure", next: 'pick_time' },
+      { label: 'Laser Hair Removal', next: 'svc_hair_removal' },
+      { label: 'Body Contouring (CoolSculpting/Emsculpt)', next: 'svc_body_contour' },
+    ],
+  },
+
+  // ── NEW PATIENT: SPECIFIC SERVICES ──────────────────────────
+  {
+    id: 'svc_botox',
+    user: 'Botox / Neurotoxins',
+    bot: 'Great choice! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
     ],
   },
   {
-    id: 'consultation',
-    user: "I'd like a consultation",
-    bot: 'Excellent. A consultation is a great way to get started. What day and time works best for you?',
+    id: 'svc_fillers',
+    user: 'Dermal Fillers',
+    bot: 'Wonderful! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_peels',
+    user: 'Chemical Peels',
+    bot: 'Perfect. What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_hydra',
+    user: 'HydraFacial',
+    bot: 'Great choice! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_micro',
+    user: 'Microneedling',
+    bot: 'Perfect. What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_ipl',
+    user: 'IPL Photofacials',
+    bot: 'Great choice! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_laser',
+    user: 'Laser Skin Resurfacing',
+    bot: 'Perfect. What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_hair_removal',
+    user: 'Laser Hair Removal',
+    bot: 'Great choice! What day and time works best for you?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+    ],
+  },
+  {
+    id: 'svc_body_contour',
+    user: 'Body Contouring (CoolSculpting/Emsculpt)',
+    bot: 'Wonderful! What day and time works best for you?',
     options: [
       { label: 'Tomorrow at 2 PM', next: 'check_availability' },
       { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
@@ -68,118 +168,277 @@ const demoFlow: DemoStep[] = [
   },
   {
     id: 'other_treatment',
-    user: 'I need another treatment',
-    bot: "Got it — can you provide a few details for the doctor? Also, have you had this type of treatment before?",
+    user: 'Other service',
+    bot: "Can you provide some details for our team? Also, have you had this type of service before?",
     options: [
-      { label: "First time, I'll explain in person", next: 'other_treatment_consult' },
+      { label: "First time — I'll explain in person", next: 'other_treatment_consult' },
       { label: "Yes, I've had it before", next: 'other_treatment_consult' },
     ],
   },
   {
     id: 'other_treatment_consult',
-    user: "First time, I'll explain in person",
-    bot: "Okay! The next step is a complimentary consultation with Dr. Murray Vega. What day and time works best?",
+    user: "First time — I'll explain in person",
+    bot: "Okay. The next step is a complimentary consultation with our lead aesthetician. What day and time works best?",
     options: [
       { label: 'Tomorrow at 2 PM', next: 'check_availability' },
       { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
     ],
   },
-  {
-    id: 'pick_time',
-    bot: "Thank you for that. Let's find a time — what day and time works best for you?",
-    options: [
-      { label: 'Tomorrow at 2 PM', next: 'check_availability' },
-      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
-      { label: 'Next Monday afternoon', next: 'check_availability' },
-    ],
-  },
+
+  // ── AVAILABILITY ─────────────────────────────────────────────
   {
     id: 'check_availability',
     user: 'Tomorrow at 2:00 PM',
     action: 'calendar_check',
-    bot: 'Great news! 2:00 PM tomorrow is available. Can I get your name and email to confirm?',
-    options: [{ label: 'John Smith / john@email.com', next: 'confirm_booking' }],
+    bot: 'Good news, that time is available. Shall I book that?',
+    options: [
+      { label: 'Yes, book it!', next: 'get_name' },
+      { label: 'Pick a different time', next: 'pick_time_retry' },
+    ],
   },
   {
     id: 'check_availability_alt',
     user: 'Thursday at 10:00 AM',
     action: 'calendar_check',
-    bot: '10:00 AM Thursday is already booked. I have 10:30 AM and 1:00 PM available. Which works?',
+    bot: 'That time is unavailable. However, I have 10:30 AM or 1:00 PM available. Would either work?',
     options: [
-      { label: '10:30 AM works', next: 'confirm_booking_alt' },
-      { label: '1:00 PM works', next: 'confirm_booking_alt' },
+      { label: '10:30 AM works', next: 'get_name' },
+      { label: '1:00 PM works', next: 'get_name' },
     ],
   },
   {
-    id: 'confirm_booking',
-    user: 'John Smith, john@email.com',
-    bot: 'To confirm: 30-minute appointment tomorrow at 2:00 PM with Dr. Murray Vega. Shall I book it?',
-    options: [{ label: 'Yes, book it!', next: 'booked' }],
+    id: 'pick_time_retry',
+    user: 'Pick a different time',
+    bot: 'No problem. What other time works for you?',
+    options: [
+      { label: 'Thursday at 10 AM', next: 'check_availability_alt' },
+      { label: 'Friday at 3 PM', next: 'check_availability' },
+    ],
+  },
+
+  // ── CONTACT INFO (NEW PATIENT) ───────────────────────────────
+  {
+    id: 'get_name',
+    user: 'Yes, book it!',
+    bot: 'Perfect. What is your full name?',
+    options: [{ label: 'Jane Smith', next: 'get_insurance' }],
   },
   {
-    id: 'confirm_booking_alt',
-    user: 'That works for me',
-    bot: 'Can I get your name and email to finalize?',
-    options: [{ label: 'John Smith / john@email.com', next: 'confirm_booking_final' }],
+    id: 'get_insurance',
+    user: 'Jane Smith',
+    bot: "Got it, Jane! Do you have any skin concerns or allergies we should note before your appointment?",
+    options: [
+      { label: "Yes, I'll share in person", next: 'get_phone' },
+      { label: 'No concerns', next: 'get_phone' },
+    ],
   },
   {
-    id: 'confirm_booking_final',
-    user: 'John Smith, john@email.com',
-    bot: "Let me book that for you...",
-    action: 'booking',
-    options: [],
+    id: 'get_phone',
+    user: 'No concerns',
+    bot: 'Great. What is the best phone number to reach you?',
+    options: [{ label: '(555) 123-4567', next: 'get_email' }],
+  },
+  {
+    id: 'get_email',
+    user: '(555) 123-4567',
+    bot: 'And your email address for the confirmation?',
+    options: [{ label: 'jane@email.com', next: 'booked' }],
   },
   {
     id: 'booked',
+    user: 'jane@email.com',
+    action: 'booking',
+    options: [],
+  },
+
+  // ── EXISTING PATIENT ─────────────────────────────────────────
+  {
+    id: 'existing_patient',
+    user: "I've visited before",
+    bot: "Welcome back! Please share the phone number or email associated with your profile so I can look you up.",
+    options: [{ label: 'john@email.com', next: 'lookup_client' }],
+  },
+  {
+    id: 'lookup_client',
+    user: 'john@email.com',
+    action: 'calendar_lookup',
+    bot: "Thanks, John! I have your profile open. Are you looking to book a new appointment, reschedule, or cancel?",
+    options: [
+      { label: 'Book a new appointment', next: 'existing_book' },
+      { label: 'Reschedule', next: 'reschedule' },
+      { label: 'Cancel', next: 'cancel' },
+    ],
+  },
+  {
+    id: 'existing_book',
+    user: 'Book a new appointment',
+    bot: "Great! What service are you looking for?",
+    options: [
+      { label: 'Injectables', next: 'ex_svc_injectables' },
+      { label: 'Skin Rejuvenation', next: 'ex_svc_skin' },
+      { label: 'Body & Hair', next: 'ex_svc_body_hair' },
+      { label: 'Something else', next: 'existing_other' },
+    ],
+  },
+
+  // ── EXISTING PATIENT: SERVICE CATEGORIES ────────────────────
+  {
+    id: 'ex_svc_injectables',
+    user: 'Injectables',
+    bot: 'Which injectable service are you interested in?',
+    options: [
+      { label: 'Botox / Neurotoxins', next: 'ex_svc_botox' },
+      { label: 'Dermal Fillers', next: 'ex_svc_fillers' },
+    ],
+  },
+  {
+    id: 'ex_svc_skin',
+    user: 'Skin Rejuvenation',
+    bot: 'Which skin treatment are you looking for?',
+    options: [
+      { label: 'Chemical Peels', next: 'ex_svc_peels' },
+      { label: 'HydraFacial', next: 'ex_svc_hydra' },
+      { label: 'Microneedling', next: 'ex_svc_micro' },
+      { label: 'IPL Photofacials', next: 'ex_svc_ipl' },
+      { label: 'Laser Skin Resurfacing', next: 'ex_svc_laser' },
+    ],
+  },
+  {
+    id: 'ex_svc_body_hair',
+    user: 'Body & Hair',
+    bot: 'Which service interests you?',
+    options: [
+      { label: 'Laser Hair Removal', next: 'ex_svc_hair_removal' },
+      { label: 'Body Contouring (CoolSculpting/Emsculpt)', next: 'ex_svc_body_contour' },
+    ],
+  },
+
+  // ── EXISTING PATIENT: SPECIFIC SERVICES ─────────────────────
+  {
+    id: 'ex_svc_botox',
+    user: 'Botox / Neurotoxins',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_fillers',
+    user: 'Dermal Fillers',
+    bot: 'Wonderful! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_peels',
+    user: 'Chemical Peels',
+    bot: 'Perfect. What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_hydra',
+    user: 'HydraFacial',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_micro',
+    user: 'Microneedling',
+    bot: 'Perfect. What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_ipl',
+    user: 'IPL Photofacials',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_laser',
+    user: 'Laser Skin Resurfacing',
+    bot: 'Perfect. What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_hair_removal',
+    user: 'Laser Hair Removal',
+    bot: 'Great choice! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'ex_svc_body_contour',
+    user: 'Body Contouring (CoolSculpting/Emsculpt)',
+    bot: 'Wonderful! What day and time works best?',
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'existing_other',
+    user: 'Something else',
+    bot: "Can you provide some details for our team?",
+    options: [{ label: "I'll explain in person", next: 'existing_consult' }],
+  },
+  {
+    id: 'existing_consult',
+    user: "I'll explain in person",
+    bot: "Okay. The next step is a complimentary consultation with our lead aesthetician. What day and time works best?",
+    options: [
+      { label: 'Tomorrow at 2 PM', next: 'existing_check_availability' },
+      { label: 'Thursday at 10 AM', next: 'existing_check_alt' },
+    ],
+  },
+  {
+    id: 'existing_check_availability',
+    user: 'Tomorrow at 2:00 PM',
+    action: 'calendar_check',
+    bot: "Good news, that time is available. Shall I book it?",
+    options: [{ label: 'Yes, book it!', next: 'existing_booked' }],
+  },
+  {
+    id: 'existing_check_alt',
+    user: 'Thursday at 10:00 AM',
+    action: 'calendar_check',
+    bot: "That time is unavailable. However, I have 10:30 AM or 1:00 PM available. Would either work?",
+    options: [
+      { label: '10:30 AM works', next: 'existing_booked' },
+      { label: '1:00 PM works', next: 'existing_booked' },
+    ],
+  },
+  {
+    id: 'existing_booked',
     user: 'Yes, book it!',
     action: 'booking',
     options: [],
   },
-  {
-    id: 'question',
-    user: 'I have a question',
-    bot: 'Of course! What would you like to know?',
-    options: [
-      { label: 'What are your hours?', next: 'hours_answer' },
-      { label: 'Do you accept insurance?', next: 'insurance_answer' },
-      { label: 'Where are you located?', next: 'location_answer' },
-    ],
-  },
-  {
-    id: 'hours_answer',
-    user: 'What are your hours?',
-    action: 'rag_search',
-    bot: "We're open Monday through Friday, 8:00 AM to 6:00 PM. Closed weekends. Would you like to book?",
-    options: [
-      { label: 'Yes, book an appointment', next: 'treatment' },
-      { label: 'No thanks!', next: 'goodbye' },
-    ],
-  },
-  {
-    id: 'insurance_answer',
-    user: 'Do you accept insurance?',
-    action: 'rag_search',
-    bot: 'Yes! We accept Delta Dental, Cigna, Aetna, MetLife, and more. We also offer payment plans. Want to schedule?',
-    options: [
-      { label: 'Yes, book an appointment', next: 'treatment' },
-      { label: "That's all, thanks!", next: 'goodbye' },
-    ],
-  },
-  {
-    id: 'location_answer',
-    user: 'Where are you located?',
-    action: 'rag_search',
-    bot: "We're in the heart of Las Vegas with convenient parking. Want to schedule a visit?",
-    options: [
-      { label: 'Yes, book an appointment', next: 'treatment' },
-      { label: 'Thanks!', next: 'goodbye' },
-    ],
-  },
+
+  // ── RESCHEDULE ───────────────────────────────────────────────
   {
     id: 'reschedule',
-    user: 'I need to reschedule',
-    action: 'calendar_lookup',
-    bot: 'I found your upcoming appointment on Wednesday at 3:00 PM. What new time works?',
+    user: 'Reschedule',
+    bot: 'No problem. What new day and time would you prefer?',
     options: [
       { label: 'Friday at 11 AM', next: 'reschedule_confirm' },
       { label: 'Next Tuesday at 2 PM', next: 'reschedule_confirm' },
@@ -198,9 +457,76 @@ const demoFlow: DemoStep[] = [
     action: 'reschedule_action',
     options: [],
   },
+
+  // ── CANCEL ───────────────────────────────────────────────────
+  {
+    id: 'cancel',
+    user: 'Cancel',
+    bot: "I understand. Just to confirm, are you sure you want to cancel your appointment?",
+    options: [
+      { label: 'Yes, cancel it', next: 'cancelled' },
+      { label: 'No, keep it', next: 'keep_appointment' },
+    ],
+  },
+  {
+    id: 'cancelled',
+    user: 'Yes, cancel it',
+    action: 'cancel_action',
+    options: [],
+  },
+  {
+    id: 'keep_appointment',
+    user: 'No, keep it',
+    bot: "Okay, I've left your appointment as is. Can I help with anything else?",
+    options: [{ label: "No, that's all. Thanks!", next: 'goodbye' }],
+  },
+
+  // ── QUESTIONS ────────────────────────────────────────────────
+  {
+    id: 'question',
+    user: 'I have a question',
+    bot: 'Of course! What would you like to know?',
+    options: [
+      { label: 'What are your hours?', next: 'hours_answer' },
+      { label: 'What services do you offer?', next: 'insurance_answer' },
+      { label: 'Where are you located?', next: 'location_answer' },
+    ],
+  },
+  {
+    id: 'hours_answer',
+    user: 'What are your hours?',
+    action: 'rag_search',
+    bot: "We're open Monday through Saturday, 9:00 AM to 7:00 PM. Does that help? Shall we get back to scheduling?",
+    options: [
+      { label: 'Yes, book an appointment', next: 'new_patient' },
+      { label: "No, that's all. Thanks!", next: 'goodbye' },
+    ],
+  },
+  {
+    id: 'insurance_answer',
+    user: 'What services do you offer?',
+    action: 'rag_search',
+    bot: "We offer Botox, fillers, laser treatments, facials, skin rejuvenation, and more. We also offer packages and memberships. Does that help? Shall we get back to scheduling?",
+    options: [
+      { label: 'Yes, book an appointment', next: 'new_patient' },
+      { label: "No, that's all. Thanks!", next: 'goodbye' },
+    ],
+  },
+  {
+    id: 'location_answer',
+    user: 'Where are you located?',
+    action: 'rag_search',
+    bot: "We're located in Virginia Beach with convenient parking available. Does that help? Shall we get back to scheduling?",
+    options: [
+      { label: 'Yes, book an appointment', next: 'new_patient' },
+      { label: "No, that's all. Thanks!", next: 'goodbye' },
+    ],
+  },
+
+  // ── GOODBYE ──────────────────────────────────────────────────
   {
     id: 'goodbye',
-    user: "That's all, thanks!",
+    user: "No, that's all. Thanks!",
     bot: "You're welcome! Have a wonderful day.",
     options: [{ label: 'Start over', next: 'restart' }],
   },
@@ -216,7 +542,8 @@ const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const spinnerLabels: Record<string, string> = {
   calendar_check: 'Checking calendar availability...',
   rag_search: 'Searching knowledge base...',
-  calendar_lookup: 'Looking up your appointment...',
+  calendar_lookup: 'Looking up your file...',
+  cancel_action: 'Cancelling appointment...',
 };
 
 /* ── Booking Confirmation card ───────────────────────────── */
@@ -231,7 +558,7 @@ function BookingConfirmation() {
         <p className="mt-0.5 text-xs text-zinc-500">Added to calendar. Confirmation email sent.</p>
         <ul className="mt-2 space-y-1.5">
           {[
-            { Icon: Calendar, text: 'Google Calendar updated' },
+            { Icon: Calendar, text: 'Square updated' },
             { Icon: Mail, text: 'Confirmation email sent' },
             { Icon: Users, text: 'Contact saved to CRM' },
           ].map(({ Icon, text }) => (
@@ -260,6 +587,32 @@ function RescheduleConfirmation() {
           {[
             { Icon: RefreshCw, text: 'Calendar updated' },
             { Icon: Mail, text: 'Rescheduling email sent' },
+          ].map(({ Icon, text }) => (
+            <li key={text} className="flex items-center gap-1.5 text-[11px] text-zinc-400 sm:text-xs">
+              <Icon className="h-3 w-3 shrink-0" />
+              {text}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+/* ── Cancel Confirmation card ────────────────────────────── */
+function CancelConfirmation() {
+  return (
+    <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/5 p-3.5 sm:p-4">
+      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500/20">
+        <XCircle className="h-4 w-4 text-red-400" strokeWidth={2} />
+      </div>
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-zinc-900">Appointment Cancelled</p>
+        <p className="mt-0.5 text-xs text-zinc-500">Your appointment has been cancelled. Have a good day.</p>
+        <ul className="mt-2 space-y-1.5">
+          {[
+            { Icon: Calendar, text: 'Calendar updated' },
+            { Icon: Mail, text: 'Cancellation email sent' },
           ].map(({ Icon, text }) => (
             <li key={text} className="flex items-center gap-1.5 text-[11px] text-zinc-400 sm:text-xs">
               <Icon className="h-3 w-3 shrink-0" />
@@ -356,27 +709,51 @@ export default function DemoChatbot() {
       setMessages((p) => p.filter((m) => m.id !== spId));
     }
 
-    // ── booking / reschedule finals ──────────────────────
+    // ── booking final ────────────────────────────────────
     if (step.action === 'booking') {
+      const spId2 = nextId();
+      setMessages((p) => [...p, { id: spId2, kind: 'spinner', spinnerLabel: 'Booking your appointment...' }]);
+      await delay(1600);
+      setMessages((p) => p.filter((m) => m.id !== spId2));
       const typId = nextId();
       setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
-      await delay(1100);
+      await delay(1000);
       setMessages((p) => p.filter((m) => m.id !== typId));
+      setMessages((p) => [...p, { id: nextId(), kind: 'bot', text: "You're all set! Your appointment has been booked and a confirmation email is on its way. We look forward to seeing you!" }]);
+      await delay(700);
       setMessages((p) => [...p, { id: nextId(), kind: 'booked' }]);
       await delay(600);
-      setOptions([{ label: 'Try again', next: 'restart' }]);
+      setOptions([]);
       runningRef.current = false;
       return;
     }
 
+    // ── reschedule final ─────────────────────────────────
     if (step.action === 'reschedule_action') {
       const typId = nextId();
       setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
       await delay(1100);
       setMessages((p) => p.filter((m) => m.id !== typId));
+      setMessages((p) => [...p, { id: nextId(), kind: 'bot', text: "You're all set! Your appointment has been rescheduled and a confirmation email is on its way. We look forward to seeing you!" }]);
+      await delay(700);
       setMessages((p) => [...p, { id: nextId(), kind: 'rescheduled' }]);
       await delay(600);
-      setOptions([{ label: 'Try again', next: 'restart' }]);
+      setOptions([]);
+      runningRef.current = false;
+      return;
+    }
+
+    // ── cancel final ─────────────────────────────────────
+    if (step.action === 'cancel_action') {
+      const typId = nextId();
+      setMessages((p) => [...p, { id: typId, kind: 'typing' }]);
+      await delay(1100);
+      setMessages((p) => p.filter((m) => m.id !== typId));
+      setMessages((p) => [...p, { id: nextId(), kind: 'bot', text: "Done! Your appointment has been cancelled. We hope to see you again soon — feel free to reach out anytime." }]);
+      await delay(700);
+      setMessages((p) => [...p, { id: nextId(), kind: 'cancelled' }]);
+      await delay(600);
+      setOptions([]);
       runningRef.current = false;
       return;
     }
@@ -396,14 +773,20 @@ export default function DemoChatbot() {
   }, [startDemo]);
 
   return (
+    <>
     <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-black/[.08] bg-white shadow-[0_2px_20px_rgba(0,0,0,0.06)]" style={{ height: 'min(520px, calc(100vh - 200px))' }}>
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b border-black/[.08] px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
-        <span className="text-sm font-medium text-zinc-700">Appointly AI</span>
-        <span className="ml-auto rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-500">
-          Online
-        </span>
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-50">
+          <Sparkles className="h-3.5 w-3.5 text-indigo-500" strokeWidth={1.75} />
+        </div>
+        <div className="flex flex-col">
+          <span className="text-sm font-medium text-zinc-700">ABC Med Spa</span>
+          <span className="flex items-center gap-1 text-[10px] font-medium text-green-500">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+            Online
+          </span>
+        </div>
       </div>
 
       {/* Messages */}
@@ -424,11 +807,8 @@ export default function DemoChatbot() {
           if (msg.kind === 'bot') {
             return (
               <div key={msg.id} className="flex justify-start">
-                <div className="msg-label-wrap">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Appointly AI</p>
-                  <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-white px-4 py-2.5 text-[0.88rem] leading-relaxed text-zinc-800 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-black/[.06]">
-                    {msg.text}
-                  </div>
+                <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-white px-4 py-2.5 text-[0.88rem] leading-relaxed text-zinc-800 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-black/[.06]">
+                  {msg.text}
                 </div>
               </div>
             );
@@ -451,7 +831,6 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="w-full max-w-[85%]">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Appointly AI</p>
                   <BookingConfirmation />
                 </div>
               </div>
@@ -461,8 +840,16 @@ export default function DemoChatbot() {
             return (
               <div key={msg.id} className="flex justify-start">
                 <div className="w-full max-w-[85%]">
-                  <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-zinc-400">Appointly AI</p>
                   <RescheduleConfirmation />
+                </div>
+              </div>
+            );
+          }
+          if (msg.kind === 'cancelled') {
+            return (
+              <div key={msg.id} className="flex justify-start">
+                <div className="w-full max-w-[85%]">
+                  <CancelConfirmation />
                 </div>
               </div>
             );
@@ -486,16 +873,32 @@ export default function DemoChatbot() {
         )}
       </div>
 
-      {/* Footer restart */}
+      {/* Input bar */}
       <div className="shrink-0 border-t border-black/[.08] bg-white px-4 py-3">
-        <button
-          onClick={startDemo}
-          className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
-        >
-          <RefreshCw className="h-3.5 w-3.5" />
-          Restart Demo
-        </button>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            placeholder="Type a message..."
+            className="flex-1 rounded-full border border-black/[.08] bg-[#fafafa] px-4 py-2 text-sm text-zinc-700 placeholder-zinc-400 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100"
+            style={{ fontSize: '16px' }}
+            readOnly
+          />
+          <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-500 text-white shadow-sm transition-colors hover:bg-indigo-600">
+            <Send className="h-4 w-4" strokeWidth={1.75} />
+          </button>
+        </div>
       </div>
+
     </div>
+    <div className="mt-3 flex justify-center">
+      <button
+        onClick={startDemo}
+        className="flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-600"
+      >
+        <RefreshCw className="h-3.5 w-3.5" />
+        Restart Demo
+      </button>
+    </div>
+    </>
   );
 }

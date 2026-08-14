@@ -13,26 +13,19 @@ interface SliderConfig {
 
 const sliders: SliderConfig[] = [
   {
-    label: "Missed leads / day",
+    label: "Missed appointments / week",
     min: 1,
-    max: 30,
+    max: 50,
     step: 1,
-    defaultValue: 8,
+    defaultValue: 5,
   },
   {
-    label: "Avg booking value",
+    label: "Avg appointment value",
     min: 25,
     max: 1000,
     step: 25,
     defaultValue: 200,
     prefix: "$",
-  },
-  {
-    label: "Days covered / mo",
-    min: 1,
-    max: 31,
-    step: 1,
-    defaultValue: 22,
   },
 ];
 
@@ -54,17 +47,26 @@ export default function RevenueCalculator() {
     update(index, num);
   };
 
-  const [leads, avgValue, days] = values;
-  const total = leads * avgValue * days;
+  const APIVO_MONTHLY = 297;
+  const APIVO_ANNUAL = 2316;
+  const [missed, avgValue] = values;
+  const total = missed * 4 * avgValue;
+  const roi = total - APIVO_MONTHLY;
+  const annualSavings = total * 12 - APIVO_MONTHLY * 12;
 
   return (
-    <div className="mx-auto mt-12 max-w-5xl sm:mt-16">
-      <p className="mb-6 text-center text-xs font-medium uppercase tracking-widest text-zinc-400 sm:text-sm">
-        Revenue Impact Calculator
-      </p>
+    <div className="mx-auto max-w-5xl">
+      <div className="mb-10 text-center sm:mb-14">
+        <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
+          Revenue Impact
+        </p>
+        <h2 className="mt-2 text-2xl font-bold text-zinc-900 sm:text-3xl md:text-4xl">
+          See What You&apos;re Losing Every Month
+        </h2>
+      </div>
 
-      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-4 sm:gap-5">
-        {/* 3 slider columns */}
+      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-3 sm:gap-5">
+        {/* 2 slider columns */}
         {sliders.map((s, i) => {
           const pct = ((values[i] - s.min) / (s.max - s.min)) * 100;
 
@@ -106,11 +108,52 @@ export default function RevenueCalculator() {
         {/* Result column */}
         <div className="rounded-xl border border-indigo-500/20 bg-indigo-50/50 px-4 py-4 text-center">
           <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
-            Recovered revenue
+            Monthly missed revenue
           </p>
           <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-900 sm:text-3xl">
             ${total.toLocaleString()}
             <span className="text-sm font-normal text-zinc-400">/mo</span>
+          </p>
+        </div>
+      </div>
+
+      {/* ROI row */}
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+        {/* Apivo cost */}
+        <div className="rounded-xl border border-black/[.08] bg-white px-5 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,.04)]">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+            Compared to Apivo
+          </p>
+          <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-900 sm:text-3xl">
+            $297
+            <span className="text-sm font-normal text-zinc-400">/mo</span>
+          </p>
+        </div>
+
+        {/* ROI */}
+        <div className="rounded-xl border border-green-500/20 bg-green-50/50 px-5 py-4 text-center">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+            Your monthly ROI
+          </p>
+          <p className={`mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl ${roi >= 0 ? "text-green-600" : "text-red-500"}`}>
+            {roi >= 0 ? "+" : "−"}${Math.abs(roi).toLocaleString()}
+            <span className="text-sm font-normal text-zinc-400">/mo</span>
+          </p>
+        </div>
+      </div>
+
+      {/* Annual savings row */}
+      <div className="mt-4">
+        <div className="rounded-xl border border-indigo-500/20 bg-indigo-50/50 px-5 py-4 text-center">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 sm:text-[11px]">
+            Annual savings with Apivo
+          </p>
+          <p className={`mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl ${annualSavings >= 0 ? "text-indigo-600" : "text-red-500"}`}>
+            {annualSavings >= 0 ? "+" : "−"}${Math.abs(annualSavings).toLocaleString()}
+            <span className="text-sm font-normal text-zinc-400">/yr</span>
+          </p>
+          <p className="mt-1.5 text-[10px] text-zinc-400 sm:text-[11px]">
+            Switch to annual and save an additional $1,248/yr
           </p>
         </div>
       </div>

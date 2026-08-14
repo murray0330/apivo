@@ -1,0 +1,424 @@
+/* ─── Root ─────────────────────────────────────────────────────────────────── */
+
+.root {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .root {
+    flex-direction: column;
+  }
+}
+
+/* ─── Conversation Pane ─────────────────────────────────────────────────────── */
+
+.convo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+/* Phone chrome header */
+.phoneBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  background: #fafafa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #6366f1;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phoneInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.callerName {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #18181b;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.callerRole {
+  font-size: 0.6875rem;
+  font-weight: 300;
+  color: #a1a1aa;
+  line-height: 1.25;
+}
+
+.liveBadge {
+  margin-left: auto;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #22c55e;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Exchange — content area */
+.exchange {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  min-height: 240px;
+  flex: 1;
+}
+
+/* Choices footer */
+.choices {
+  padding: 0 1.25rem 1.25rem;
+  flex-shrink: 0;
+}
+
+.choiceGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.choiceBtn {
+  background: transparent;
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  border-radius: 999px;
+  color: #6366f1;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.choiceBtn:hover,
+.choiceBtn:active {
+  background: #6366f1;
+  border-color: #6366f1;
+  color: #ffffff;
+}
+
+.resetBtn {
+  background: none;
+  border: none;
+  color: #a1a1aa;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0.375rem 0;
+  transition: color 0.15s ease;
+}
+
+.resetBtn:hover {
+  color: #6366f1;
+}
+
+/* ─── Waveform ──────────────────────────────────────────────────────────────── */
+
+.waveformBlock {
+  background: #f4f4f5;
+  border-radius: 14px;
+  padding: 0.875rem 1rem 0.625rem;
+  flex-shrink: 0;
+}
+
+.waveformBars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 44px;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 3px;
+  background: #6366f1;
+  opacity: 0.7;
+  /* static height: a fraction of the bar's "voice height" */
+  height: calc(var(--bar-h, 30%) * 0.3);
+  min-height: 3px;
+  max-height: 100%;
+}
+
+.barActive {
+  animation: waveBar var(--dur, 0.6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes waveBar {
+  from {
+    height: 8%;
+    opacity: 0.4;
+  }
+  to {
+    height: var(--bar-h, 70%);
+    opacity: 1;
+  }
+}
+
+.waveStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.6875rem;
+  font-weight: 300;
+  color: #71717a;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4d4d8;
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.statusDotActive {
+  background: #6366f1;
+  animation: dotPulse 1s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ─── Bubbles ───────────────────────────────────────────────────────────────── */
+
+.chloeBubble {
+  max-width: 90%;
+  align-self: flex-start;
+}
+
+.bubbleTag {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 300;
+  color: #a1a1aa;
+  margin-bottom: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.chloeBubble p {
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0 14px 14px 14px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #27272a;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.visitorBubble {
+  max-width: 78%;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.visitorBubble p {
+  margin: 0;
+  background: #6366f1;
+  border-radius: 14px 0 14px 14px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.bubbleTagRight {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 300;
+  color: #a1a1aa;
+  margin-top: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+/* ─── Calendar ──────────────────────────────────────────────────────────────── */
+
+.calendar {
+  flex: 1;
+  min-width: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .calendar {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+
+.calHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  background: #fafafa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.calTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #3f3f46;
+}
+
+.calBadge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.2rem 0.625rem;
+  animation: badgeIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  white-space: nowrap;
+}
+
+@keyframes badgeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.badgeGreen { background: #dcfce7; color: #166534; }
+.badgeAmber { background: #fef9c3; color: #92400e; }
+.badgeRed   { background: #fee2e2; color: #b91c1c; }
+
+/* Calendar grid */
+.calDayRow {
+  display: grid;
+  grid-template-columns: 44px repeat(5, 1fr);
+  background: #fafafa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.calCorner {
+  width: 44px;
+}
+
+.calDayHead {
+  text-align: center;
+  padding: 0.4rem 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #71717a;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.calTimeRow {
+  display: grid;
+  grid-template-columns: 44px repeat(5, 1fr);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.calTime {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0.4rem;
+  height: 40px;
+  font-size: 0.5625rem;
+  font-weight: 300;
+  color: #a1a1aa;
+  white-space: nowrap;
+}
+
+.calCell {
+  border-left: 1px solid rgba(0, 0, 0, 0.04);
+  height: 40px;
+  padding: 2px 2px;
+  position: relative;
+}
+
+.appt {
+  height: 100%;
+  border-radius: 5px;
+  padding: 0 4px;
+  font-size: 0.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.apptNormal {
+  background: #e0e7ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+
+.apptNew {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.apptMoved {
+  background: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #fef08a;
+  animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.apptCancelled {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  text-decoration: line-through;
+  animation: strikeOut 0.9s ease forwards;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.65); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes strikeOut {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 0.2; }
+}
