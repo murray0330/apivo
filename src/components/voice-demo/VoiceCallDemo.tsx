@@ -67,7 +67,7 @@ const NODES: Record<string, ConvNode> = {
   },
   scheduling: {
     audioSrc: "/audio/4.wav",
-    chloeText: "Got it. Since facials don't require a consultation first, we can get you scheduled right away. What day and time works best for you?",
+    chloeText: "Got it. Since facials don't require a consultation first, we can get you scheduled for that. What day and time works best for you?",
     choices: [
       { label: "Monday at 1 PM.", next: "availability" },
     ],
@@ -89,7 +89,7 @@ const NODES: Record<string, ConvNode> = {
   },
   confirmation: {
     audioSrc: "/audio/7.wav",
-    chloeText: "You're all set, Jane. You should receive a confirmation text shortly. We're looking forward to seeing you — if anything comes up before then, just reach out. Have a great day!",
+    chloeText: "You're all set! You should receive a confirmation text shortly. We're looking forward to seeing you — if anything comes up before then, just reach out. Have a great day!",
     spinnerBefore: "Booking your appointment...",
     choices: null,
     calendarAction: "book",
@@ -182,12 +182,12 @@ function VoiceBookingConfirmation() {
       </div>
       <div className="min-w-0">
         <p className="text-xs font-semibold text-white">Appointment Booked!</p>
-        <p className="mt-0.5 text-[10px]" style={{ color: "rgba(255,255,255,0.8)" }}>
+        <p className="mt-0.5 text-[10px] text-white">
           Added to calendar. Confirmation text sent.
         </p>
         <ul className="mt-2 space-y-1">
           {["Square updated", "Confirmation email sent", "Contact saved to CRM"].map((t) => (
-            <li key={t} className="flex items-center gap-1.5 text-[10px]" style={{ color: "rgba(255,255,255,0.7)" }}>
+            <li key={t} className="flex items-center gap-1.5 text-[10px] text-white">
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
