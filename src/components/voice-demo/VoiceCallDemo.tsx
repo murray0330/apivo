@@ -212,13 +212,22 @@ export default function VoiceCallDemo() {
     setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text } : m));
   };
 
-  const streamWords = async (id: number, text: string) => {
+  const getAudioDuration = (src: string): Promise<number> =>
+    new Promise((resolve) => {
+      const a = new Audio(src);
+      a.onloadedmetadata = () => resolve(a.duration * 1000);
+      a.onerror = () => resolve(2400);
+      setTimeout(() => resolve(2400), 2000);
+    });
+
+  const streamWords = async (id: number, text: string, durationMs: number) => {
     const words = text.split(" ");
+    const msPerWord = Math.max(80, durationMs / words.length);
     let built = "";
     for (const word of words) {
       built += (built ? " " : "") + word;
       updateMsg(id, built);
-      await delay(150);
+      await delay(msPerWord);
     }
   };
 
@@ -233,10 +242,11 @@ export default function VoiceCallDemo() {
     setChoices([]);
 
     await delay(300);
+    const duration = await getAudioDuration(NODES.opening.audioSrc);
     const msgId = addMsg({ kind: "chloe", text: "" });
     await Promise.all([
       playAudio(NODES.opening.audioSrc),
-      streamWords(msgId, NODES.opening.chloeText),
+      streamWords(msgId, NODES.opening.chloeText, duration),
     ]);
     await delay(200);
     setChoices(NODES.opening.choices ?? []);
@@ -263,10 +273,11 @@ export default function VoiceCallDemo() {
     await delay(300);
 
     const next = NODES[choice.next];
+    const duration = await getAudioDuration(next.audioSrc);
     const msgId = addMsg({ kind: "chloe", text: "" });
     await Promise.all([
       playAudio(next.audioSrc),
-      streamWords(msgId, next.chloeText),
+      streamWords(msgId, next.chloeText, duration),
     ]);
 
     if (next.calendarAction) {
