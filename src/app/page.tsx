@@ -80,7 +80,7 @@ function ValueProp() {
 
   return (
     <section id="about" className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         {/* Intro */}
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
@@ -194,7 +194,7 @@ function Features() {
   ];
   return (
     <section id="features" className="bg-[#fafafa] py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHead
           tag="Features"
           title="Med Spa Booking Automation — On Autopilot"
@@ -301,7 +301,7 @@ function NotCalendly() {
 function Calculator() {
   return (
     <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <RevenueCalculator />
       </div>
     </section>
