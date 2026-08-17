@@ -30,11 +30,11 @@ function SocialProof() {
   ];
   return (
     <section className="border-y border-black/[.05] bg-[#fafafa] py-8 sm:py-10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-zinc-400 sm:mb-6 sm:text-sm">
           Native integration with Square Appointments
         </p>
-        <div className="relative mx-auto max-w-4xl overflow-hidden">
+        <div className="relative mx-auto overflow-hidden">
           <div className="industry-track flex w-max gap-4 sm:gap-6">
             {[...features, ...features].map((feature, i) => (
               <span
@@ -369,7 +369,7 @@ function Contact() {
       showRadialGradient={true}
     >
       <section id="contact" className="relative z-10 w-full scroll-mt-20">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
           <div>
               <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 sm:text-sm">
                 Get Started
